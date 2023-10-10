@@ -4,6 +4,8 @@ const app = express();
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import userRouter from './routes/userRoutes';
+import cloudRouter from './routes/cloudRoutes';
+
 import cookieParser from 'cookie-parser';
 
 const corsOptions = {
@@ -16,6 +18,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(userRouter);
+app.use(cloudRouter);
 
 app.use(express.urlencoded({ extended: true }));
 
