@@ -1,9 +1,8 @@
 'use client'
-import Register from '../../components/Register/Register'
 
 function index() {
   return (
-    <Register />
+    <p>Some protected route</p>
   )
 }
 

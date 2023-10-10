@@ -43,8 +43,6 @@ async function registerUser(req, res) {
   }
 }
 
-
-
 async function logUser (req, res) {
   const login = req.body;
   // console.log('received user data', login)

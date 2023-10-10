@@ -1,10 +1,10 @@
-import { registerUser, logUser } from "../Interfaces";
+import { RegisterUser, LoginUser } from "../Interfaces";
 
-const url = process.env.BASE_URL
+const url = process.env.NEXT_PUBLIC_BASE_URL
 
-export async function registerUser (user: registerUser) {
+export async function registerUser (user: RegisterUser) {
   try {
-    const response = await fetch(`${url}/signup`, {
+    const response = await fetch(`${url}/users/signup`, {
       method: "POST",
       credentials: 'include',
       mode: 'cors',
@@ -21,9 +21,9 @@ export async function registerUser (user: registerUser) {
   }
 }
 
-export async function loginUser (user: logUser) {
+export async function loginUser (user: LoginUser) {
   try {
-    const response = await fetch(`${url}/signin`, {
+    const response = await fetch(`${url}/users/signin`, {
       method: "POST",
       credentials: 'include',
       mode: 'cors',
@@ -33,6 +33,7 @@ export async function loginUser (user: logUser) {
       body: JSON.stringify(user)
     })
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

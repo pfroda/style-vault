@@ -1,9 +1,9 @@
 'use client'
-import Register from '../../components/Register/Register'
+import Home from '../../components/Home/Home'
 
 function index() {
   return (
-    <Register />
+    <Home />
   )
 }
 

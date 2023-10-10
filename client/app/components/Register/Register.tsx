@@ -1,41 +1,24 @@
 'use client'
 import './register.css';
-import { useEffect } from 'react';
-import { registerUser } from '@/app/Interfaces';
+import { useRouter } from 'next/navigation'; 
+import { RegisterUser } from '@/app/Interfaces';
 import { useForm } from 'react-hook-form';
-// import { useRouter } from 'next/navigation'; 
 import Link from 'next/link';
+import useAuth from '@/app/hooks/useAuth';
 
-import { increment, decrement, incrementByAmount } from '@/app/GlobalRedux/Features/counter/counterSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/app/GlobalRedux/store';
+function Register() {
+  const { register, handleSubmit } = useForm<RegisterUser>();
+  const { user, handleRegister } = useAuth();
 
-function RegisterPage() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const { register, handleSubmit } = useForm<registerUser>();
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   if (isAuthenticated) navigate('/initial');
-  // }, [isAuthenticated]);
-
-  // const submitForm = handleSubmit(async (user: User) => {
-  //   await signup(user);
-  //   router.push('/');
-  // });
-  const submitForm = () => {
-    console.log('hola');
-  }
+  const submitForm = handleSubmit(async (user: RegisterUser) => {
+    handleRegister(user);
+    router.push('/home');
+  });
 
   return (
     <div className="register-page-container">
-      <div className="contador">
-        <button onClick={() => dispatch(increment())}>Increment</button>
-        <button onClick={() => dispatch(decrement())}>Decrement</button>
-        <span style={{color: 'white'}}>{count}</span>
-      </div>
       <div className="register-page">
         <form onSubmit={submitForm} className='register-form'>
           <input className='register-input' type="text" {...register("username", { required: true })} placeholder='Username' />
@@ -49,5 +32,5 @@ function RegisterPage() {
   )
 }
 
-export default RegisterPage
+export default Register
 

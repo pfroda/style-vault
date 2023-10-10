@@ -3,12 +3,13 @@ import express from 'express';
 const app = express();
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import userRouter from './routes/user'
+import userRouter from './routes/userRoutes';
 import cookieParser from 'cookie-parser';
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
-  credentials: process.env.CORS_CREDENTIALS === 'true',
+//  credentials: process.env.CORS_CREDENTIALS === 'true',
+ credentials: true
 }
 
 app.use(cookieParser());
