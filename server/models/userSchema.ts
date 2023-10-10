@@ -1,12 +1,25 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Sequelize, Model, DataTypes } from 'sequelize';
+
+interface UserAttributes {
+  username: string;
+  password: string;
+  email: string;
+  profilePicture?: string;
+  name?: string;
+  surname?: string;
+}
+
+class User extends Model<UserAttributes> implements UserAttributes {
+  public username!: string;
+  public password!: string;
+  public email!: string;
+  public profilePicture?: string;
+  public name?: string;
+  public surname?: string;
+}
 
 export default (sequelize: Sequelize) => {
-  const Profile = sequelize.define('Users', {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   primaryKey: true,
-    //   autoIncrement: true,
-    // },
+  User.init({
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -31,6 +44,9 @@ export default (sequelize: Sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+  }, {
+    sequelize,
+    tableName: 'Users',
   });
-  return Profile;
+  return User;
 };
