@@ -1,16 +1,18 @@
 const { ImageAnnotatorClient } = require('@google-cloud/vision');
 const client = new ImageAnnotatorClient();
 
-process.env['GOOGLE_APPLICATION_CREDENTIALS'] = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
+
+process.env['GOOGLE_APPLICATION_CREDENTIALS'] = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 async function logoDetection (req, res) {
     try {
-        const [result] = await client.logoDetection('./controllers/gucci.png');
+        const [result] = await client.logoDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+        // './controllers/gucci.png'
         const logos = result.logoAnnotations;
 
         if (!logos || logos.length === 0) {
-            return res.status(404).json({ message: 'No logos detected.' });
+            return res.status(404).json({ message: 'No brand detected.' });
         }
 
         const logoDetails = logos.map(logo => ({
