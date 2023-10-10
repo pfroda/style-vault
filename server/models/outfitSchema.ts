@@ -1,5 +1,5 @@
-import { Attribute, PrimaryKey, AutoIncrement, NotNull } from '@sequelize/core/decorators-legacy';
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+import { Attribute, PrimaryKey, AutoIncrement, NotNull, BelongsToMany } from '@sequelize/core/decorators-legacy';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
 import { Item } from './itemSchema';
 
 export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttributes<Outfit>> {
@@ -22,22 +22,6 @@ export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttribut
   @NotNull
   declare userId: number;
 
-  // @HasMany(() => Item, 'userId')
-  // declare items?: NonAttribute<Item[]>;
+  @BelongsToMany(() => Item, { through: 'ItemOutfit' })
+  declare items?: NonAttribute<Item[]>;
 }
-
-
-// @Attribute(DataTypes.STRING)
-// declare bottom: string;
-
-// @Attribute(DataTypes.STRING)
-// declare dress: string;
-
-// @Attribute(DataTypes.STRING)
-// declare shoes: string;
-
-// @Attribute(DataTypes.STRING)
-// declare outerwear: string;
-
-// @Attribute(DataTypes.STRING)
-// declare accessories: string[];

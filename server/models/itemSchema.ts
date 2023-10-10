@@ -1,5 +1,6 @@
-import { Attribute, PrimaryKey, AutoIncrement, NotNull } from '@sequelize/core/decorators-legacy';
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+import { Attribute, PrimaryKey, AutoIncrement, NotNull, BelongsToMany } from '@sequelize/core/decorators-legacy';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
+import { Outfit } from './outfitSchema';
 
 export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
   @Attribute(DataTypes.INTEGER)
@@ -14,6 +15,10 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
   @Attribute(DataTypes.STRING)
   @NotNull
   declare category: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare itemUrl: string;
 
   @Attribute(DataTypes.STRING)
   declare occasion: string[];
@@ -33,4 +38,7 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
   @Attribute(DataTypes.STRING)
   @NotNull
   declare userId: number;
+
+  @BelongsToMany(() => Outfit, { through: 'ItemOutfit' })
+  declare outfits?: NonAttribute<Outfit[]>;
 }
