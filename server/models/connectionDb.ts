@@ -1,6 +1,9 @@
 import * as dotenv from 'dotenv';
-import { Sequelize, DataTypes, Dialect } from 'sequelize';
-import userSchema from './userSchema';
+import { Sequelize, Dialect } from '@sequelize/core';
+
+import { User } from './userSchema';
+import { Item } from './itemSchema';
+import { Outfit } from './outfitSchema';
 
 dotenv.config();
 
@@ -19,6 +22,7 @@ const sequelize = new Sequelize(
     dialect: dialect,
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
     logging: false,
+    models: [User, Item, Outfit],
   }
 );
 
@@ -26,12 +30,6 @@ const db: any = {};
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-
-db.userProfile = userSchema(sequelize);
-
-// Associations Tables
-
-// End Associations Tables
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log('Well done Cintia! Re-sync done on DB 📑!');

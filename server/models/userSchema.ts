@@ -1,52 +1,38 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import { Attribute, PrimaryKey, AutoIncrement, NotNull, HasMany } from '@sequelize/core/decorators-legacy';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
+import { Item } from './itemSchema';
+import { Outfit } from './outfitSchema';
 
-interface UserAttributes {
-  username: string;
-  password: string;
-  email: string;
-  profilePicture?: string;
-  name?: string;
-  surname?: string;
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  @Attribute(DataTypes.INTEGER)
+  @PrimaryKey
+  @AutoIncrement
+  declare id: CreationOptional<number>;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare username: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare password: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare email: string;
+
+  @Attribute(DataTypes.STRING)
+  declare profilePicture: string;
+
+  @Attribute(DataTypes.STRING)
+  declare name: string;
+
+  @Attribute(DataTypes.STRING)
+  declare surname: string;
+
+  @HasMany(() => Item, 'userId')
+  declare items?: NonAttribute<Item[]>;
+
+  @HasMany(() => Outfit, 'userId')
+  declare outfits?: NonAttribute<Outfit[]>;
 }
-
-class User extends Model<UserAttributes> implements UserAttributes {
-  public username!: string;
-  public password!: string;
-  public email!: string;
-  public profilePicture?: string;
-  public name?: string;
-  public surname?: string;
-}
-
-export default (sequelize: Sequelize) => {
-  User.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    profilePicture: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    surname: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-  }, {
-    sequelize,
-    tableName: 'Users',
-  });
-  return User;
-};

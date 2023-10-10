@@ -1,15 +1,16 @@
 import db from '../models/connectionDb';
-import {TOKEN_SECRET} from "../config/.token";
+import { TOKEN_SECRET } from "../config/.token";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
-const userProfile = db.userProfile;
+import { User } from '../models/userSchema';
+const userProfile = db.User;
 
 async function registerUser(req, res) {
   try {
-    const user = req.body;
+    const user: User = req.body;
     console.log('Received user data:', user);
 
-    const findUser = await userProfile.findOne({ where: { email: user.email } });
+    const findUser = await User.findOne({ where: { email: user.email } });
     if (findUser) {
       console.log('User already exists:', findUser);
       return res.status(409).send({ error: '409', message: 'User already exists' });
@@ -22,7 +23,7 @@ async function registerUser(req, res) {
 
     const hashPassword = await bcrypt.hash(user.password, 10);
 
-    const newUser = await userProfile.create({
+    const newUser = await User.create({
       username: user.username,
       password: hashPassword,
       email: user.email,
@@ -44,7 +45,7 @@ async function registerUser(req, res) {
 }
 
 async function logUser (req, res) {
-  const login = req.body;
+  const login: User = req.body;
   // console.log('received user data', login)
   try {
     const user = await userProfile.findOne({ where: { email: login.email } });
