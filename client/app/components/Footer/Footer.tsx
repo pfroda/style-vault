@@ -42,7 +42,7 @@ function Footer() {
       text: 'Upload',
     },
     {
-      href: '/login',
+      href: '/dashboard/cupboard',
       imgSrc: pathname === '/login' ? closet : closet,
       text: 'You',
     },
