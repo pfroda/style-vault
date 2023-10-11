@@ -1,36 +1,38 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import { Attribute, PrimaryKey, NotNull, HasMany, Default } from '@sequelize/core/decorators-legacy';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
+import { Item } from './itemSchema';
+import { Outfit } from './outfitSchema';
 
-export default (sequelize: Sequelize) => {
-  const Profile = sequelize.define('Users', {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   primaryKey: true,
-    //   autoIncrement: true,
-    // },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    profilePicture: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    surname: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-  });
-  return Profile;
-};
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  @Attribute(DataTypes.UUID)
+  @PrimaryKey
+  @Default(DataTypes.UUIDV4)
+  declare id: CreationOptional<string>;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare username: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare password: string;
+
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare email: string;
+
+  @Attribute(DataTypes.STRING)
+  declare profilePicture: string;
+
+  @Attribute(DataTypes.STRING)
+  declare name: string;
+
+  @Attribute(DataTypes.STRING)
+  declare surname: string;
+
+  @HasMany(() => Item, 'userId')
+  declare items?: NonAttribute<Item[]>;
+
+  @HasMany(() => Outfit, 'userId')
+  declare outfits?: NonAttribute<Outfit[]>;
+}

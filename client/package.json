@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "axios": "^1.5.1",
+    "cloudinary": "^1.41.0",
     "cookie": "^0.5.0",
     "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
