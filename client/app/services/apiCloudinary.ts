@@ -1,33 +1,25 @@
-import axios from 'axios';
-// process.env.VITE_APP_CLOUD_KEY;
-const cloudKey = "qlofz1nj"
-const urlCloud = 'https://api.cloudinary.com/v1_1/dizg5ajyl/image/upload';
+const url = process.env.NEXT_PUBLIC_BASE_URL
 
-
-
-export const uploadPhotoToCloudinary = async (file: File) => {
-  if (!cloudKey) {
-    throw new Error("Cloud key is not defined!");
-  }
-
-
-
+export const uploadPhotoToCloudinary = async (file) => {
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', cloudKey);
-
-
-  
+  formData.append('image', file);
+  console.log(formData)
   try {
-    const response = await axios.post(urlCloud, formData);
-    console.log(response.data.secure_url)
-    return response.data;
-    
+    const response = await fetch(`${url}/item-foto`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Image upload failed');
+    }
   } catch (error) {
-    console.error('Error uploading to Cloudinary:', error.response?.data || error.message);
+    console.error('Error uploading image:', error.message);
     throw error;
   }
-};
-
+}
 
 
