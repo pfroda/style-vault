@@ -1,13 +1,12 @@
-import { Attribute, PrimaryKey, AutoIncrement, NotNull, HasMany } from '@sequelize/core/decorators-legacy';
+import { Attribute, PrimaryKey, NotNull, HasMany } from '@sequelize/core/decorators-legacy';
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
 import { Item } from './itemSchema';
 import { Outfit } from './outfitSchema';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  @Attribute(DataTypes.INTEGER)
+  @Attribute(DataTypes.UUID)
   @PrimaryKey
-  @AutoIncrement
-  declare id: CreationOptional<number>;
+  declare id: CreationOptional<string>;
 
   @Attribute(DataTypes.STRING)
   @NotNull

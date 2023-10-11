@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express from 'express';
+import { initDb } from './models/connectionDb';
 
 // GraphQL
 import { ApolloServer } from '@apollo/server';
@@ -26,6 +27,10 @@ const server = new ApolloServer({
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
+const initGql = async (server, app) => {
+  await server.start();
+  app.use('/graphql', json(), expressMiddleware(server));
+}
 // GraphQL
 
 const corsOptions = {
@@ -41,15 +46,12 @@ app.use(userRouter);
 
 app.use(express.urlencoded({ extended: true }));
 
-const initGql = async (server, app) => {
-  await server.start();
-  app.use('/graphql', json(), expressMiddleware(server));
-}
-
 const PORT = 3001;
 (async () => {
   try {
+    await initDb();
     await initGql(server, app);
+    
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT} 🎉`);
     });
