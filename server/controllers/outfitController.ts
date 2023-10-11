@@ -1,4 +1,5 @@
 import { Outfit } from '../models/outfitSchema';
+import { Item } from '../models/itemSchema';
 
 async function createOutfit (req, res) {
   try {
@@ -8,8 +9,18 @@ async function createOutfit (req, res) {
       userId: outfit.userId,
       name: outfit.name,
       occasion: outfit.occasion,
-      season: outfit.season,
+      season: outfit.season
     });
+
+    // // Busca los Items por sus IDs
+    // const items = await Item.findAll({
+    //   where: {
+    //     id: item.id,
+    //   },
+    // });
+
+    // // Asocia los Items con el Outfit
+    // await newOutfit.set('items', items);
 
     res.status(201).send(newOutfit);
   } catch (error) {
