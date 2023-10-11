@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import { Interface } from "readline"
 import { useState } from "react";
 import { uploadPhotoToCloudinary } from "@/app/services/apiCloudinary";
+import Link from 'next/link';
 
 interface imgData {
   file?: FileList;
@@ -22,13 +23,8 @@ function Home() {
   };
   return (
     <div>
-      <div>Home</div>
-      <br></br>
-      <form onSubmit={handleSubmit(onSubmit)} action="/item-foto" method="POST">
-        <input type="file" {...register("file")} />
-         <input type="submit" />
-          </form>
-          <img src={image ? image : undefined} alt="Uploaded preview" />
+      <p>Home</p>
+      <Link href="/dashboard/userprofile">Profile</Link>
     </div>
   )
 }
