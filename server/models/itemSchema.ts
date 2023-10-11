@@ -31,9 +31,6 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
 
   @Attribute(DataTypes.STRING)
   declare brand: string;
-
-  @Attribute(DataTypes.STRING)
-  declare surname: string;
   
   @Attribute(DataTypes.STRING)
   @NotNull

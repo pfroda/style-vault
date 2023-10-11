@@ -6,7 +6,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import http from 'http';
-import { typeDefs } from './graphql/schema/schema';
+import { typeDefs } from './graphql/schemas/index';
 import { resolvers } from './graphql/resolvers/resolver';
 import { json } from 'body-parser';
 // GraphQL
@@ -25,7 +25,6 @@ const server = new ApolloServer({
   resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
-
 // GraphQL
 
 const corsOptions = {
