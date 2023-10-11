@@ -11,6 +11,7 @@ interface imgData {
   file?: FileList;
 }
 
+
 function Home() {
   const {register, handleSubmit} = useForm<imgData>()
   const [image, setImage] = useState<string | null>(null);
@@ -19,6 +20,7 @@ function Home() {
     if (data.file && data.file.length > 0) {
       const response = await uploadPhotoToCloudinary(data.file[0]);
       if (response.data && response.data.secure_url) {
+    
         setImage(response.data.secure_url); 
       }
     }

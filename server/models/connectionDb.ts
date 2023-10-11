@@ -34,7 +34,7 @@ db.userProfile = userSchema(sequelize);
 // End Associations Tables
 
 db.sequelize.sync({ force: false }).then(() => {
-  console.log('Well done Cintia! Re-sync done on DB 📑!');
+  console.log('StyleVault is your home! Re-sync done on DB 📑!');
 });
 
 export default db;
