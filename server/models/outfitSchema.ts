@@ -1,13 +1,12 @@
-import { Attribute, PrimaryKey, AutoIncrement, NotNull, BelongsToMany } from '@sequelize/core/decorators-legacy';
+import { Attribute, PrimaryKey, NotNull, BelongsToMany } from '@sequelize/core/decorators-legacy';
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
 import { Item } from './itemSchema';
 
 export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttributes<Outfit>> {
-  @Attribute(DataTypes.INTEGER)
+  @Attribute(DataTypes.UUID)
   @PrimaryKey
-  @AutoIncrement
-  declare id: CreationOptional<number>;
 
+  declare id: CreationOptional<string>;
   @Attribute(DataTypes.STRING)
   @NotNull
   declare name: string;
@@ -18,9 +17,9 @@ export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttribut
   @Attribute(DataTypes.STRING)
   declare season: string[];
   
-  @Attribute(DataTypes.STRING)
+  @Attribute(DataTypes.UUID)
   @NotNull
-  declare userId: number;
+  declare userId: string;
 
   @BelongsToMany(() => Item, { through: 'ItemOutfit' })
   declare items?: NonAttribute<Item[]>;

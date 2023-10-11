@@ -26,13 +26,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const db: any = {};
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-db.sequelize.sync({ force: false }).then(() => {
+export const initDb = async () => {
+  await sequelize.sync({ force: false });
   console.log('Well done Cintia! Re-sync done on DB 📑!');
-});
-
-export default db;
+}

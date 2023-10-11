@@ -32,9 +32,9 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
   @Attribute(DataTypes.STRING)
   declare brand: string;
   
-  @Attribute(DataTypes.STRING)
+  @Attribute(DataTypes.UUID)
   @NotNull
-  declare userId: number;
+  declare userId: string;
 
   @BelongsToMany(() => Outfit, { through: 'ItemOutfit' })
   declare outfits?: NonAttribute<Outfit[]>;

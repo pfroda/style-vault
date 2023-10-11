@@ -1,9 +1,7 @@
-import db from '../models/connectionDb';
 import { TOKEN_SECRET } from "../config/.token";
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import { User } from '../models/userSchema';
-const userProfile = db.User;
 
 async function registerUser(req, res) {
   try {
@@ -48,7 +46,7 @@ async function logUser (req, res) {
   const login: User = req.body;
   // console.log('received user data', login)
   try {
-    const user = await userProfile.findOne({ where: { email: login.email } });
+    const user = await User.findOne({ where: { email: login.email } });
     // console.log('user in database', user)
     const validatedPass = await bcrypt.compare(login.password, user.password);
 
