@@ -14,9 +14,11 @@ import { json } from 'body-parser';
 
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+
 import userRouter from './routes/userRoutes';
 import itemRouter from './routes/itemRoutes';
-import cookieParser from 'cookie-parser';
+import outfitRouter from './routes/outfitRoutes';
 
 const app = express();
 
@@ -45,6 +47,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(userRouter);
 app.use(itemRouter);
+app.use(outfitRouter);
 
 app.use(express.urlencoded({ extended: true }));
 

@@ -12,10 +12,10 @@ export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttribut
   @NotNull
   declare name: string;
 
-  @Attribute(DataTypes.STRING)
+  @Attribute(DataTypes.ARRAY(DataTypes.STRING))
   declare occasion: string[];
 
-  @Attribute(DataTypes.STRING)
+  @Attribute(DataTypes.ARRAY(DataTypes.STRING))
   declare season: string[];
   
   @Attribute(DataTypes.UUID)
