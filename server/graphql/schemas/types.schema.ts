@@ -1,4 +1,4 @@
-const types = `
+export const types = `#graphql
   type Item {
     id: Number!
     userId: Number!
@@ -19,5 +19,3 @@ const types = `
     season: String[]!
   }
 `;
-
-export default { types };

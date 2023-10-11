@@ -1,4 +1,4 @@
-const queries = `
+const queries = `#graphql
   type Query {
     getItems: [Item]!
     getOutfits: [Outfit]!
