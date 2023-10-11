@@ -8,7 +8,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import http from 'http';
 import { typeDefs } from './graphql/schemas/index';
-import { resolvers } from './graphql/resolvers/resolver';
+import { resolvers } from './graphql/resolvers/index';
 import { json } from 'body-parser';
 // GraphQL
 

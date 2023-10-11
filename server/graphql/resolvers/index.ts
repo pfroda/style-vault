@@ -1,12 +1,11 @@
-const queryResolver = require('./query.resolver');
-const mutationResolver = require('./mutation.resolver');
-const { pokemonResolver, moveResolver } = require('./type.resolver');
+import { queryResolver } from './query.resolver';
+// import mutationResolver from './mutation.resolver';
+import { itemResolver, outfitResolver } from './type.resolver';
 
-const resolvers = { 
+export const resolvers = { 
   Query: queryResolver,
-  Pokemon: pokemonResolver,
-  Move: moveResolver,
-  Mutation: mutationResolver
+  Item: itemResolver,
+  Outfit: outfitResolver,
 };
 
-module.exports = resolvers;
+// Mutation: mutationResolver
