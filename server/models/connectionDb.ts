@@ -28,5 +28,5 @@ const sequelize = new Sequelize(
 
 export const initDb = async () => {
   await sequelize.sync({ force: false });
-  console.log('Well done Cintia! Re-sync done on DB 📑!');
+  console.log('Orale putos 📑!');
 }

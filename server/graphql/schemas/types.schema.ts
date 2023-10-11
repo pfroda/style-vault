@@ -1,18 +1,18 @@
 export const types = `#graphql
   type Item {
-    id: Int!
+    id: String!
     userId: String!
-    closet: [String]!
+    closet: [String]
     category: String!
     itemUrl: String!
-    occasion: [String]!
-    season: [String]!
+    occasion: [String]
+    season: [String]
     color: [String]!
     brand: String!
   }
 
   type Outfit {
-    id: Int!
+    id: String!
     userId: String!
     name: String!
     occasion: [String]!
