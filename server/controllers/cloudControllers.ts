@@ -3,13 +3,14 @@ const client = new ImageAnnotatorClient();
 
 process.env['GOOGLE_APPLICATION_CREDENTIALS'] = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
-
 async function logoDetection(req, res, next) {
+    const imageUrl = req.body.imageUrl;
+
     try {
-        const [result] = await client.logoDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+        const [result] = await client.logoDetection(imageUrl);
         const cloudVisionApi = result.logoAnnotations;
         if (!cloudVisionApi || cloudVisionApi.length === 0) {
-            return res.status(404).json({ message: 'No LOGO detected. choose your LOGO' });
+            return res.status(404).json({ message: 'No Logo detected. choose your Loho' });
         }
         if (req.route.path === '/all') {
             req.logoDetails = cloudVisionApi[0].description;
@@ -23,11 +24,11 @@ async function logoDetection(req, res, next) {
 }
 
 
+async function labelDetection (req, res, next) {
+    const imageUrl = req.body.imageUrl;
 
-
-async function labelDetection (req, res, next){
     try {
-              const [result] = await client.labelDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+              const [result] = await client.labelDetection(imageUrl);
               const label = result.labelAnnotations[0].description;
        
          if (req.route.path === '/all') {
@@ -41,10 +42,11 @@ async function labelDetection (req, res, next){
             }
 }
 
+async function imageProperties (req, res, next) {
+    const imageUrl = req.body.imageUrl;
 
-async function imageProperties (req, res, next){
     try {
-            const [result] = await client.imageProperties('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+            const [result] = await client.imageProperties(imageUrl);
             const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
 
             let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
@@ -60,8 +62,6 @@ async function imageProperties (req, res, next){
             res.status(500).send('Error fetching labels');
           }
 }
-
-
 
 function sendFinalResponse(req, res) {
     res.json({

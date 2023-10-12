@@ -7,6 +7,7 @@ import { Item } from '@/app/Interfaces';
 import { useState } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 import { useRouter } from 'next/navigation'; 
+import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 
 function ItemForm() {
   const { register, handleSubmit } = useForm<Item>();
@@ -15,9 +16,16 @@ function ItemForm() {
   const [file, setFile] = useState(null);
   const [showForm, setShowForm] = useState(false)
   const [itemUrl, setItemUrl] = useState('');
-  const router = useRouter()
+  const router = useRouter();
+
+  // loading...
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Google Cloud states
+  const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
 
   async function handleFileChange(event: any) {
+    setIsLoading(true)
     console.log('changing...');
     const selectedFile = event?.target.files[0];
     console.log('selected file', selectedFile);
@@ -25,12 +33,21 @@ function ItemForm() {
     setShowForm(true);
   
     if (selectedFile) {
+
       try {
         const imageUrl = await uploadPhotoToCloudinary(selectedFile); 
-        console.log(imageUrl);
         setItemUrl(imageUrl);
+
+        // general info
+        const info = await fetchInfoFromImage(imageUrl);
+        // console.log('imageInfo:', info)
+        setImageInfo(info);
+        console.log('setting image info:', imageInfo)
+
       } catch (error) {
         console.error('Error uploading image:', error);
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -47,7 +64,9 @@ function ItemForm() {
         <input className="img-form" type="file" onChange={handleFileChange} />
       <div className="img-form-container">
         <img src={itemUrl} alt="" />
+        {isLoading && <div className='spinner'></div>}
       </div>
+    
 
       {showForm &&
       <form onSubmit={submitForm} className='item-form'>
@@ -58,7 +77,7 @@ function ItemForm() {
               <img src="#" alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input id="categories" className='item-input' type="text" {...register("category", { required: true })} placeholder='Categories' />
+            <input id="categories" className='item-input' type="text" {...register("category", { required: true })} placeholder={imageInfo?.labels} value={imageInfo?.labels || ''} />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
@@ -79,14 +98,14 @@ function ItemForm() {
               <img src="#" alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder='Color' />
+            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder={imageInfo?.hexColor} value={imageInfo?.hexColor || ''} />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
               <img src="#" alt="Icono" />
               <label htmlFor="brand">Brand</label>
             </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder='Brand' />
+            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder={imageInfo?.logos} value={imageInfo?.logos || ''}/>
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
