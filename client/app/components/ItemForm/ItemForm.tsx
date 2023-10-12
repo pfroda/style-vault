@@ -1,13 +1,21 @@
 'use client'
 import './itemform.css'
 import { useForm } from 'react-hook-form';
+import ItemAuth from '@/app/hooks/useItem';
+import useAuth from '@/app/hooks/useAuth';
+import { Item } from '@/app/Interfaces';
 
-function ItemFrom() {
-  const { register, handleSubmit } = useForm();
+function ItemForm() {
+  const { register, handleSubmit } = useForm<Item>();
+  const { item, handleItem } = ItemAuth();
+  const { user } = useAuth()
 
-  const submitForm = handleSubmit(() => {
-    console.log('clicked')
-    // router.push('/home');
+  const submitForm = handleSubmit(async (item: Item) => {
+    console.log('user:', user);
+    console.log('item user id:', item.userId);
+    item.userId = user?.id!;
+    console.log(item)
+    handleItem(item)
   });
   
   return (
@@ -22,7 +30,7 @@ function ItemFrom() {
               <img src="#" alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input id="categories" className='item-input' type="text" {...register("categories", { required: true })} placeholder='Categories' />
+            <input id="categories" className='item-input' type="text" {...register("category", { required: true })} placeholder='Categories' />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
@@ -66,4 +74,4 @@ function ItemFrom() {
   )
 }
 
-export default ItemFrom
+export default ItemForm
