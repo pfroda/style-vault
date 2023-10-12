@@ -5,9 +5,11 @@ process.env['GOOGLE_APPLICATION_CREDENTIALS'] = process.env.GOOGLE_APPLICATION_C
 
 
 async function logoDetection(req, res, next) {
+    const imageUrl = req.body.imageUrl;
     try {
-        const [result] = await client.logoDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+        const [result] = await client.logoDetection(imageUrl);
         const cloudVisionApi = result.logoAnnotations;
+
         if (!cloudVisionApi || cloudVisionApi.length === 0) {
             return res.status(404).json({ message: 'No LOGO detected. choose your LOGO' });
         }
@@ -15,7 +17,9 @@ async function logoDetection(req, res, next) {
             req.logoDetails = cloudVisionApi[0].description;
             return next();
         }
+
         res.json(cloudVisionApi[0].description);
+        
     } catch (error) {
         console.error('Error fetching logos:', error);
         res.status(500).send('Error fetching logos');
@@ -25,8 +29,9 @@ async function logoDetection(req, res, next) {
 
 
 async function labelDetection (req, res, next){
+    const imageUrl = req.body.imageUrl;
     try {
-              const [result] = await client.labelDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+              const [result] = await client.labelDetection(imageUrl);
               const label = result.labelAnnotations[0].description;
        
          if (req.route.path === '/all') {
@@ -42,8 +47,9 @@ async function labelDetection (req, res, next){
 
 
 async function imageProperties (req, res, next){
+    const imageUrl = req.body.imageUrl;
     try {
-            const [result] = await client.imageProperties('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
+            const [result] = await client.imageProperties(imageUrl);
             const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
 
             let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
