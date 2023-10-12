@@ -1,5 +1,5 @@
 'use client'
-import ItemFrom from "@/app/components/ItemForm/ItemFrom"
+import ItemFrom from "@/app/components/ItemForm/ItemForm"
 
 function index() {
   return (

@@ -1,9 +1,9 @@
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
-  cloud_name:"dizg5ajyl",
-  api_key: "647788662837597",
-  api_secret: "-r58tROnw-al9XkIIEdJLKSC3JI"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 async function uploadToCloudinary(req, res) {
@@ -17,8 +17,8 @@ async function uploadToCloudinary(req, res) {
         {
           resource_type: "image",
           use_filename: true,
-          unique_filename: false,
-          background_removal: 'cloudinary_ai', 
+          unique_filename: true,
+          // background_removal: 'cloudinary_ai', 
         },
         onDone
       ).end(req.files[0].buffer);
@@ -30,8 +30,10 @@ async function uploadToCloudinary(req, res) {
           resolve({ success: true, result });
         }
       }
-    }).then((result) => {
-      res.json(result);
+    }).then((result: any) => {
+      console.log(result.result.url)
+      res.json(result.result.url);
+
     }).catch((error) => {
       console.error('Error uploading to Cloudinary:', error);
       res.status(500).json({ error: 'An error occurred while uploading to Cloudinary', details: error.message });

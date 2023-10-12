@@ -17,7 +17,4 @@ router.post('/all',
     cloudControllers.sendFinalResponse
 ])
 
-
-
-
 export default router

@@ -9,7 +9,7 @@ async function createItem (req, res) {
       brand: item.brand,
       category: item.category,
       color: item.color,
-      itemUrl: item.itemUrl,
+      itemUrl: item.itemUrl || null,
       closet: item.closet || null,
       occasion: item.occasion || null,
       season: item.season || null,
