@@ -4,11 +4,25 @@ import { useForm } from 'react-hook-form';
 import ItemAuth from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';
+import { useState } from 'react';
+import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 
 function ItemForm() {
   const { register, handleSubmit } = useForm<Item>();
   const { item, handleItem } = ItemAuth();
   const { user } = useAuth()
+  const [file, setFile] = useState(null);
+  const [showForm, setShowForm] = useState(false)
+
+
+
+  async function handleFileChange (event: any) {
+    const selectedFile = event?.target.files[0];
+    setFile(selectedFile)
+    console.log(file)
+    setShowForm(true)
+    await uploadPhotoToCloudinary(file);
+  }
 
   const submitForm = handleSubmit(async (item: Item) => {
     console.log('user:', user);
@@ -21,10 +35,13 @@ function ItemForm() {
   return (
     <div className='ItemForm'>
       <div className="img-form-container">
-        <img className="img-form" src="#" alt="" />
+        <input className="img-form" type="file" onChange={handleFileChange} />
       </div>
+
+      {showForm &&
       <form onSubmit={submitForm} className='item-form'>
         <div className='input-container'>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <img src="#" alt="Icono" />
@@ -69,7 +86,7 @@ function ItemForm() {
           </div>
         </div>
         <button className='register-button' type="submit">Add Item</button>
-      </form>
+      </form>}
     </div>
   )
 }

@@ -17,8 +17,8 @@ async function uploadToCloudinary(req, res) {
         {
           resource_type: "image",
           use_filename: true,
-          unique_filename: false,
-          background_removal: 'cloudinary_ai', 
+          unique_filename: true,
+          // background_removal: 'cloudinary_ai', 
         },
         onDone
       ).end(req.files[0].buffer);
@@ -30,8 +30,10 @@ async function uploadToCloudinary(req, res) {
           resolve({ success: true, result });
         }
       }
-    }).then((result) => {
-      res.json(result);
+    }).then((result: any) => {
+      console.log(result.result.url)
+      res.json(result.result.url);
+
     }).catch((error) => {
       console.error('Error uploading to Cloudinary:', error);
       res.status(500).json({ error: 'An error occurred while uploading to Cloudinary', details: error.message });

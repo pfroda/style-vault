@@ -1,6 +1,6 @@
 const url = process.env.NEXT_PUBLIC_BASE_URL
 
-export const uploadPhotoToCloudinary = async (file) => {
+export const uploadPhotoToCloudinary = async (file: any) => {
   const formData = new FormData();
   formData.append('image', file);
   console.log(formData)
