@@ -9,58 +9,56 @@ async function logoDetection(req, res, next) {
     try {
         const [result] = await client.logoDetection(imageUrl);
         const cloudVisionApi = result.logoAnnotations;
+        
         if (!cloudVisionApi || cloudVisionApi.length === 0) {
-            return res.status(404).json({ message: 'No Logo detected. choose your Loho' });
-        }
-        if (req.route.path === '/all') {
+            // no logo is detected, continue to next step
+            req.logoDetails = '';
+        } else {
             req.logoDetails = cloudVisionApi[0].description;
-            return next();
         }
-        res.json(cloudVisionApi[0].description);
+
+        return next();
+
     } catch (error) {
         console.error('Error fetching logos:', error);
         res.status(500).send('Error fetching logos');
     }
 }
 
-
-async function labelDetection (req, res, next) {
+async function labelDetection(req, res, next) {
     const imageUrl = req.body.imageUrl;
 
     try {
-              const [result] = await client.labelDetection(imageUrl);
-              const label = result.labelAnnotations[0].description;
-       
-         if (req.route.path === '/all') {
-            req.labelDetails = label;
-            return next();
-        }
-            res.json(label);
-        } catch (error) {
-              console.error('Error fetching labels:', error);
-              res.status(500).send('Error fetching labels');
-            }
+        const [result] = await client.labelDetection(imageUrl);
+        const label = result.labelAnnotations[0].description;
+
+        req.labelDetails = label;
+        return next();
+        
+    } catch (error) {
+        console.error('Error fetching labels:', error);
+        res.status(500).send('Error fetching labels');
+    }
 }
 
-async function imageProperties (req, res, next) {
+async function imageProperties(req, res, next) {
     const imageUrl = req.body.imageUrl;
 
     try {
-            const [result] = await client.imageProperties(imageUrl);
-            const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
+        const [result] = await client.imageProperties(imageUrl);
+        const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
 
-            let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
-            let hex:string = "#" + rgb_arr.map(e=>e.toString(16).padStart(2, "0")).join("")
+        let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
+        let hex = "#" + rgb_arr.map(e => e.toString(16).padStart(2, "0")).join("");
 
-          if (req.route.path === '/all') {
-            req.hexColor = hex;
-            return next();
-        }
-          res.json(hex);
-        } catch (error) {
-            console.error('Error fetching labels:', error);
-            res.status(500).send('Error fetching labels');
-          }
+        req.hexColor = hex;
+
+        // Continue to the next step
+        return next();
+    } catch (error) {
+        console.error('Error fetching image properties:', error);
+        res.status(500).send('Error fetching image properties');
+    }
 }
 
 function sendFinalResponse(req, res) {
@@ -71,16 +69,9 @@ function sendFinalResponse(req, res) {
     });
 }
 
-
-
-
-
-
-
 export default {
-   logoDetection,
-   labelDetection,
-   imageProperties,
-   sendFinalResponse,
-  };
-  
+    logoDetection,
+    labelDetection,
+    imageProperties,
+    sendFinalResponse,
+};
