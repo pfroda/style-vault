@@ -17,22 +17,27 @@ function ItemForm() {
   const [itemUrl, setItemUrl] = useState('');
   const router = useRouter()
 
-  async function handleFileChange (event: any) {
+  async function handleFileChange(event: any) {
+    console.log('changing...');
     const selectedFile = event?.target.files[0];
-    setFile(selectedFile)
-    console.log(file)
-    setShowForm(true)
-    const imageUrl = await uploadPhotoToCloudinary(file);
-    setItemUrl(imageUrl)
-    console.log('testing front react', imageUrl)
+    console.log('selected file', selectedFile);
+    setFile(selectedFile);
+    setShowForm(true);
+  
+    if (selectedFile) {
+      try {
+        const imageUrl = await uploadPhotoToCloudinary(selectedFile); 
+        console.log(imageUrl);
+        setItemUrl(imageUrl);
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      }
+    }
   }
 
   const submitForm = handleSubmit(async (item: Item) => {
-    console.log('user:', user);
-    console.log('item user id:', item.userId);
     item.userId = user?.id!;
     item.itemUrl = itemUrl;
-    console.log(item)
     handleItem(item)
     router.push('/dashboard/cupboard')
   });
