@@ -1,31 +1,36 @@
-import { useEffect } from 'react';
 import { Item } from '@/app/Interfaces';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
-import { addItem } from '../services/apiItem';
-import useAuth from '@/app/hooks/useAuth';
-import {  setItem } from '@/app/GlobalRedux/Features/item/itemSlice';
+import { postItem, editItem, deleteItem } from '../services/apiItem';
+import { addItem, removeItem, updateItem } from '@/app/GlobalRedux/Features/item/itemSlice';
 
-function ItemAuth() {
-  const item = useSelector((state: RootState) => state.item.item);
-  const { user } = useAuth();
+function useItems() {
+  const item = useSelector((state: RootState) => state.item.items);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
-  const handleItem = async (item: Item) => {
-    // item.userId = user;
-    const res = await addItem(item);
+  const handlePostItem = async (item: Item) => {
+    const res = await postItem(item);
     if (res) {
-      dispatch(setItem(res));
-
+      dispatch(addItem(res));
     }
   }
 
-  return { item, handleItem };
+  const handleEditItem = async (id: string, item: Item) => {
+    const res = await editItem(id, item);
+    if (res) {
+      dispatch(updateItem(res));
+    }
+  }
+
+  const handleDeleteItem = async (id: string) => {
+    const res = await deleteItem(id);
+    if (res) {
+      dispatch(removeItem(res));
+    }
+  }
+
+  return { item, handlePostItem, handleEditItem, handleDeleteItem };
 }
 
-export default ItemAuth
+export default useItems
 

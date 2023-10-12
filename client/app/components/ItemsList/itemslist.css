@@ -1,0 +1,62 @@
+.ItemsList {
+  & h2 {
+    padding-left: 20px;
+    padding-top: 20px;
+    font-size: 20px;
+  }
+  & .items-list-header {
+    padding-top: 20px;
+    & .header-options {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      & button {
+        background-color: transparent;
+        width: 100%;
+        text-align: center;
+        padding-bottom: 3px;
+      }
+      & .closet-button {
+        border-bottom: 2px solid rgb(0, 0, 0);
+      }
+      & .outfit-button {
+        border-bottom: 2px solid rgb(168, 168, 168);
+      }
+    }
+  }
+
+  & .items-list-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: 75px;
+    width: 100%;
+    & .item {
+      display: flex;
+      flex-direction: column;
+      aspect-ratio: 1/1;
+      border-right: 1px solid rgba(98, 98, 98, 0.3);
+      border-bottom: 1px solid rgba(98, 98, 98, 0.3);
+      & .image {
+        height: 100%;
+        width: 100%;
+        background-color: rgba(177, 157, 157, 0.2);
+      }
+      & .brand {
+        display: flex;
+        align-items: center;
+        padding-left: 4px;
+        font-size: 12px;
+        height: 25px;
+        text-transform: uppercase;
+        color: darkgrey;
+      }
+      &:nth-child(3n) {
+        border-right: none;
+      }
+      &:nth-last-child(-n+3) {
+        border-bottom: none;
+      }
+    }
+  }
+}

@@ -4,11 +4,13 @@ import thunk from 'redux-thunk';
 
 import userReducer from './Features/user/authSlice';
 import itemReducer from './Features/item/itemSlice';
+import closetReducer from './Features/closet/closetSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    item: itemReducer
+    item: itemReducer,
+    closet: closetReducer
   },
   middleware: [thunk]
 })

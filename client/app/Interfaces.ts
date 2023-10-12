@@ -11,7 +11,7 @@ export type LoginUser = {
 }
 
 export type Item = {
-  id: string
+  id?: string
   userId: string
   closet?: string
   category?: string
@@ -29,4 +29,10 @@ export type Outfit = {
   name: string
   occasion: string[] //revisar
   season: string[] // revisar
+}
+
+export interface Closet {
+  id?: string
+  userId: string
+  name: string
 }
