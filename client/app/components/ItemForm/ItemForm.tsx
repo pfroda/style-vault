@@ -6,6 +6,7 @@ import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';
 import { useState } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
+import { useRouter } from 'next/navigation'; 
 
 function ItemForm() {
   const { register, handleSubmit } = useForm<Item>();
@@ -13,29 +14,34 @@ function ItemForm() {
   const { user } = useAuth()
   const [file, setFile] = useState(null);
   const [showForm, setShowForm] = useState(false)
-
-
+  const [itemUrl, setItemUrl] = useState('');
+  const router = useRouter()
 
   async function handleFileChange (event: any) {
     const selectedFile = event?.target.files[0];
     setFile(selectedFile)
     console.log(file)
     setShowForm(true)
-    await uploadPhotoToCloudinary(file);
+    const imageUrl = await uploadPhotoToCloudinary(file);
+    setItemUrl(imageUrl)
+    console.log('testing front react', imageUrl)
   }
 
   const submitForm = handleSubmit(async (item: Item) => {
     console.log('user:', user);
     console.log('item user id:', item.userId);
     item.userId = user?.id!;
+    item.itemUrl = itemUrl;
     console.log(item)
     handleItem(item)
+    router.push('/dashboard/cupboard')
   });
   
   return (
     <div className='ItemForm'>
-      <div className="img-form-container">
         <input className="img-form" type="file" onChange={handleFileChange} />
+      <div className="img-form-container">
+        <img src={itemUrl} alt="" />
       </div>
 
       {showForm &&

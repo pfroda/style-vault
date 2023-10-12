@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    & .img-form {
+    & img {
       background-color: rgb(175, 175, 223);
       width: 90%;
       height: 90%;

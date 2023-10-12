@@ -12,6 +12,7 @@ export const uploadPhotoToCloudinary = async (file: any) => {
 
     if (response.status === 200) {
       const data = await response.json();
+      console.log('api front:', data)
       return data;
     } else {
       throw new Error('Image upload failed');
