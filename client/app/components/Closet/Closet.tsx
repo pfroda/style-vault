@@ -1,4 +1,6 @@
 import './closet.css'
+import arrow from '../../../public/right-arrow.png';
+import Image from 'next/image';
 
 function Closet() {
   return (
@@ -10,7 +12,8 @@ function Closet() {
             <div className="img"></div>
             <div className="name">Natalie</div>
           </div>
-          <div className="edit-profile">Edit</div>
+          {/* <div className="edit-profile">Edit</div> */}
+          <Image className="arrow" src={arrow} alt="Right Arrow" />
         </div>
         <div className="header-options">
           <button className='closet-button'>Closet</button>
