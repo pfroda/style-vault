@@ -1,8 +1,27 @@
 import './closet.css'
 import arrow from '../../../public/right-arrow.png';
 import Image from 'next/image';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import useAuth from '@/app/hooks/useAuth';
+import UseCloset from '@/app/hooks/useCloset';
 
 function Closet() {
+  const { register, handleSubmit } = useForm();
+  const { user } = useAuth();
+  const { handlePostCloset } = UseCloset();
+
+  const [closetForm, setClosetForm] = useState(false);
+
+  const showFormCloset = () => {
+    setClosetForm(!closetForm);
+  }
+
+  const submitForm = handleSubmit(async (closet) => {
+    console.log(closet);
+    handlePostCloset(closet);
+  });
+
   return (
     <div className='Closet'>
       <div className="closet-header">
@@ -12,7 +31,6 @@ function Closet() {
             <div className="img"></div>
             <div className="name">Natalie</div>
           </div>
-          {/* <div className="edit-profile">Edit</div> */}
           <Image className="arrow" src={arrow} alt="Right Arrow" />
         </div>
         <div className="header-options">
@@ -29,14 +47,23 @@ function Closet() {
         <div className="closets-container">
             <div className="closet-name">Barcelona closet</div>
         </div>
-        <div className="closets-container">
+        {/* <div className="closets-container">
             <div className="closet-name">Honduras closet</div>
         </div>
         <div className="closets-container">
             <div className="closet-name">Add new closet</div>
-        </div>
+        </div> */}
         <div className="closets-container">
-            <div className="closet-name">Add new closet</div>
+          {closetForm ? (
+            <>
+              <form onSubmit={submitForm} className='register-form'>
+                <div onClick={showFormCloset} className="close-closet">X</div>
+                <input className='closet-input' type="text" {...register("name", { required: true })} placeholder='Closet name' />
+                <button className='closet-button' type="submit" >Add Closet</button>
+              </form>
+            </>
+          ) : ( 
+          <div onClick={showFormCloset} className="closet-name">Add new closet</div>)}
         </div>
       </div>
     </div>

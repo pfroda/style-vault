@@ -3,10 +3,12 @@ import { configureStore  } from "@reduxjs/toolkit";
 import thunk from 'redux-thunk';
 
 import userReducer from './Features/user/authSlice';
+import closetReducer from './Features/closet/closetSlice';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    closet: closetReducer
   },
   middleware: [thunk]
 })
