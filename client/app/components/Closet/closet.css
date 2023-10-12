@@ -61,7 +61,9 @@
     justify-content: space-between;
     padding-bottom: 75px;
     & .closets-container {
+      position: relative;
       flex-basis: calc(50% - 10px);
+      max-width: calc(50% - 10px);
       aspect-ratio: 1/1;
       background-color: azure;
       border: 1px solid black;
@@ -69,6 +71,39 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      & form {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        gap: 10px;
+        & .close-closet {
+          position: absolute;
+          top: 5px;
+          right: 8px;
+        }
+        & input{
+          padding-top: 2px;
+          padding-bottom: 2px;
+          /* padding-left: 8px; */
+          background-color: none;
+          border-bottom: 1.5px solid grey;
+          background-color: transparent;
+          &::placeholder {
+            text-align: center;
+            /* padding-left: 12px; */
+          }
+          &:focus {
+            outline-style: none;
+          }
+        }
+        & button {
+          border-radius: 5px;
+          padding-top: 2px;
+          padding-bottom: 2px;
+          border: .5px solid grey;
+          font-size: 14px;
+        }
+      }
       & .closet-name {
         max-width: 20vw;
         text-align: center;
