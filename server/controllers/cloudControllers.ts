@@ -24,7 +24,6 @@ async function logoDetection(req, res, next) {
 
 
 
-
 async function labelDetection (req, res, next){
     try {
               const [result] = await client.labelDetection('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
@@ -46,6 +45,7 @@ async function imageProperties (req, res, next){
     try {
             const [result] = await client.imageProperties('https://res.cloudinary.com/dizg5ajyl/image/upload/v1696960802/qz30virmoxeuvrxjwomd.png');
             const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
+
             let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
             let hex:string = "#" + rgb_arr.map(e=>e.toString(16).padStart(2, "0")).join("")
 

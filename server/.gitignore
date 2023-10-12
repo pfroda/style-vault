@@ -1,3 +1,6 @@
 .env
+<<<<<<< HEAD
 node_modules
 style-vault.json
+=======
+>>>>>>> parent of e1514619 (cloud)
