@@ -1,0 +1,81 @@
+.Closet {
+  & .closet-header {
+    & .style-vault, .profile {
+      padding-inline: 20px;
+    }
+    & .style-vault {
+      padding-top: 20px;
+      font-size: 18px;
+    }
+    & .profile {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      & .arrow {
+        height: 30px;
+        width: auto;
+      }
+      & .profile-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        & .img {
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          background-color: rgb(169, 116, 116);
+        }
+      }
+    }
+    & .header-options {
+      width: 100%;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-evenly;
+      & button {
+        background-color: transparent;
+        width: 100%;
+        text-align: center;
+        padding-bottom: 3px;
+      }
+      & .closet-button {
+        border-bottom: 2px solid rgb(0, 0, 0);
+      }
+      & .outfit-button {
+        border-bottom: 2px solid rgb(168, 168, 168);
+      }
+      & .loves-button {
+        border-bottom: 2px solid rgb(168, 168, 168);
+      }
+    }
+  }
+}
+
+.Closet {
+  & .user-closets {
+    display: flex;
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    padding-bottom: 75px;
+    & .closets-container {
+      flex-basis: calc(50% - 10px);
+      aspect-ratio: 1/1;
+      background-color: azure;
+      border: 1px solid black;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & .closet-name {
+        max-width: 20vw;
+        text-align: center;
+      }
+      &:last-child {
+        margin-right: auto;
+      }
+    }
+  }
+}
