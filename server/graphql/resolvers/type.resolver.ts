@@ -1,13 +1,21 @@
 export const itemResolver = {
-  closet: ({ closet }, _, db) => {
-    return closet.map(closetId => db.closet.find(({id}) => id === closetId));
+  closets: async (item: any) => {
+    return item.getClosets();
   },
-  category: ( { category }, _, db) => {
-    return category.map(categoryId => db.category.find(({id}) => id === categoryId));
-  },
-  occasion: ({ identifier }) => identifier.charAt(0).toUpperCase() + identifier.slice(1)
 };
 
 export const outfitResolver = {
-  occasion: (move, _, db) => db.types.find(({id}) => move.type_id === id)
+  closets: async (outfit: any) => {
+    return outfit.getClosets();
+  }
 };
+
+export const closetResolver = {
+  items: async (closet: any) => {
+    return closet.getItems();
+  },
+  outfits: async (closet: any) => {
+    return closet.getOutfits();
+  }
+};
+

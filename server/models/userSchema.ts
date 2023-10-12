@@ -2,6 +2,7 @@ import { Attribute, PrimaryKey, NotNull, HasMany, Default } from '@sequelize/cor
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
 import { Item } from './itemSchema';
 import { Outfit } from './outfitSchema';
+import { Closet } from './closetSchema';
 
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   @Attribute(DataTypes.UUID)
@@ -35,4 +36,8 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
 
   @HasMany(() => Outfit, 'userId')
   declare outfits?: NonAttribute<Outfit[]>;
+
+  @HasMany(() => Closet, 'userId')
+  declare closets?: NonAttribute<Closet[]>;
 }
+

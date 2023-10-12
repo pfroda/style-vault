@@ -9,8 +9,8 @@ async function createItem (req, res) {
       brand: item.brand,
       category: item.category,
       color: item.color,
-      itemUrl: item.itemUrl || null,
-      closet: item.closet || null,
+      itemUrl: item.itemUrl,
+      closets: item.closets || null,
       occasion: item.occasion || null,
       season: item.season || null,
     });
