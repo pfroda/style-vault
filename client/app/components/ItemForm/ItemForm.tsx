@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 import { useRouter } from 'next/navigation'; 
 import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
+import rgbToColor from '@/app/utils/rgbToColor';
 
 function ItemForm() {
   const { register, handleSubmit } = useForm<Item>();
@@ -99,7 +100,7 @@ function ItemForm() {
               <img src="#" alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={imageInfo?.hexColor || ' '}  />
+            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor(imageInfo?.hexColor || ' ')}  />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
