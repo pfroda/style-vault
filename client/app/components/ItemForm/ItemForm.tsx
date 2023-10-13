@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 import { useRouter } from 'next/navigation'; 
 import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
@@ -22,18 +22,24 @@ import { it } from 'node:test';
 function ItemForm() {
   const { register, handleSubmit, reset } = useForm<Item>();
   const { item, handlePostItem } = useItems();
-  const { user } = useAuth()
+  const { user } = useAuth();
   const [file, setFile] = useState(null);
-  const [showForm, setShowForm] = useState(false)
+  const [showForm, setShowForm] = useState(false);
   const [itemUrl, setItemUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [photoIsLoading, setPhotoIsLoading] = useState(false);
   const router = useRouter();
 
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
 
+  useEffect(() => {
+    if (itemUrl) {
+      setPhotoIsLoading(false);
+    }
+  }, [itemUrl]); 
+
   async function handleFileChange(event: any) {
-    setIsLoading(true);
+    setPhotoIsLoading(true);
     const selectedFile = event?.target.files[0];
     setFile(selectedFile);
     setShowForm(true);
@@ -53,7 +59,7 @@ function ItemForm() {
       } catch (error) {
         console.error('Error uploading image:', error);
       } finally {
-        setIsLoading(false);
+        setPhotoIsLoading(false);
       }
     }
   }
@@ -71,7 +77,7 @@ function ItemForm() {
     <div className='ItemForm'>
       <div className="img-form-container">
         {itemUrl && <img src={itemUrl} alt="" />}
-        {isLoading && <div className='spinner'></div>}
+        {photoIsLoading && <div className='spinner'></div>}
       </div>
       <div className="custom-file-input">
         <input className="img-form" type="file" onChange={handleFileChange} />
