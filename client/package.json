@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0-rc.2",
-    "@apollo/experimental-nextjs-app-support": "^0.4.3",
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.5.1",
     "cloudinary": "^1.41.0",
