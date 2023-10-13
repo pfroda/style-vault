@@ -5,7 +5,7 @@ import { postCloset, editCloset, deleteCloset } from '../services/apiCloset';
 import { addCloset, removeCloset, updateCloset } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
 function useCloset() {
-  const user = useSelector((state: RootState) => state.closet.closets);
+  const closet = useSelector((state: RootState) => state.closet.closets);
   const dispatch = useDispatch();
 
   const handlePostCloset = async (closet: Closet) => {
@@ -29,7 +29,7 @@ function useCloset() {
     }
   }
 
-  return { user, handlePostCloset, handleEditCloset, handleDeleteCloset };
+  return { closet, handlePostCloset, handleEditCloset, handleDeleteCloset };
 }
 
 export default useCloset

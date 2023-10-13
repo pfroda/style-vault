@@ -25,7 +25,7 @@ function Footer() {
 
   const togglePopup = (event) => {
     event.preventDefault();
-    console.log('cliced')
+    console.log('clicked')
     setPopupVisible(!isPopupVisible);
   };
 

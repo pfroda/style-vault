@@ -19,8 +19,8 @@ function Closet() {
   }
 
   const submitForm = handleSubmit(async (closet) => {
-    console.log(closet);
     closet.userId = user?.id!;
+    console.log(closet);
     handlePostCloset(closet);
   });
 

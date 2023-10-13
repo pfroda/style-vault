@@ -22,6 +22,7 @@ import cookieParser from 'cookie-parser';
 
 import itemRouter from './routes/itemRoutes';
 import outfitRouter from './routes/outfitRoutes';
+import closetRouter from './routes/closetRoutes';
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use(cloudinaryRouter);
 
 app.use(itemRouter);
 app.use(outfitRouter);
+app.use(closetRouter);
 
 app.use(express.urlencoded({ extended: true }));
 

@@ -59,6 +59,6 @@ export interface Closet {
   id: string;
   userId: string;
   name: string;
-  items: Item[];
-  outfits: Outfit[];
+  items?: Item[];
+  outfits?: Outfit[];
 }
