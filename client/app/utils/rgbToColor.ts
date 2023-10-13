@@ -1,4 +1,9 @@
 export default function rgbToColor(rgb) {
+
+  if (!rgb || rgb.length !== 3) {
+    return ' ';
+  }
+  
   const colors = {
     White: [255, 255, 255],
     Silver: [192, 192, 192],
