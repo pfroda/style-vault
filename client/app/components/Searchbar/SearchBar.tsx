@@ -1,6 +1,6 @@
 import './searchbar.css';
 import { useState } from "react";
-import searchbar from './searchbar.png';
+import searchbar from './search-icon.svg';
 import Image from 'next/image';
 
 function SearchBar() {
