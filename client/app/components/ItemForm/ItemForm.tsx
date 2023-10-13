@@ -119,7 +119,7 @@ function ItemForm() {
               <Image src={colorImg} alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={imageInfo?.hexColor || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
+            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
             </div>
           <div className='input-wrapper'>
             <div className='label-container'>

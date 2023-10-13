@@ -1,0 +1,15 @@
+.items-list-container {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 65px;
+  width: 100%;
+}
+
+.items-list-container .item:nth-child(3n) {
+  border-right: none;
+}
+
+.items-list-container .item:nth-last-child(-n+3) {
+  border-bottom: none;
+}
