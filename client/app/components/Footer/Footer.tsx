@@ -49,11 +49,12 @@ function Footer() {
   ];
 
   return (
-    <>
+    <div className='footer-wrapper'>
+      <div className="Footer">
       <div className={`popup-container ${isPopupVisible ? 'popup-active' : ''}`}>
         <AddPopup isPopupVisible={isPopupVisible} />
       </div>
-      <div className="Footer">
+      <div className="footer-links">
         {links.map((link, index) => (
           <Link href={link.href} key={index} className="footer-container">
             <Image
@@ -65,7 +66,8 @@ function Footer() {
           </Link>
         ))}
       </div>
-    </>
+      </div>
+    </div>
   )
 }
 
