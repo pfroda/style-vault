@@ -7,11 +7,16 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
+import { useDispatch, useSelector } from 'react-redux';
+import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
 function Closet() {
-  const [closets, setClosets] = useState<ClosetInterface[]>([]);
-  const { register, handleSubmit } = useForm();
+  // const [closets, setClosets] = useState<ClosetInterface[]>([]);
+  const { register, handleSubmit, reset } = useForm();
   const { user } = useAuth();
+
+  const dispatch = useDispatch();
+  const closets = useSelector(state => state.closet.closets);
   
   const { handlePostCloset } = useCloset();
   const [closetForm, setClosetForm] = useState(false);
@@ -23,22 +28,34 @@ function Closet() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const  res = await queryClosets(user?.id!);
-        console.log(res)
-        console.log('lo que queremos:', res.data?.getClosets)
-        setClosets(res.data?.getClosets || []);
+        const res = await queryClosets(user?.id!);
+        console.log('lo que queremos:', res.data?.getClosets);
+        dispatch(setClosetState(res.data?.getClosets || []));
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
-    
     fetchItems();
-  }, [user?.id]); 
+  }, [user?.id, dispatch]); 
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     try {
+  //       const  res = await queryClosets(user?.id!);
+  //       console.log('lo que queremos:', res.data?.getClosets)
+  //       setClosets(res.data?.getClosets || []);
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   };
+  //   fetchItems();
+  // }, [user?.id]);  
 
   const submitForm = handleSubmit(async (closet) => {
     closet.userId = user?.id!;
     console.log(closet);
     handlePostCloset(closet);
+    setClosetForm(false);
+    reset();
   });
 
   return (
@@ -63,13 +80,10 @@ function Closet() {
         <div className="closets-container">
             <div className="closet-name">All Clothes</div>
         </div>
-        <div className="closets-container">
-            <div className="closet-name">Barcelona closet</div>
-        </div>
-        
+
         {closets.map((closet) => (
-          <div className="closets-container">
-              <div key={closet.id} className="closet-name">
+          <div key={closet.id} className="closets-container">
+              <div className="closet-name">
                 {closet.name}
               </div>
           </div>
