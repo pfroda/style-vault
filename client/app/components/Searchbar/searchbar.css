@@ -1,0 +1,33 @@
+.Searchbar {
+    display: inline-block;
+}
+
+.searchbar-input {
+    display: inline-block;
+    position: relative;
+    background-color: rgb(250, 245, 245);
+    color: rgb(143, 138, 138);
+    border-radius: 7px;
+    width: 350px;
+    height: 40px;
+    padding: 10px 0px 10px 35px;
+    margin: 20px 0px 0px 15px;
+    text-align: left;
+}
+
+.searchbar-input::placeholder {
+    padding-left: 10px;
+}
+
+.searchbar-input:focus {
+    outline-style: none;
+}
+
+.searchbar-icon {
+    z-index: 99;
+    position: absolute;
+    margin-left: 25px;
+    margin-top: 30px;
+    width: 20px;
+    height: 20px;
+}

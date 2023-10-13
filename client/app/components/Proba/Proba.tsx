@@ -1,11 +1,13 @@
 import ItemContainer from '../Lists/ItemContainer/ItemContainer';
 import ItemHeader from '../Lists/ItemHeader/ItemHeader';
 import Footer from '../Footer/Footer';
+import SearchBar from '../Searchbar/SearchBar';
+import Filters from '../Filters/Filters';
 
 function Proba() {
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
 
-  const itemCount = 25;
+  const itemCount = 7;
 
   const items = Array.from({ length: itemCount }, (_, index) => ({
     id: index + 1,
@@ -18,6 +20,8 @@ function Proba() {
   return (
     <>
       <ItemHeader closetName={honduras} />
+      <SearchBar/>
+      <Filters/>
       <ItemContainer items={items} />
       <Footer />
     </>
