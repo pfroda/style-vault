@@ -25,6 +25,7 @@ function Home() {
     <div>
       <p>Home</p>
       <Link href="/dashboard/userprofile">Profile</Link>
+      <Link href="/dashboard/grid">Grid</Link>
     </div>
   )
 }

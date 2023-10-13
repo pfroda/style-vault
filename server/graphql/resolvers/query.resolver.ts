@@ -9,31 +9,45 @@ interface FilterConditions {
   season?: string[];
   location?: string;
   category?: string;
+  userId: string;
 }
 
 export const queryResolver = {
-  getItems: (_, { color, occasion, season, location, category }: FilterConditions) => {
+  getItems: async (_, { userId, color, occasion, season, location, category }: FilterConditions) => {
+    console.log('hello')
     const filter: Record<string, any> = {};
     
+    if (userId) filter.userId = userId;
     if (color) filter.color = { [Op.contains]: occasion };
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
     if (location) filter.location = location;
     if (category) filter.category = category;
-    
+    const items = await Item.findAll({ where: filter });
+    console.log(items)
     return Item.findAll({ where: filter });
   },
 
-  getOutfits: (_, { occasion, season }: FilterConditions) => {
+  
+
+  getOutfits: (_, { userId, occasion, season }: FilterConditions) => {
     const filter: Record<string, any> = {};
-    
+
+    if (userId) filter.userId = userId;
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
     
     return Outfit.findAll({ where: filter as any });
   },
 
-  getClosets: (_) => Closet.findAll(),
+  getClosets: (_, {userId}: FilterConditions) => {
+    const filter: Record<string, any> = {};
+
+    if (userId) filter.userId = userId;
+
+    return Closet.findAll({ where: filter as any });
+
+  },
 
   getItemById: (_, { id }) => Item.findByPk(id),
 

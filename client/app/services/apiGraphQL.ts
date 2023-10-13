@@ -1,6 +1,6 @@
 import { Item, Outfit, Closet  } from "../Interfaces"
 
-const GRAPHQL_URL = "http://your_graphql_server_url/graphql";
+const GRAPHQL_URL = "http://localhost:3001/graphql";
 
 interface GraphQLResponse<T = any> {
   data?: T;
@@ -15,10 +15,10 @@ const fetchGraphQL = <T = any>(query: string, variables?: Record<string, any>): 
   }).then((res) => res.json());
 };
 
-export const queryItems = (): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+export const queryItems = (userId: string): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
   const query = `
-    query {
-      getItems {
+    query Query($userId: String!){
+      getItems(userId: $userId) {
         id
         itemUrl
         category
@@ -29,7 +29,7 @@ export const queryItems = (): Promise<GraphQLResponse<{ getItems: Item[] }>> => 
       }
     }
   `;
-  return fetchGraphQL(query);
+  return fetchGraphQL(query, { userId });
 };
 
 export const queryItemById = (id: number): Promise<GraphQLResponse<{ getItemById: Item }>> => {
@@ -49,10 +49,10 @@ export const queryItemById = (id: number): Promise<GraphQLResponse<{ getItemById
   return fetchGraphQL(query, { id });
 };
 
-export const queryOutfits = (): Promise<GraphQLResponse<{ getOutfits: Outfit[] }>> => {
+export const queryOutfits = (userId: string): Promise<GraphQLResponse<{ getOutfits: Outfit[] }>> => {
   const query = `
-    query {
-      getOutfits {
+    query Query($userId: String!) {
+      getOutfits($userId: String!) {
         id
         name
         occasion
@@ -60,7 +60,7 @@ export const queryOutfits = (): Promise<GraphQLResponse<{ getOutfits: Outfit[] }
       }
     }
   `;
-  return fetchGraphQL(query);
+  return fetchGraphQL(query, {userId});
 };
 
 export const queryOutfitById = (id: number): Promise<GraphQLResponse<{ getOutfitById: Outfit }>> => {
@@ -77,10 +77,10 @@ export const queryOutfitById = (id: number): Promise<GraphQLResponse<{ getOutfit
   return fetchGraphQL(query, { id });
 };
 
-export const queryClosets = (): Promise<GraphQLResponse<{ getClosets: Closet[] }>> => {
+export const queryClosets = (userId: string): Promise<GraphQLResponse<{ getClosets: Closet[] }>> => {
   const query = `
-    query {
-      getClosets {
+    query Query($userId: String!) {
+      getClosets(userId: $userId) {
         id
         name
         userId

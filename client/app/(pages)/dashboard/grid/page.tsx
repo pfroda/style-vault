@@ -1,9 +1,9 @@
 'use client'
-import Proba from "@/app/components/Proba/Proba";
+import Grid from "@/app/components/Lists/Grid/Grid";
 
 function index() {
   return (
-    <Proba />
+    <Grid />
   )
 }
 
