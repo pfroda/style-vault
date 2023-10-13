@@ -17,9 +17,10 @@ import { useRouter } from 'next/navigation';
 import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
+import { it } from 'node:test';
 
 function ItemForm() {
-  const { register, handleSubmit } = useForm<Item>();
+  const { register, handleSubmit, reset } = useForm<Item>();
   const { item, handlePostItem } = useItems();
   const { user } = useAuth()
   const [file, setFile] = useState(null);
@@ -32,46 +33,43 @@ function ItemForm() {
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
 
   async function handleFileChange(event: any) {
-    setIsLoading(true)
-    console.log('changing...');
+    setIsLoading(true);
     const selectedFile = event?.target.files[0];
-    console.log('selected file', selectedFile);
     setFile(selectedFile);
     setShowForm(true);
   
     if (selectedFile) {
-
       try {
         const imageUrl = await uploadPhotoToCloudinary(selectedFile); 
         setItemUrl(imageUrl);
-
-        // general info
+          
         const info = await fetchInfoFromImage(imageUrl);
-        // console.log('imageInfo:', info)
-        setImageInfo(info);
-        console.log('setting image info:', imageInfo)
-
+        reset()
+        setImageInfo(prevState => ({
+          ...prevState, 
+          ...info
+        }));
+        
       } catch (error) {
         console.error('Error uploading image:', error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
   }
 
   const submitForm = handleSubmit(async (item: Item) => {
-    // trigger();
     item.userId = user?.id!;
     item.itemUrl = itemUrl;
-    console.log('clicked', item);
     handlePostItem(item);
-    router.push('/dashboard/cupboard')
+    router.push('/dashboard/cupboard');
   });
+
+
   
   return (
     <div className='ItemForm'>
       <div className="img-form-container">
-        {/* <img src={itemUrl} alt="" /> */}
         {itemUrl && <img src={itemUrl} alt="" />}
         {isLoading && <div className='spinner'></div>}
       </div>
@@ -83,13 +81,23 @@ function ItemForm() {
       {showForm &&
       <form onSubmit={submitForm} className='item-form'>
         <div className='input-container'>
+          
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={categoriesImg} alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input id="category" className='item-input' type="text" {...register("category", { required: true })} placeholder={imageInfo?.labels} value={imageInfo?.labels || ' '} />
+            <input 
+          id="category" 
+          className='item-input' 
+          type="text" 
+          {...register("category", { required: true })} 
+          placeholder={imageInfo?.labels} 
+          value={imageInfo?.labels || ''} 
+          onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}
+        />
           </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={seasonImg} alt="Icono" />
@@ -97,6 +105,7 @@ function ItemForm() {
             </div>
             <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
           </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={occasionImg} alt="Icono" />
@@ -104,20 +113,22 @@ function ItemForm() {
             </div>
             <input id="occasion" className='item-input' type="text" {...register("occasion", { required: true })} placeholder='Occasion' />
           </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={colorImg} alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor(imageInfo?.hexColor || ' ')}  />
-          </div>
+            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={imageInfo?.hexColor || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
+            </div>
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={brandImg} alt="Icono" />
               <label htmlFor="brand">Brand</label>
             </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ' '}/>
+            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
           </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={locationImg} alt="Icono" />
@@ -125,11 +136,13 @@ function ItemForm() {
             </div>
             <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
           </div>
+
         </div>
         <button className='register-button' type="submit">Add Item</button>
       </form>}
     </div>
-  )
-}
+  
+)
+      }
 
 export default ItemForm
