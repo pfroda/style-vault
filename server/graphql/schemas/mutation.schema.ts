@@ -1,5 +1,5 @@
-export const mutations = `#graphql
-  type Mutation {
-    # toggleWishListItem(id: String!): ToggleResponse!
-  }
-`;
+// export const mutations = `#graphql
+//   type Mutation {
+//     # toggleWishListItem(id: String!): ToggleResponse!
+//   }
+// `;

@@ -49,9 +49,10 @@ async function imageProperties(req, res, next) {
         const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
 
         let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
-        let hex = "#" + rgb_arr.map(e => e.toString(16).padStart(2, "0")).join("");
+        // let hex = "#" + rgb_arr.map(e => e.toString(16).padStart(2, "0")).join("");
 
-        req.hexColor = hex;
+        // req.hexColor = hex;
+        req.hexColor = rgb_arr;
 
         // Continue to the next step
         return next();

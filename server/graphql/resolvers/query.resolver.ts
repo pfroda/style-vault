@@ -1,8 +1,22 @@
+import { Item } from "../../models/itemSchema";
+import { Outfit } from "../../models/outfitSchema";
+import { Closet } from "../../models/closetSchema";
+
 export const queryResolver = {
-  getItems: (_, __, { types }) => types,
-  getOutfits: (_, __, { types }) => types,
-  getItemById: (_, { id }, { item }) => item.find(i => i.id == id),
-  getOutfitById: (_, { id }, { outfit }) => outfit.find(out => out.id == id),
-  // getItemByType: (_, { id }, { item }) => item.filter(i => i.types.includes(id)),
-  getWishList: async (_, __, { getWishlist }) => JSON.stringify(await getWishlist())
+  getItems: (_) => Item.findAll(),
+  getOutfits: (_) => Outfit.findAll(),
+  getClosets: (_) => Closet.findAll(),
+  getItemById: (_, { id }) => Item.findByPk(id),
+  getOutfitById: (_, { id }) => Outfit.findByPk(id),
+  getClosetById: (_, { id }) => Item.findByPk(id),
+  getItemsByCloset: async (_, { closetId }) => {
+    const closet = await Closet.findByPk(closetId);
+    if (!closet) throw new Error('Closet not found');
+    return closet.getItems();
+  },
+  getOutfitsByCloset: async (_, { closetId }) => {
+    const closet = await Closet.findByPk(closetId);
+    if (!closet) throw new Error('Closet not found');
+    return closet.getOutfits();
+  } 
 };

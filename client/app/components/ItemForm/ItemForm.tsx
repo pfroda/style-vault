@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 import { useRouter } from 'next/navigation'; 
 import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
+import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 
 function ItemForm() {
@@ -87,7 +88,7 @@ function ItemForm() {
               <Image src={categoriesImg} alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input id="categories" className='item-input' type="text" {...register("category", { required: true })} placeholder={imageInfo?.labels} value={imageInfo?.labels || ' '} />
+            <input id="category" className='item-input' type="text" {...register("category", { required: true })} placeholder={imageInfo?.labels} value={imageInfo?.labels || ' '} />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
@@ -108,14 +109,14 @@ function ItemForm() {
               <Image src={colorImg} alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder={imageInfo?.hexColor} value={imageInfo?.hexColor || ' '} />
+            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor(imageInfo?.hexColor || ' ')}  />
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={brandImg} alt="Icono" />
               <label htmlFor="brand">Brand</label>
             </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder={imageInfo?.logos} value={imageInfo?.logos || ' '}/>
+            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ' '}/>
           </div>
           <div className='input-wrapper'>
             <div className='label-container'>

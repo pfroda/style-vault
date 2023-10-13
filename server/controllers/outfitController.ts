@@ -8,6 +8,7 @@ async function createOutfit (req, res) {
     const newOutfit = await Outfit.create({
       userId: outfit.userId,
       name: outfit.name,
+      closets: outfit.closets || null,
       occasion: outfit.occasion,
       season: outfit.season
     });
