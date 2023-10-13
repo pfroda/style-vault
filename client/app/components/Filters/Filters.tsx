@@ -1,31 +1,76 @@
 import './filters.css';
+import useAuth from '@/app/hooks/useAuth';
+// import { Item } from '../../Interfaces';
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
+import { queryItemsByCategory } from '@/app/services/apiGraphQL';
+
 
 function Filters() {
+  const selectedFilter = useSelector((state) => state.filter.category);
+  const dispatch = useDispatch();
+
   const [selectedCategory, setSelectedCategory] = useState('All');
-  
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
+
+  // categories
+  const categories = [
+  'All',
+  'Pants',
+  'Tops',
+  'Shirts',
+  'Shoes',
+  'Boots',
+  'Bags',
+  'Accessories',
+  'Sandals',
+  'Sneakers',
+  'Heels',
+  'Outwear',
+  'Dresses',
+  'Shorts',
+  'One-Piece'
+];
+
+
   useEffect(() => {
-    console.log(selectedCategory)
-  }, [selectedCategory])
+    const fetchItemsbyCategory = async () => {
+      try {
+        const res = await queryItemsByCategory(user?.id!, selectedCategory)
+        console.log(res);
+
+      } catch (error) {
+        setError('network error')
+      }
+    };
+  
+    console.log(selectedCategory);
+    console.log('selected filter:', selectedFilter)
+    fetchItemsbyCategory();
+
+  }, [user?.id, selectedCategory])
 
 
   function handleFilterClick(event:any) {
     const category = event.target.textContent;
-    setSelectedCategory(category);
-  
-    // here we call the queries of the selected category
+    // setSelectedCategory(category);
+    dispatch(setSelectedFilter(category))
   }
 
   return (
     <div className='Filter'>
         <div className="filters">
-            {/* this should be a map of all the user categories */}
-            <h4 onClick={handleFilterClick} className={selectedCategory === 'All' ? 'selected' : ''}>All</h4>
-            <h4 onClick={handleFilterClick}>Trousers</h4>
-            <h4 onClick={handleFilterClick}>Shirts</h4>
-            <h4 onClick={handleFilterClick}>Shoes</h4>
-            <h4 onClick={handleFilterClick}>Pants</h4>
-            <h4 onClick={handleFilterClick}>Sockets</h4>
+            <ul>
+            {categories.map((category) => (
+              <li key={category}>
+                <h4 onClick={handleFilterClick} className={selectedCategory === 'All' ? 'selected' : ''}>
+                {category}
+                </h4>
+              </li>
+            ))}
+              </ul>
         </div>
     </div>
   )

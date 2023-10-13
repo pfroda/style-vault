@@ -6,13 +6,15 @@ import userReducer from './Features/user/authSlice';
 import itemReducer from './Features/item/itemSlice';
 import closetReducer from './Features/closet/closetSlice';
 import outfitReducer from './Features/outfit/outfitSlice';
+import filterReducer from './Features/filter/filterSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     item: itemReducer,
     closet: closetReducer,
-    outfit: outfitReducer
+    outfit: outfitReducer,
+    filter: filterReducer
   },
   middleware: [thunk]
 })

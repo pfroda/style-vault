@@ -49,28 +49,54 @@ export const queryResolver = {
 
   },
 
-  getItemById: (_, { id }) => Item.findByPk(id),
-
-  getOutfitById: (_, { id }) => Outfit.findByPk(id),
-
-  getClosetById: (_, { id }) => Item.findByPk(id),
-
-  getItemsByCategory: async (_, { category }) => {
-    const items = await Item.findAll({ where: { category } });
-    if (!items.length) throw new Error('No items found for this category');
-    return items; 
+  getItemById: async (_, { userId, id }) => {
+    const item = await Item.findByPk(id);
+    if (!item) throw new Error('Item not found');
+    
+    if (item.userId !== userId) throw new Error('Not authorized to view this item');
+    
+    return item;
   },
 
-  getItemsByCloset: async (_, { closetId }) => {
-    const closet = await Closet.findByPk(closetId);
+  getOutfitById: async (_, { userId, id }) => {
+    const outfit = await Outfit.findByPk(id);
+    if (!outfit) throw new Error('Item not found');
+    
+    if (outfit.userId !== userId) throw new Error('Not authorized to view this item');
+    
+    return outfit;
+  },
+
+  getClosetById: async (_, { userId, id}) => {
+    const closet = await Closet.findByPk(id);
+    if (!closet) throw new Error('Item not found');
+    
+    if (closet.userId !== userId) throw new Error('Not authorized to view this item');
+    
+    return closet;
+  },
+
+
+  getItemsByCategory: async (_, { userId, category }) => {
+    const items = await Item.findAll({ 
+      where: { 
+        userId, 
+        category 
+      } 
+    });
+    if (!items.length) throw new Error('No items found for this category');
+    return items;
+  },
+
+  getItemsByCloset: async (_, { id }) => {
+    const closet = await Closet.findByPk(id);
     if (!closet) throw new Error('Closet not found');
     return closet.getItems();
   },
 
-  getOutfitsByCloset: async (_, { closetId }) => {
-    const closet = await Closet.findByPk(closetId);
+  getOutfitsByCloset: async (_, { id }) => {
+    const closet = await Closet.findByPk(id);
     if (!closet) throw new Error('Closet not found');
     return closet.getOutfits();
   } 
 };
-
