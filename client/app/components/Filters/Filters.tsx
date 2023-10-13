@@ -12,7 +12,6 @@ function Filters() {
   const dispatch = useDispatch();
 
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
   // categories
@@ -42,7 +41,7 @@ function Filters() {
         console.log(res);
 
       } catch (error) {
-        setError('network error')
+        console.log(error)
       }
     };
   
