@@ -2,6 +2,7 @@ import './closet.css'
 import arrow from '../../../public/right-arrow.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
+import Link from 'next/link';
 import { queryClosets } from '@/app/services/apiGraphQL';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -78,7 +79,8 @@ function Closet() {
 
       <div className="user-closets">
         <div className="closets-container">
-            <div className="closet-name">All Clothes</div>
+          <Link className="closet-name" href="/dashboard/grid">All Clothes</Link>
+            {/* <div className="closet-name">All Clothes</div> */}
         </div>
 
         {closets.map((closet) => (
