@@ -20,15 +20,12 @@ function Grid() {
     const fetchItems = async () => {
       try {
         const  res = await queryItems(user?.id!);
-
         console.log('lo que queremos:', res.data?.getItems)
         setItems(res.data?.getItems || []);
-
       } catch (error) {
         setError('Network error.');
       }
     };
-    
     fetchItems();
   }, [user?.id]); 
 
@@ -53,6 +50,15 @@ export default Grid;
 
 
 
+  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+
+  // const itemCount = 7;
+
+  // const items = Array.from({ length: itemCount }, (_, index) => ({
+  //   id: index + 1,
+  //   url: myUrl,
+  //   brand: `Marca ${index + 1}`,
+  // }));
 
 
 // const items = [

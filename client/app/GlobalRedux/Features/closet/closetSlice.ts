@@ -26,9 +26,12 @@ export const closetSlice = createSlice({
         state.closets[index] = action.payload;
       }
     },
+    setClosetState: (state, action) => {
+      state.closets = action.payload;
+    },
   }
 })
 
-export const { addCloset, removeCloset, updateCloset } = closetSlice.actions;
+export const { addCloset, removeCloset, updateCloset, setClosetState } = closetSlice.actions;
 
 export default closetSlice.reducer;
