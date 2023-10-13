@@ -49,19 +49,23 @@ function Footer() {
   ];
 
   return (
-    <div className="Footer">
-      {isPopupVisible && <AddPopup />}
-      {links.map((link, index) => (
-        <Link href={link.href} key={index} className="footer-container">
-          <Image
-            className={`footer-img ${link.href === currentPage ? 'active' : ''}`}
-            src={link.imgSrc}
-            alt={link.text}
-            onClick={link.onClick}
-          />
-        </Link>
-      ))}
-    </div>
+    <>
+      <div className={`popup-container ${isPopupVisible ? 'popup-active' : ''}`}>
+        <AddPopup isPopupVisible={isPopupVisible} />
+      </div>
+      <div className="Footer">
+        {links.map((link, index) => (
+          <Link href={link.href} key={index} className="footer-container">
+            <Image
+              className={`footer-img ${link.href === currentPage ? 'active' : ''}`}
+              src={link.imgSrc}
+              alt={link.text}
+              onClick={link.onClick}
+            />
+          </Link>
+        ))}
+      </div>
+    </>
   )
 }
 

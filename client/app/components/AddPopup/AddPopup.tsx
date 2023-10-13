@@ -1,7 +1,7 @@
 import './addpopup.css';
 import { useRouter } from 'next/navigation'; 
 
-function AddPopup() {
+function AddPopup({ isPopupVisible }) {
   const router = useRouter();
 
   const handleClick = () => {
@@ -9,7 +9,7 @@ function AddPopup() {
   }
 
   return (
-    <div className='add-container'>
+    <div className={`add-container ${isPopupVisible ? 'popup-active' : ''}`}>
       <button>Add Outfit</button>
       <button onClick={handleClick}>Add Item</button>
     </div>
