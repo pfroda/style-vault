@@ -1,0 +1,24 @@
+/* item.css */
+.item {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1/1;
+  border-right: 1px solid rgba(98, 98, 98, 0.3);
+  border-bottom: 1px solid rgba(98, 98, 98, 0.3);
+}
+
+.item .image {
+  min-height: 120px;
+  width: 100%;
+  background-color: rgba(177, 157, 157, 0.2);
+}
+
+.item .brand {
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  font-size: 12px;
+  height: 25px;
+  text-transform: uppercase;
+  color: darkgrey;
+}
