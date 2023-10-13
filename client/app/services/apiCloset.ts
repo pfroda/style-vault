@@ -13,6 +13,7 @@ export async function postCloset (closet: Closet) {
       },
       body: JSON.stringify(closet),
     })
+    console.log(response);
     const data = await response.json();
     console.log(data);
     return data;
