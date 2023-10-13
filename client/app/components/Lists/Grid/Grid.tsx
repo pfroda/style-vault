@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 function Grid() {
   const selectedFilter = useSelector((state) => state.filter.category);
   const [items, setItems] = useState<Item[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -23,24 +22,31 @@ function Grid() {
         console.log('lo que queremos:', res.data?.getItems)
         setItems(res.data?.getItems || []);
       } catch (error) {
-        setError('Network error.');
+        console.log(error);
       }
     };
     fetchItems();
   }, [user?.id]); 
 
-  const honduras = 'Puta espanya!'
+  const honduras = 'Puta espanya!';
+  const filteredItems = selectedFilter === 'All'
+    ? items.map((item) => ({
+      url: item.itemUrl,
+      brand: item.brand
+    }))
+    : items
+      .filter(item => item.category === selectedFilter)
+      .map((item) => ({
+        url: item.itemUrl,
+        brand: item.brand
+      }))
 
   return (
     <>
       <ItemHeader closetName={honduras} />
       <SearchBar/>
       <Filters/>
-      <ItemContainer items={
-         items.filter(item => item.category === selectedFilter).map((item) => ({
-          url: item.itemUrl,
-          brand: item.brand,
-        }))} />
+      <ItemContainer items={filteredItems} />
       <Footer />
     </>
   );
