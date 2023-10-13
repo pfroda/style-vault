@@ -7,8 +7,11 @@ import { queryItems } from '@/app/services/apiGraphQL';
 import { Item } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
+import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
+import { useSelector } from 'react-redux';
 
 function Grid() {
+  const selectedFilter = useSelector((state) => state.filter.category);
   const [items, setItems] = useState<Item[]>([]);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
@@ -17,12 +20,7 @@ function Grid() {
     const fetchItems = async () => {
       try {
         const  res = await queryItems(user?.id!);
-        // if (errors) {
-        //   setError('Error fetching items.');
-        //   return;
-        // }
-        // setItems(data?.getItems || []);
-        console.log(res)
+
         console.log('lo que queremos:', res.data?.getItems)
         setItems(res.data?.getItems || []);
 
@@ -34,17 +32,6 @@ function Grid() {
     fetchItems();
   }, [user?.id]); 
 
-
-  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
-
-  // const itemCount = 7;
-
-  // const items = Array.from({ length: itemCount }, (_, index) => ({
-  //   id: index + 1,
-  //   url: myUrl,
-  //   brand: `Marca ${index + 1}`,
-  // }));
-
   const honduras = 'Puta espanya!'
 
   return (
@@ -53,7 +40,7 @@ function Grid() {
       <SearchBar/>
       <Filters/>
       <ItemContainer items={
-         items.map((item) => ({
+         items.filter(item => item.category === selectedFilter).map((item) => ({
           url: item.itemUrl,
           brand: item.brand,
         }))} />

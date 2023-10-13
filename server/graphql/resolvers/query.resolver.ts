@@ -100,4 +100,3 @@ export const queryResolver = {
     return closet.getOutfits();
   } 
 };
-

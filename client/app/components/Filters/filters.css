@@ -1,4 +1,5 @@
 .Filter {
+    width: 100%;
     padding: 30px;
     overflow-x: auto;
 }
@@ -8,16 +9,26 @@
   }
 
 .filters {
+  padding-right: 50px;
+}
+
+.filters ul {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    gap: 30px;
+    gap: 20px;
     color: grey;
+    white-space: nowrap;
+
 }
 
-h4:hover, h4.selected {
+li:hover, li.selected {
     color: black;
     filter: brightness(1.2);
     border-bottom: 1px solid black;
+  }
+
+  .filters h4 {
+    width: fit-content;
   }
