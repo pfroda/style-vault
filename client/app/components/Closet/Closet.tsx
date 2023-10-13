@@ -2,21 +2,38 @@ import './closet.css'
 import arrow from '../../../public/right-arrow.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
-import { useState } from 'react';
+import { queryClosets } from '@/app/services/apiGraphQL';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
 
 function Closet() {
+  const [closets, setClosets] = useState<ClosetInterface[]>([]);
   const { register, handleSubmit } = useForm();
   const { user } = useAuth();
+  
   const { handlePostCloset } = useCloset();
-
   const [closetForm, setClosetForm] = useState(false);
 
   const showFormCloset = () => {
     setClosetForm(!closetForm);
   }
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const  res = await queryClosets(user?.id!);
+        console.log(res)
+        console.log('lo que queremos:', res.data?.getClosets)
+        setClosets(res.data?.getClosets || []);
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    
+    fetchItems();
+  }, [user?.id]); 
 
   const submitForm = handleSubmit(async (closet) => {
     closet.userId = user?.id!;
@@ -49,12 +66,15 @@ function Closet() {
         <div className="closets-container">
             <div className="closet-name">Barcelona closet</div>
         </div>
-        {/* <div className="closets-container">
-            <div className="closet-name">Honduras closet</div>
-        </div>
-        <div className="closets-container">
-            <div className="closet-name">Add new closet</div>
-        </div> */}
+        
+        {closets.map((closet) => (
+          <div className="closets-container">
+              <div key={closet.id} className="closet-name">
+                {closet.name}
+              </div>
+          </div>
+        ))}
+
         <div className="closets-container">
           {closetForm ? (
             <>
