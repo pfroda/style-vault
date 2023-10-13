@@ -31,7 +31,6 @@ async function labelDetection(req, res, next) {
     try {
         const [result] = await client.labelDetection(imageUrl);
         const label = result.labelAnnotations[0].description;
-
         req.labelDetails = label;
         return next();
         
