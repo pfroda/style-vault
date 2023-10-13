@@ -9,9 +9,12 @@ import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function Grid() {
   const selectedFilter = useSelector((state) => state.filter.category);
+  const dispatch = useDispatch();
+
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
 
@@ -27,7 +30,7 @@ function Grid() {
         console.log(error);
       }
     };
-    
+    dispatch(setSelectedFilter('All'))
     fetchItems();
   }, [user?.id]); 
 
@@ -56,18 +59,3 @@ function Grid() {
 }
 
 export default Grid;
-
-
-
-
-
-// const items = [
-//   { id: 1, url: myUrl, brand: 'Marca 1' },
-//   { id: 2, url: myUrl, brand: 'Marca 2' },
-//   { id: 3, url: myUrl, brand: 'Marca 2' },
-//   { id: 4, url: myUrl, brand: 'Marca 2' },
-//   { id: 5, url: myUrl, brand: 'Marca 2' },
-//   { id: 6, url: myUrl, brand: 'Marca 2' },
-//   { id: 7, url: myUrl, brand: 'Marca 2' },
-//   { id: 8, url: myUrl, brand: 'Marca 2' },
-// ];
