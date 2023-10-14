@@ -18,6 +18,7 @@ export const types = `#graphql
     season: String
     color: String!
     brand: String!
+    location: String
   }
 
   type Outfit {

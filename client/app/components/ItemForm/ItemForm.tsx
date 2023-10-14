@@ -7,7 +7,7 @@ import colorImg from '../../../public/color.png';
 import brandImg from '../../../public/brand.png';
 import locationImg from '../../../public/location.png';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller  } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';
@@ -30,6 +30,20 @@ function ItemForm() {
 
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
+
+  //form states
+  const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
+
+  const handleSeasonChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+    setSelectedSeasons(selectedOptions);
+  };
+
+  const handleRemoveSeason = (removedSeason: string) => {
+    const newSelectedSeasons = selectedSeasons.filter(season => season !== removedSeason);
+    setSelectedSeasons(newSelectedSeasons);
+    // If using react-hook-form, update the form state accordingly here
+  };
 
   useEffect(() => {
     if (itemUrl) {
@@ -101,13 +115,43 @@ function ItemForm() {
         />
           </div>
 
-          <div className='input-wrapper'>
+          {/* <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={seasonImg} alt="Icono" />
               <label htmlFor="season">Season</label>
             </div>
             <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
+          </div> */}
+
+
+          <div className='input-wrapper'>
+            <div className='label-container'>
+              <Image src={seasonImg} alt="Icono" />
+              <label htmlFor="season">Season</label>
+            </div>
+            <select 
+              id="season" 
+              className='item-input' 
+              value={selectedSeasons}
+              onChange={handleSeasonChange}
+              multiple
+            >
+              <option value="Winter">Winter</option>
+              <option value="Spring">Spring</option>
+              <option value="Summer">Summer</option>
+              <option value="Fall">Fall</option>
+            </select>
           </div>
+                    <div className='selected-seasons-display'>
+            <p>Selected Seasons: </p>
+            {selectedSeasons.map((season, index) => (
+              <div key={index} className='selected-season'>
+                {season}
+                <button onClick={() => handleRemoveSeason(season)}>Remove</button>
+              </div>
+            ))}
+          </div>
+
 
           <div className='input-wrapper'>
             <div className='label-container'>

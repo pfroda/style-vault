@@ -9,5 +9,9 @@ export const queries = `#graphql
     getItemsByCategory(userId: String!, category: String!): [Item]!
     getItemsByCloset(id: String!): [Item]!
     getOutfitsByCloset(id: String!): [Outfit]!
+    getColors(userId: String!): [String]!
+    getBrands(userId: String!): [String]!
+    getOccasions(userId: String!): [String]!
+    getLocations(userId: String!): [String]!
   }
 `;

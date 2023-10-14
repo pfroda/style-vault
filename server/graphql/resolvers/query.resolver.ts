@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { Op, Sequelize, Model, DataType } from "sequelize";
 import { Item } from "../../models/itemSchema";
 import { Outfit } from "../../models/outfitSchema";
 import { Closet } from "../../models/closetSchema";
@@ -24,23 +24,20 @@ export const queryResolver = {
     if (location) filter.location = location;
     if (category) filter.category = category;
     const items = await Item.findAll({ where: filter });
-    console.log(items)
     return Item.findAll({ where: filter });
   },
 
-  
-
-  getOutfits: (_, { userId, occasion, season }: FilterConditions) => {
+  getOutfits: async (_, { userId, occasion, season }: FilterConditions) => {
     const filter: Record<string, any> = {};
 
     if (userId) filter.userId = userId;
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
-    
+
     return Outfit.findAll({ where: filter as any });
   },
 
-  getClosets: (_, {userId}: FilterConditions) => {
+  getClosets: async (_, {userId}: FilterConditions) => {
     const filter: Record<string, any> = {};
 
     if (userId) filter.userId = userId;
@@ -76,7 +73,6 @@ export const queryResolver = {
     return closet;
   },
 
-
   getItemsByCategory: async (_, { userId, category }) => {
     const items = await Item.findAll({ 
       where: { 
@@ -98,5 +94,62 @@ export const queryResolver = {
     const closet = await Closet.findByPk(id);
     if (!closet) throw new Error('Closet not found');
     return closet.getOutfits();
-  } 
+  },
+
+  getColors: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['color'],
+      where: { userId },
+      group: ['color'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/colors found for this user');
+    }
+    return items.map(item => item.color);
+  },
+
+  getBrands: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['brand'],
+      where: { userId },
+      group: ['brand'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/brands found for this user');
+    }
+    return items.map(item => item.brand);
+  },
+
+  getOccasions: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['occasion'],
+      where: { userId },
+      group: ['occasion'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/occasions found for this user');
+    }
+    return items.map(item => item.occasion);
+  },
+
+  getLocations: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['location'],
+      where: { userId },
+      group: ['location'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/locations found for this user');
+    }
+    return items.map(item => item.location);
+  }
 };
+
