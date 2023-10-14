@@ -1,0 +1,26 @@
+.filter-tags {
+    padding-top: 10px;
+}
+
+.filter-tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    list-style: none;
+    padding: 0px;
+    /* justify-content: space-around; */
+  }
+  
+.filter-tags-list ul {
+    /* margin: 5px;
+    gap: 30px; */
+}
+
+.filter-tags-list li {
+    font-size: 12px;
+    border: 1px solid grey;
+    color: grey;
+    border-radius: 50px;
+    padding: 4px 8px;
+    margin: 10px 10px 0px 0px;
+  }
