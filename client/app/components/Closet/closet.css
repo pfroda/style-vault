@@ -65,7 +65,7 @@
       flex-basis: calc(50% - 10px);
       max-width: calc(50% - 10px);
       aspect-ratio: 1/1;
-      background-color: azure;
+      background-color: rgba(162, 162, 162, 0.1);
       border: 1px solid black;
       border-radius: 12px;
       display: flex;

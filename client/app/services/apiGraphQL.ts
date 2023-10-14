@@ -110,7 +110,7 @@ export const queryClosets = (userId: string): Promise<GraphQLResponse<{ getClose
       }
     }
   `;
-  return fetchGraphQL(query, { userId });
+  return fetchGraphQL(query, {userId});
 };
 
 export const queryClosetById = (userId: string, id: string): Promise<GraphQLResponse<{ getClosetById: Closet }>> => {

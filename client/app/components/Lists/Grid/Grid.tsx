@@ -30,7 +30,6 @@ function Grid() {
         const  res = await queryItems({userId: user?.id!});
         console.log('queremos all items:', res.data?.getItems)
         setItems(res.data?.getItems || []);
-
       } catch (error) {
         console.log(error);
       }
