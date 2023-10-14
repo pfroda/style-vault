@@ -93,3 +93,22 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+
+
+.colorDot {
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 210px;
+   margin-top: 6px;
+ 
+}
+
+#color{
+  display: inline-block;
+  width: 70px;
+}

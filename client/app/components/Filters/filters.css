@@ -19,19 +19,11 @@
     justify-content: space-between;
     gap: 20px;
     color: grey;
-<<<<<<< HEAD
-     cursor: context-menu;
-}
-
-
-h4:hover, h4.selected {
-=======
     white-space: nowrap;
 
 }
 
 li:hover, li.selected {
->>>>>>> predev
     color: black;
     filter: brightness(1.2);
     border-bottom: 1px solid black;

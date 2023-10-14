@@ -32,6 +32,37 @@ function ItemForm() {
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
 
+  const categoriesArray = [
+    "Pants",
+    "Tops",
+    "Shirts",
+    "Shoes",
+    "Boots",
+    "Bags",
+    "Accessories",
+    "Sandals",
+    "Sneakers",
+    "Heels",
+    "Outwear",
+    "Dress",
+    "Shorts",
+    "One-Piece"
+  ];
+
+ 
+  for (let i = 0; i< categoriesArray.length; i++){
+      if(categoriesArray[i] === imageInfo?.labels ){
+       const deleteElement = categoriesArray.indexOf(imageInfo?.labels)
+       categoriesArray.splice(deleteElement, 1)
+          categoriesArray.unshift(imageInfo?.labels)
+          console.log("------->", categoriesArray)
+      }else{
+        console.log("No existe", imageInfo?.labels, "cambia nombre")
+      }
+      //  console.log(categoriesArray[i])
+  }
+
+ 
   useEffect(() => {
     if (itemUrl) {
       setPhotoIsLoading(false);
@@ -43,6 +74,7 @@ function ItemForm() {
     const selectedFile = event?.target.files[0];
     setFile(selectedFile);
     setShowForm(true);
+
   
     if (selectedFile) {
       try {
@@ -71,8 +103,12 @@ function ItemForm() {
     router.push('/dashboard/cupboard');
   });
 
+  console.log("Label-->", imageInfo?.labels)
 
-  
+  const circleStyle = {
+    backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'
+  };
+
   return (
     <div className='ItemForm'>
       <div className="img-form-container">
@@ -93,31 +129,49 @@ function ItemForm() {
               <Image src={categoriesImg} alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input 
-          id="category" 
-          className='item-input' 
-          type="text" 
-          {...register("category", { required: true })} 
-          placeholder={imageInfo?.labels} 
-          value={imageInfo?.labels || ''} 
-          onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}
-        />
-          </div>
+            <select 
+              id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))} >
+              {categoriesArray.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+            </select>
+           </div>
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={seasonImg} alt="Icono" />
-              <label htmlFor="season">Season</label>
-            </div>
-            <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
+
+           <div className='input-wrapper'>
+          <div className='label-container'>
+          <Image src={seasonImg} alt="Icono" />
+            <label htmlFor="season">Season</label>
           </div>
+          <select  id="season" className='item-input' {...register("season", { required: true })}   defaultValue="Season" 
+          >
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Autumn">Autumn</option>
+            <option value="Winter">Winter</option>
+          </select>
+        </div>
+
+
 
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={occasionImg} alt="Icono" />
               <label htmlFor="occasion">Occasion</label>
             </div>
-            <input id="occasion" className='item-input' type="text" {...register("occasion", { required: true })} placeholder='Occasion' />
+            <select id="occasion" className='item-input'  {...register("occasion", { required: true })} placeholder='Occasion' 
+            >
+        <option value="Lounge">Lounge</option>
+          <option value="Active">Active</option>
+          <option value="Work">Work</option>
+          <option value="Formal">Formal</option>
+          <option value="Night">Night</option>
+          <option value="Day">Day</option>
+          <option value="Semi-Formal">Semi-Formal</option>
+         </select>
+            
           </div>
 
           <div className='input-wrapper'>
@@ -125,8 +179,11 @@ function ItemForm() {
               <Image src={colorImg} alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
+              <p className='colorDot' style={circleStyle}> </p>
+            <input id="color" 
+            className='item-input' type="text"  {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}  onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
             </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={brandImg} alt="Icono" />

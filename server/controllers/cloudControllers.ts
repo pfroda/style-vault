@@ -9,7 +9,7 @@ async function logoDetection(req, res, next) {
     try {
         const [result] = await client.logoDetection(imageUrl);
         const cloudVisionApi = result.logoAnnotations;
-        
+
         if (!cloudVisionApi || cloudVisionApi.length === 0) {
             // no logo is detected, continue to next step
             req.logoDetails = '';
@@ -25,13 +25,17 @@ async function logoDetection(req, res, next) {
     }
 }
 
+
+
+// Cambiar nombre, labelDetection esta comentada, esta funcion es objectLocalization
 async function labelDetection(req, res, next) {
     const imageUrl = req.body.imageUrl;
 
     try {
-        const [result] = await client.labelDetection(imageUrl);
-        const label = result.labelAnnotations[0].description;
-        console.log("este---->",result)
+        const [result] = await client.objectLocalization(imageUrl);
+        const label = result.localizedObjectAnnotations[0].name;
+         console.log("esto -->",label)
+
         req.labelDetails = label;
         return next();
         
@@ -42,14 +46,33 @@ async function labelDetection(req, res, next) {
 }
 
 
+
+// async function labelDetection(req, res, next) {
+//     const imageUrl = req.body.imageUrl;
+
+//     try {
+//         const [result] = await client.labelDetection(imageUrl);
+//         const label = result.labelAnnotations[0].description;
+
+
+//         req.labelDetails = label;
+//         return next();
+        
+//     } catch (error) {
+//         console.error('Error fetching labels:', error);
+//         res.status(500).send('Error fetching labels');
+//     }
+// }
+
+
 async function imageProperties(req, res, next) {
     const imageUrl = req.body.imageUrl;
 
     try {
         const [result] = await client.imageProperties(imageUrl);
         const colorRgb = result.imagePropertiesAnnotation.dominantColors.colors[0].color;
-
         let rgb_arr = [colorRgb.red, colorRgb.green, colorRgb.blue];
+
         // let hex = "#" + rgb_arr.map(e => e.toString(16).padStart(2, "0")).join("");
 
         // req.hexColor = hex;
@@ -65,19 +88,6 @@ async function imageProperties(req, res, next) {
 
 
 
-// async function localizedObjectAnnotations(req, res, next) {
-//     const imageUrl = req.body.imageUrl;
-//     try {
-//         const [result] = await client.localizedObjectAnnotations(imageUrl);
-//         const localizedObjects = result.localizedObjectAnnotations;
-//        console.log("este--->", localizedObjects)
-      
-//         return next();
-//     } catch (error) {
-//         console.error('Error fetching image properties:', error);
-//         res.status(500).send('Error fetching image properties');
-//     }
-// }
 
 
 
