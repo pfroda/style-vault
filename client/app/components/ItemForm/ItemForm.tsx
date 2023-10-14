@@ -115,41 +115,12 @@ function ItemForm() {
         />
           </div>
 
-          {/* <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={seasonImg} alt="Icono" />
-              <label htmlFor="season">Season</label>
-            </div>
-            <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
-          </div> */}
-
-
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={seasonImg} alt="Icono" />
               <label htmlFor="season">Season</label>
             </div>
-            <select 
-              id="season" 
-              className='item-input' 
-              value={selectedSeasons}
-              onChange={handleSeasonChange}
-              multiple
-            >
-              <option value="Winter">Winter</option>
-              <option value="Spring">Spring</option>
-              <option value="Summer">Summer</option>
-              <option value="Fall">Fall</option>
-            </select>
-          </div>
-                    <div className='selected-seasons-display'>
-            <p>Selected Seasons: </p>
-            {selectedSeasons.map((season, index) => (
-              <div key={index} className='selected-season'>
-                {season}
-                <button onClick={() => handleRemoveSeason(season)}>Remove</button>
-              </div>
-            ))}
+            <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
           </div>
 
 
