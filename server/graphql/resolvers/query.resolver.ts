@@ -27,6 +27,7 @@ export const queryResolver = {
     return Item.findAll({ where: filter });
   },
 
+
   getOutfits: async (_, { userId, occasion, season }: FilterConditions) => {
     const filter: Record<string, any> = {};
 
@@ -72,6 +73,7 @@ export const queryResolver = {
     
     return closet;
   },
+
 
   getItemsByCategory: async (_, { userId, category }) => {
     const items = await Item.findAll({ 
@@ -152,4 +154,3 @@ export const queryResolver = {
     return items.map(item => item.location);
   }
 };
-

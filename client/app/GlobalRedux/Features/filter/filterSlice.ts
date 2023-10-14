@@ -6,7 +6,7 @@ export const filterSlice = createSlice({
     name: 'filter',
     initialState: { 
       category: 'All',
-      season: undefined
+      season: []
     },
     reducers: {
         setSelectedFilter: (state, action) => {
