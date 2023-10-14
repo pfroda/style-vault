@@ -7,7 +7,7 @@ import colorImg from '../../../public/color.png';
 import brandImg from '../../../public/brand.png';
 import locationImg from '../../../public/location.png';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller  } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';

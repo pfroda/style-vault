@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { Op, Sequelize, Model, DataType } from "sequelize";
 import { Item } from "../../models/itemSchema";
 import { Outfit } from "../../models/outfitSchema";
 import { Closet } from "../../models/closetSchema";
@@ -18,29 +18,27 @@ export const queryResolver = {
     const filter: Record<string, any> = {};
     
     if (userId) filter.userId = userId;
-    if (color) filter.color = { [Op.contains]: occasion };
+    if (color) filter.color = { [Op.contains]: color };
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
     if (location) filter.location = location;
     if (category) filter.category = category;
     const items = await Item.findAll({ where: filter });
-    console.log(items)
     return Item.findAll({ where: filter });
   },
 
-  
 
-  getOutfits: (_, { userId, occasion, season }: FilterConditions) => {
+  getOutfits: async (_, { userId, occasion, season }: FilterConditions) => {
     const filter: Record<string, any> = {};
 
     if (userId) filter.userId = userId;
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
-    
+
     return Outfit.findAll({ where: filter as any });
   },
 
-  getClosets: (_, {userId}: FilterConditions) => {
+  getClosets: async (_, {userId}: FilterConditions) => {
     const filter: Record<string, any> = {};
 
     if (userId) filter.userId = userId;
@@ -100,3 +98,4 @@ export const queryResolver = {
     return closet.getOutfits();
   } 
 };
+

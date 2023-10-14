@@ -15,10 +15,34 @@ const fetchGraphQL = <T = any>(query: string, variables?: Record<string, any>): 
   }).then((res) => res.json());
 };
 
-export const queryItems = (userId: string): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+export const queryItems = (filters: {
+  userId: string;
+  color?: string[];
+  occasion?: string[];
+  season?: string[];
+  location?: string;
+  category?: string;
+  brand?: string;
+}): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
   const query = `
-    query Query($userId: String!){
-      getItems(userId: $userId) {
+    query Query(
+      $userId: String!,
+      $color: [String],
+      $occasion: [String],
+      $season: [String],
+      $location: String,
+      $category: String,
+      $brand: String
+    ){
+      getItems(
+        userId: $userId,
+        color: $color,
+        occasion: $occasion,
+        season: $season,
+        location: $location,
+        category: $category,
+        brand: $brand
+      ) {
         id
         itemUrl
         category
@@ -29,8 +53,9 @@ export const queryItems = (userId: string): Promise<GraphQLResponse<{ getItems: 
       }
     }
   `;
-  return fetchGraphQL(query, { userId });
+  return fetchGraphQL(query, filters);
 };
+
 
 export const queryItemById = (userId: string, id: string): Promise<GraphQLResponse<{ getItemById: Item }>> => {
   const query = `
@@ -149,4 +174,40 @@ export const queryOutfitsByCloset = (id: string): Promise<GraphQLResponse<{ getO
     }
   `;
   return fetchGraphQL(query, { id });
+};
+
+export const queryColors = (userId: string): Promise<GraphQLResponse<{ getColors: string[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getColors(userId: $userId)
+    }
+  `;
+  return fetchGraphQL(query, { userId });
+};
+
+export const queryBrands = (userId: string): Promise<GraphQLResponse<{ getBrands: string[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getBrands(userId: $userId)
+    }
+  `;
+  return fetchGraphQL(query, { userId });
+};
+
+export const queryOccasions = (userId: string): Promise<GraphQLResponse<{ getOccasions: string[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getOccasions(userId: $userId)
+    }
+  `;
+  return fetchGraphQL(query, { userId });
+};
+
+export const queryLocations = (userId: string): Promise<GraphQLResponse<{ getLocations: string[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getLocations(userId: $userId)
+    }
+  `;
+  return fetchGraphQL(query, { userId });
 };

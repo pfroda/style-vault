@@ -16,9 +16,9 @@ export type Item = {
   closets?: Closet[];
   category?: string;
   itemUrl: string;
-  occasion?: string;
-  season?: string;
-  color: string;
+  occasion?: string[];
+  season?: string[];
+  color: string[];
   brand: string;
   location: string;
 }
@@ -28,8 +28,8 @@ export type Outfit = {
   userId: string;
   name: string;
   closets?: Closet[];
-  occasion: string[]; //revisar
-  season: string[]; // revisar
+  occasion: string[]; 
+  season: string[]; 
 }
 
 export interface Closet {

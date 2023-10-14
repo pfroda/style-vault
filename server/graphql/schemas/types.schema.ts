@@ -14,10 +14,11 @@ export const types = `#graphql
     closets: [Closet]
     category: String!
     itemUrl: String!
-    occasion: String
-    season: String
-    color: String!
+    occasion: [String]
+    season: [String]
+    color: [String]!
     brand: String!
+    location: String
   }
 
   type Outfit {
