@@ -1,4 +1,4 @@
-import './filters.css';
+import './categoryfilter.css';
 import useAuth from '@/app/hooks/useAuth';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice
 import { queryItemsByCategory } from '@/app/services/apiGraphQL';
 
 
-function Filters() {
+function CategoryFilter() {
   const selectedFilter = useSelector((state) => state.filter.category);
   const dispatch = useDispatch();
 
@@ -54,4 +54,4 @@ function Filters() {
   )
 }
 
-export default Filters
+export default CategoryFilter;

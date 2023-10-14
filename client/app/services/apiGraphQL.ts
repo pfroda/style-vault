@@ -15,10 +15,34 @@ const fetchGraphQL = <T = any>(query: string, variables?: Record<string, any>): 
   }).then((res) => res.json());
 };
 
-export const queryItems = (userId: string): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+export const queryItems = (filters: {
+  userId: string;
+  color?: string[];
+  occasion?: string[];
+  season?: string[];
+  location?: string;
+  category?: string;
+  brand?: string;
+}): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
   const query = `
-    query Query($userId: String!){
-      getItems(userId: $userId) {
+    query Query(
+      $userId: String!,
+      $color: [String],
+      $occasion: [String],
+      $season: [String],
+      $location: String,
+      $category: String,
+      $brand: String
+    ){
+      getItems(
+        userId: $userId,
+        color: $color,
+        occasion: $occasion,
+        season: $season,
+        location: $location,
+        category: $category,
+        brand: $brand
+      ) {
         id
         itemUrl
         category
@@ -29,9 +53,8 @@ export const queryItems = (userId: string): Promise<GraphQLResponse<{ getItems: 
       }
     }
   `;
-  return fetchGraphQL(query, { userId });
+  return fetchGraphQL(query, filters);
 };
-
 export const queryItemById = (userId: string, id: string): Promise<GraphQLResponse<{ getItemById: Item }>> => {
   const query = `
     query Query($userId: String!, $id: String!) {

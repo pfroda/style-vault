@@ -18,7 +18,7 @@ export const queryResolver = {
     const filter: Record<string, any> = {};
     
     if (userId) filter.userId = userId;
-    if (color) filter.color = { [Op.contains]: occasion };
+    if (color) filter.color = { [Op.contains]: color };
     if (occasion) filter.occasion = { [Op.contains]: occasion };
     if (season) filter.season = { [Op.contains]: season };
     if (location) filter.location = location;

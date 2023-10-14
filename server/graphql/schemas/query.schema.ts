@@ -1,6 +1,6 @@
 export const queries = `#graphql
   type Query {
-    getItems(userId: String!): [Item]!
+    getItems(userId: String!, color: [String], occasion: [String], season: [String], location: String, category: String, brand: String): [Item]!
     getOutfits(userId: String!): [Outfit]!
     getClosets(userId: String!): [Closet]!
     getItemById(userId: String!, id: String!): Item!

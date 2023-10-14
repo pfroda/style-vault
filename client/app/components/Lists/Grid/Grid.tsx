@@ -1,8 +1,9 @@
 import ItemContainer from '../ItemContainer/ItemContainer';
 import ItemHeader from '../ItemHeader/ItemHeader';
 import Footer from '../../Footer/Footer';
-import SearchBar from '../../Searchbar/SearchBar';
-import Filters from '../../Filters/Filters';
+import SearchBar from '../../Filters/Searchbar/SearchBar';
+import Filters from '../../Filters/CategoryFilter/CategoryFilter';
+import FilterPopup from '../../Filters/FilterPopup/FilterPopup';
 import { queryItems } from '@/app/services/apiGraphQL';
 import { Item } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
@@ -14,16 +15,20 @@ import { useDispatch } from 'react-redux';
 function Grid() {
   const selectedFilter = useSelector((state) => state.filter.category);
   const dispatch = useDispatch();
-
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
+  const [displayFilters, setDisplayFilters] = useState(false);
+
+  const toggleFilters = () => {
+    console.log('changed:', displayFilters)
+    setDisplayFilters(!displayFilters);
+  };
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const  res = await queryItems(user?.id!);
-
-        console.log('lo que queremos:', res.data?.getItems)
+        const  res = await queryItems({userId: user?.id!});
+        console.log('queremos all items:', res.data?.getItems)
         setItems(res.data?.getItems || []);
 
       } catch (error) {
@@ -50,9 +55,10 @@ function Grid() {
   return (
     <>
       <ItemHeader closetName={honduras} />
-      <SearchBar/>
+      <SearchBar toggleFilters={toggleFilters}/>
       <Filters/>
       <ItemContainer items={filteredItems} />
+      <FilterPopup toggleFilters={displayFilters}/>
       <Footer />
     </>
   );
