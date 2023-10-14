@@ -24,14 +24,14 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
   // @NotNull
   declare itemUrl: string;
 
-  @Attribute(DataTypes.STRING)
-  declare occasion: string;
+  @Attribute(DataTypes.ARRAY(DataTypes.STRING))
+  declare occasion: string[];
 
-  @Attribute(DataTypes.STRING)
-  declare season: string;
+  @Attribute(DataTypes.ARRAY(DataTypes.STRING))
+  declare season: string[];
 
-  @Attribute(DataTypes.STRING)
-  declare color: string;
+  @Attribute(DataTypes.ARRAY(DataTypes.STRING))
+  declare color: string[];
 
   @Attribute(DataTypes.STRING)
   declare brand: string;
