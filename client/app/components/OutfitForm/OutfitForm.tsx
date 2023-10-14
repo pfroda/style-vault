@@ -1,5 +1,5 @@
-'use client'
-import './outfitform.css'
+'use client';
+import './outfitform.css';
 import shuffle from '../../../public/shuffle.png';
 import shufflewhite from '../../../public/shuffle-white.png';
 import out2white from '../../../public/outfit-two-white.png';
@@ -9,9 +9,11 @@ import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
 
-import Slider from "react-slick";
+import OutfitSlider from '../OutfitSlider/OutfitSlider';
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
@@ -30,7 +32,7 @@ function OutfitForm() {
 
   const submitForm = handleSubmit(async (outfit: Outfit) => {
     handleRegister(outfit);
-    router.push('/dashboard/cupboard');
+    // router.push('/dashboard/cupboard');
   });
 
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
@@ -47,7 +49,7 @@ function OutfitForm() {
     slidesToScroll: 1,
     autoplay: false,
     arrows: true,
-    dots: true,
+    // dots: true,
   };
 
   const handleShuffle = () => {
@@ -60,14 +62,16 @@ function OutfitForm() {
       <div className="outfit-header"></div>
       
       <div className="outfit-slider">
-        {/* {currentOutfit.id === 'outfit-1' &&
+        {currentOutfit.id === 'outfit-1' &&
           <div className='outfit-1'>
-              <Slider {...sliderSettings} className="something">
+            <OutfitSlider items={items} />
+            <OutfitSlider items={items} />
+              {/* <Slider {...sliderSettings} className="something">
                 {items
                 //  .filter(image => image.length > 0)
                   .map((item, index) => (
                     <div key={index} className='img top'>
-                      <img src={item.url} alt="" />
+                      <Image className="outfit-slider-img" width={200} height={200} src={item.url} alt="" />
                     </div>
                   ))}
               </Slider>
@@ -76,16 +80,16 @@ function OutfitForm() {
                 //  .filter(image => image.length > 0)
                   .map((item, index) => (
                     <div key={index} className='img bottom'>
-                      <img src={item.url} alt="" />
+                      <Image className="outfit-slider-img" width={200} height={200} src={item.url} alt="" />
                     </div>
                   ))}
-              </Slider>
-          </div>} */}
-        {currentOutfit.id === 'outfit-1' &&
+              </Slider> */}
+          </div>}
+        {/* {currentOutfit.id === 'outfit-1' &&
         <div className='outfit-1'>
           <div className="img top"></div>
           <div className="img bottom"></div>
-        </div>}
+        </div>} */}
         {currentOutfit.id === 'outfit-2' &&
         <div className='outfit-2'>
           <div className="img top"></div>
