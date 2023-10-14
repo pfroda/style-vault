@@ -14,39 +14,44 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 function Grid() {
-  const selectedFilter = useSelector((state) => state.filter.category);
+  const selectedCategory = useSelector((state) => state.filter.category);
+  const selectedSeason = useSelector((state) => state.filter.season);
   const dispatch = useDispatch();
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
   const [displayFilters, setDisplayFilters] = useState(false);
 
   const toggleFilters = () => {
-    console.log('changed:', displayFilters)
     setDisplayFilters(!displayFilters);
   };
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const  res = await queryItems({userId: user?.id!});
-        console.log('queremos all items:', res.data?.getItems)
+        const  res = await queryItems({
+          userId: user?.id!,
+          category: selectedCategory,
+          season: selectedSeason,
+        });
+        console.log('GraphQL Response:', res);
         setItems(res.data?.getItems || []);
       } catch (error) {
         console.log(error);
       }
     };
-    dispatch(setSelectedFilter('All'))
+    // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
+    // console.log('selectedFilterCat', selectedCategory)
     fetchItems();
-  }, [user?.id]); 
+  }, [user?.id, selectedCategory, selectedSeason]); 
 
   const honduras = 'Puta espanya!';
-  const filteredItems = selectedFilter === 'All'
+  const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
       url: item.itemUrl,
       brand: item.brand
     }))
     : items
-      .filter(item => item.category === selectedFilter)
+      .filter(item => item.category === selectedCategory)
       .map((item) => ({
         url: item.itemUrl,
         brand: item.brand

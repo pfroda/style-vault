@@ -13,8 +13,8 @@ function SeasonsFilter() {
 
   const seasons = ['Winter', 'Spring', 'Summer', 'Autumn'];
 
-  const handleSelectedSeason = (season: string) => {
-    dispatch(setSelectedFilter({ type: 'season', value: season }));
+  const handleSelectedSeason = (season) => {
+    dispatch(setSelectedFilter({ type: 'season', value: [season] }));
   }
 
   return (

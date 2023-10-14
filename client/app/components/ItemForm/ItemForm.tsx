@@ -64,9 +64,12 @@ function ItemForm() {
     }
   }
 
-  const submitForm = handleSubmit(async (item: Item) => {
+   const submitForm = handleSubmit(async (item: Item) => {
     item.userId = user?.id!;
     item.itemUrl = itemUrl;
+    item.season = item.season ? [item.season] : [];
+    item.color = item.color ? [item.color] : [];
+    item.occasion = item.occasion ? [item.occasion] : [];
     handlePostItem(item);
     router.push('/dashboard/cupboard');
   });
@@ -92,14 +95,14 @@ function ItemForm() {
               <label htmlFor="categories">Categories</label>
             </div>
             <input 
-          id="category" 
-          className='item-input' 
-          type="text" 
-          {...register("category", { required: true })} 
-          placeholder={imageInfo?.labels} 
-          value={imageInfo?.labels || ''} 
-          onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}
-        />
+              id="category" 
+              className='item-input' 
+              type="text" 
+              {...register("category", { required: true })} 
+              placeholder={imageInfo?.labels} 
+              value={imageInfo?.labels || ''} 
+              onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}
+            />
           </div>
 
           <div className='input-wrapper'>
@@ -107,16 +110,43 @@ function ItemForm() {
               <Image src={seasonImg} alt="Icono" />
               <label htmlFor="season">Season</label>
             </div>
-            <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
+            <input 
+              id="season" 
+              className='item-input' 
+              type="text" 
+              {...register("season", { required: true })} 
+              placeholder='Season' 
+              multiple // Allow multiple values
+              onChange={(e) => {
+                const selectedValues = Array.from(e.target.selectedOptions, (option) => option.value);
+                reset({
+                  ...item,
+                  season: selectedValues,
+                });
+              }}
+            />
           </div>
-
 
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={occasionImg} alt="Icono" />
               <label htmlFor="occasion">Occasion</label>
             </div>
-            <input id="occasion" className='item-input' type="text" {...register("occasion", { required: true })} placeholder='Occasion' />
+            <input 
+              id="occasion" 
+              className='item-input' 
+              type="text" 
+              {...register("occasion", { required: true })} 
+              placeholder='Occasion' 
+              multiple // Allow multiple values
+              onChange={(e) => {
+                const selectedValues = Array.from(e.target.selectedOptions, (option) => option.value);
+                reset({
+                  ...item,
+                  occasion: selectedValues,
+                });
+              }}
+            />
           </div>
 
           <div className='input-wrapper'>
@@ -124,14 +154,33 @@ function ItemForm() {
               <Image src={colorImg} alt="Icono" />
               <label htmlFor="color">Color</label>
             </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
-            </div>
+            <input 
+              id="color" 
+              className='item-input' 
+              type="text" 
+              {...register("color", { required: true })} 
+              placeholder="Color" 
+              value={rgbToColor(imageInfo?.hexColor) || ' '}
+              onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))
+            }
+          />
+          </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={brandImg} alt="Icono" />
               <label htmlFor="brand">Brand</label>
             </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
+            <input 
+              id="brand" 
+              className='item-input' 
+              type="text" 
+              {...register("brand", { required: true })} 
+              placeholder="Brand" 
+              value={imageInfo?.logos || ''}
+              onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))
+            }
+          />
           </div>
 
           <div className='input-wrapper'>
@@ -139,15 +188,19 @@ function ItemForm() {
               <Image src={locationImg} alt="Icono" />
               <label htmlFor="location">Location</label>
             </div>
-            <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
+            <input 
+              id="location" 
+              className='item-input' 
+              type="text" 
+              {...register("location", { required: true })} 
+              placeholder='Location'
+            />
           </div>
-
         </div>
         <button className='register-button' type="submit">Add Item</button>
       </form>}
     </div>
-  
-)
-      }
+  );
+}
 
-export default ItemForm
+export default ItemForm;
