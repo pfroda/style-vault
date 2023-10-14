@@ -36,6 +36,7 @@
     & .footer-img {
       height: 35px;
       aspect-ratio: 1/1;
+      width: 100%;
       & .active {
         transform: scale(1.1);
         transition: all 0.3s ease-in-out;
