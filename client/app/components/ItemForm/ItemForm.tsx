@@ -31,19 +31,6 @@ function ItemForm() {
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
 
-  //form states
-  const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
-
-  const handleSeasonChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-    setSelectedSeasons(selectedOptions);
-  };
-
-  const handleRemoveSeason = (removedSeason: string) => {
-    const newSelectedSeasons = selectedSeasons.filter(season => season !== removedSeason);
-    setSelectedSeasons(newSelectedSeasons);
-    // If using react-hook-form, update the form state accordingly here
-  };
 
   useEffect(() => {
     if (itemUrl) {
