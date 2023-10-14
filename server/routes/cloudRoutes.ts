@@ -10,6 +10,8 @@ router.post('/label', cloudControllers.labelDetection)
 
 router.post('/color', cloudControllers.imageProperties)
 
+// router.post('/prueba', cloudControllers.localizedObjectAnnotations)
+
 router.post('/all',
  [cloudControllers.logoDetection, 
     cloudControllers.labelDetection, 

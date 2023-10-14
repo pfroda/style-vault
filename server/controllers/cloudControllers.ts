@@ -31,6 +31,7 @@ async function labelDetection(req, res, next) {
     try {
         const [result] = await client.labelDetection(imageUrl);
         const label = result.labelAnnotations[0].description;
+        console.log("este---->",result)
         req.labelDetails = label;
         return next();
         
@@ -39,6 +40,7 @@ async function labelDetection(req, res, next) {
         res.status(500).send('Error fetching labels');
     }
 }
+
 
 async function imageProperties(req, res, next) {
     const imageUrl = req.body.imageUrl;
@@ -61,6 +63,24 @@ async function imageProperties(req, res, next) {
     }
 }
 
+
+
+// async function localizedObjectAnnotations(req, res, next) {
+//     const imageUrl = req.body.imageUrl;
+//     try {
+//         const [result] = await client.localizedObjectAnnotations(imageUrl);
+//         const localizedObjects = result.localizedObjectAnnotations;
+//        console.log("este--->", localizedObjects)
+      
+//         return next();
+//     } catch (error) {
+//         console.error('Error fetching image properties:', error);
+//         res.status(500).send('Error fetching image properties');
+//     }
+// }
+
+
+
 function sendFinalResponse(req, res) {
     res.json({
         logos: req.logoDetails,
@@ -69,9 +89,16 @@ function sendFinalResponse(req, res) {
     });
 }
 
+
+// localizedObjectAnnotations
+
+
 export default {
     logoDetection,
     labelDetection,
     imageProperties,
     sendFinalResponse,
+    // localizedObjectAnnotations
 };
+
+
