@@ -1,6 +1,5 @@
 import './filters.css';
 import useAuth from '@/app/hooks/useAuth';
-// import { Item } from '../../Interfaces';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
@@ -14,7 +13,7 @@ function Filters() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { user } = useAuth();
 
-  // categories
+  // categories - would need a separate doc
   const categories = [
   'All',
   'Pants',
@@ -33,28 +32,8 @@ function Filters() {
   'One-Piece'
 ];
 
-
-  useEffect(() => {
-    const fetchItemsbyCategory = async () => {
-      try {
-        const res = await queryItemsByCategory(user?.id!, selectedCategory)
-        console.log(res);
-
-      } catch (error) {
-        console.log(error)
-      }
-    };
-  
-    console.log(selectedCategory);
-    console.log('selected filter:', selectedFilter)
-    fetchItemsbyCategory();
-
-  }, [user?.id, selectedCategory])
-
-
   function handleFilterClick(event:any) {
     const category = event.target.textContent;
-    // setSelectedCategory(category);
     dispatch(setSelectedFilter(category))
   }
 
