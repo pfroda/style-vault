@@ -35,6 +35,7 @@ function CategoryFilter() {
   function handleFilterClick(event:any) {
     const category = event.target.textContent;
     dispatch(setSelectedFilter(category))
+    console.log(selectedFilter)
   }
 
   return (

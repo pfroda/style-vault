@@ -1,3 +1,4 @@
+import './grid.css'
 import ItemContainer from '../ItemContainer/ItemContainer';
 import ItemHeader from '../ItemHeader/ItemHeader';
 import Footer from '../../Footer/Footer';
@@ -52,14 +53,14 @@ function Grid() {
       }))
 
   return (
-    <>
+    <div className='Grid'>
       <ItemHeader closetName={honduras} />
       <SearchBar toggleFilters={toggleFilters}/>
       <Filters/>
       <ItemContainer items={filteredItems} />
       <FilterPopup toggleFilters={displayFilters}/>
       <Footer />
-    </>
+    </div>
   );
 }
 
