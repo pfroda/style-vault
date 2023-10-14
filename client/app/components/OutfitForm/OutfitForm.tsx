@@ -35,6 +35,7 @@ function OutfitForm() {
     // router.push('/dashboard/cupboard');
   });
 
+  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697288267/file_idv86n.png';
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
   const items = [
     { id: 1, url: myUrl, brand: 'Marca 1' },
@@ -64,8 +65,8 @@ function OutfitForm() {
       <div className="outfit-slider">
         {currentOutfit.id === 'outfit-1' &&
           <div className='outfit-1'>
-            <OutfitSlider items={items} />
-            <OutfitSlider items={items} />
+            <OutfitSlider items={items} height={200} width={200} />
+            <OutfitSlider items={items} height={200} width={200} />
               {/* <Slider {...sliderSettings} className="something">
                 {items
                 //  .filter(image => image.length > 0)
@@ -92,16 +93,23 @@ function OutfitForm() {
         </div>} */}
         {currentOutfit.id === 'outfit-2' &&
         <div className='outfit-2'>
-          <div className="img top"></div>
+          <OutfitSlider items={items} height={150} width={150} />
+          <OutfitSlider items={items} height={150} width={150} />
+          <OutfitSlider items={items} height={150} width={150} />
+          {/* <div className="img top"></div>
           <div className="img middle"></div>
-          <div className="img bottom"></div>
+          <div className="img bottom"></div> */}
         </div>}
         {currentOutfit.id === 'outfit-3' &&
         <div className='outfit-3'>
-          <div className="img hat"></div>
+          <OutfitSlider items={items} height={125} width={125} />
+          <OutfitSlider items={items} height={125} width={125} />
+          <OutfitSlider items={items} height={125} width={125} />
+          <OutfitSlider items={items} height={125} width={125} />
+          {/* <div className="img hat"></div>
           <div className="img top"></div>
           <div className="img middle"></div>
-          <div className="img bottom"></div>
+          <div className="img bottom"></div> */}
         </div>}
       </div>
 

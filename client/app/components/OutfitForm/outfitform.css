@@ -1,7 +1,7 @@
 .OutfitForm { 
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow: hidden;
   & .outfit-header {
     height: 10vh;
     width: 100vw;
@@ -18,36 +18,52 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
-      gap: 10px;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      & .something {
+        max-width: 200vw;
+        /* max-width: 200px; */
+      }
       & .img {
-        height: 20vh;
-        width: 50vw;
-        background-color: rgba(196, 138, 138, 0.5);
+        /* display: flex !important;
+        align-items: center !important; */
+        /* background-color: rgba(196, 138, 138, 0.5); */
         &.outfit-slider-img {
-          width: 200px;
-          height: 200px;
           background-color: rgb(255, 255, 255);
         }
       }
     }
     & .outfit-1 {
-      background-color: rgba(4, 4, 173, 0.1);
-      & .something {
-        width: 200px;
-        aspect-ratio: 1/1;
-        background-color: rgba(187, 187, 187, 0.5);
-        background-color: white;
-      }
+      /* background-color: rgba(4, 4, 173, 0.1); */
     }
     & .outfit-2 {
-      background-color: rgb(0, 255, 17);
+      /* background-color: rgb(0, 255, 17); */
     }
     & .outfit-3 {
-      background-color: rgb(144, 67, 124);
+      /* background-color: rgb(144, 67, 124); */
     }
   }
+}
+
+.slick-slider {
+  /* display: flex !important;
+  justify-content: center !important; */
+}
+
+.slick-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slick-next:before, .slick-prev::before {
+  color: rgba(128, 128, 128, 0.5) !important;
+}
+
+.slick-list {
+  /* display: flex !important; */
+  /* align-items: center !important; */
+  position: relative !important;
+}
+.slick-slider .something .slick-initialized {
+  position: absolute !important;
 }
 
 
@@ -71,7 +87,6 @@
     width: 100%;
     background-color: rgb(224, 224, 224);
     height: 50px;
-    /* position: fixed; */
     bottom: 0;
     & .footer-container {
       display: flex;
@@ -114,8 +129,4 @@
       }
     }
   }
-}
-
-body {
-  max-height: 60vh;
 }
