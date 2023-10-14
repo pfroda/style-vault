@@ -1,6 +1,17 @@
 'use client'
 import './outfitform.css'
 import shuffle from '../../../public/shuffle.png';
+import shufflewhite from '../../../public/shuffle-white.png';
+import out2white from '../../../public/outfit-two-white.png';
+import out2black from '../../../public/outfit-two-black.png';
+import out3white from '../../../public/outfit-three-white.png';
+import out3black from '../../../public/outfit-three-black.png';
+import out4white from '../../../public/outfit-four-white.png';
+import out4black from '../../../public/outfit-four-black.png';
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
@@ -13,6 +24,7 @@ function OutfitForm() {
   const { register, handleSubmit } = useForm<Outfit>();
   const { user, handleRegister } = useAuth();
   const [currentOutfit, setCurrentOutfit] = useState({id: 'outfit-1'});
+  const [showShuffle, setShowShuffle] = useState(false);
 
   const router = useRouter();
 
@@ -29,11 +41,46 @@ function OutfitForm() {
     { id: 4, url: myUrl, brand: 'Marca 2' },
   ];
 
+  const sliderSettings = {
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    arrows: true,
+    dots: true,
+  };
+
+  const handleShuffle = () => {
+    console.log('shuffle clicked');
+    setShowShuffle(!showShuffle);
+  }
+
   return (
     <div className='OutfitForm'>
       <div className="outfit-header"></div>
       
       <div className="outfit-slider">
+        {/* {currentOutfit.id === 'outfit-1' &&
+          <div className='outfit-1'>
+              <Slider {...sliderSettings} className="something">
+                {items
+                //  .filter(image => image.length > 0)
+                  .map((item, index) => (
+                    <div key={index} className='img top'>
+                      <img src={item.url} alt="" />
+                    </div>
+                  ))}
+              </Slider>
+              <Slider {...sliderSettings} className="something">
+                {items
+                //  .filter(image => image.length > 0)
+                  .map((item, index) => (
+                    <div key={index} className='img bottom'>
+                      <img src={item.url} alt="" />
+                    </div>
+                  ))}
+              </Slider>
+          </div>} */}
         {currentOutfit.id === 'outfit-1' &&
         <div className='outfit-1'>
           <div className="img top"></div>
@@ -60,11 +107,18 @@ function OutfitForm() {
 
       <footer>
         <div className="footer-container">
-          <button className={`outfit-footer-item ${currentOutfit.id === 'outfit-1' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-1' })}>Ic 1</button>
-          <button className={`outfit-footer-item ${currentOutfit.id === 'outfit-2' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-2' })}>Ic 2</button>
-          <button className={`outfit-footer-item ${currentOutfit.id === 'outfit-3' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-3' })}>Ic 3</button>
-          <div className="shuffle-container">
-            <Image className="outfit-footer-item shuffle" src={shuffle} alt="" />
+          <div className="outfit-icon-container">
+            <Image className={`outfit-footer-item ${currentOutfit.id === 'outfit-1' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-1' })} alt="" src={currentOutfit.id === 'outfit-1' ? out2white : out2black} />
+          </div>
+          <div className="outfit-icon-container">
+            <Image className={`outfit-footer-item ${currentOutfit.id === 'outfit-2' ? 'selected' : 'out3white'}`} onClick={() => setCurrentOutfit({ id: 'outfit-2' })} alt="" src={currentOutfit.id === 'outfit-2' ? out3white : out3black} />
+          </div>
+          <div className="outfit-icon-container">
+            <Image className={`outfit-footer-item ${currentOutfit.id === 'outfit-3' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-3' })} alt="" src={currentOutfit.id === 'outfit-3' ? out4white : out4black} />
+          </div>
+          <div className={`shuffle-container ${showShuffle ? 'white-shuffle-container' : ''}`}>
+            <Image className="outfit-footer-item shuffle" src={showShuffle ? shuffle : shufflewhite} onClick={handleShuffle} alt="" />
+            {/* <Image className="outfit-footer-item shuffle" src={shuffle} alt="" /> */}
           </div>
         </div>
       </footer>
