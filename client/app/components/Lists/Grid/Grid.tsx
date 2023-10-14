@@ -7,32 +7,53 @@ import { queryItems } from '@/app/services/apiGraphQL';
 import { Item } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
+import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
+import { useSelector } from 'react-redux';
 
 function Grid() {
+  const selectedFilter = useSelector((state) => state.filter.category);
   const [items, setItems] = useState<Item[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const  res = await queryItems(user?.id!);
-        // if (errors) {
-        //   setError('Error fetching items.');
-        //   return;
-        // }
-        // setItems(data?.getItems || []);
-        console.log(res)
         console.log('lo que queremos:', res.data?.getItems)
         setItems(res.data?.getItems || []);
-
       } catch (error) {
-        setError('Network error.');
+        console.log(error);
       }
     };
-    
     fetchItems();
   }, [user?.id]); 
+
+  const honduras = 'Puta espanya!';
+  const filteredItems = selectedFilter === 'All'
+    ? items.map((item) => ({
+      url: item.itemUrl,
+      brand: item.brand
+    }))
+    : items
+      .filter(item => item.category === selectedFilter)
+      .map((item) => ({
+        url: item.itemUrl,
+        brand: item.brand
+      }))
+
+  return (
+    <>
+      <ItemHeader closetName={honduras} />
+      <SearchBar/>
+      <Filters/>
+      <ItemContainer items={filteredItems} />
+      <Footer />
+    </>
+  );
+}
+
+export default Grid;
+
 
 
   // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
@@ -44,28 +65,6 @@ function Grid() {
   //   url: myUrl,
   //   brand: `Marca ${index + 1}`,
   // }));
-
-  const honduras = 'Puta espanya!'
-
-  return (
-    <>
-      <ItemHeader closetName={honduras} />
-      <SearchBar/>
-      <Filters/>
-      <ItemContainer items={
-         items.map((item) => ({
-          url: item.itemUrl,
-          brand: item.brand,
-        }))} />
-      <Footer />
-    </>
-  );
-}
-
-export default Grid;
-
-
-
 
 
 // const items = [
