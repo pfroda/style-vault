@@ -19,7 +19,8 @@
 /* Evitamos problemas con las imagenes */
 img, picture, video, iframe, figure {
   max-width: 100%;
-  width: 100%;
+  /* width: 100%; */
+  /* min-height: 100%; */
   display: block;
   /* opcional */
   -o-object-fit: cover;

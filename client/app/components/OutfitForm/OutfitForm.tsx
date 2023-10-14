@@ -8,12 +8,10 @@ import out3white from '../../../public/outfit-three-white.png';
 import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
+import logo from '../../../public/logo1.png';
+// import logo from '../../../public/logo2.png';
 
 import OutfitSlider from '../OutfitSlider/OutfitSlider';
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
@@ -44,14 +42,9 @@ function OutfitForm() {
     { id: 4, url: myUrl, brand: 'Marca 2' },
   ];
 
-  const sliderSettings = {
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: false,
-    arrows: true,
-    // dots: true,
-  };
+  const outfit1 = 'outfit1';
+  const outfit2 = 'outfit2';
+  const outfit3 = 'outfit3';
 
   const handleShuffle = () => {
     console.log('shuffle clicked');
@@ -60,65 +53,41 @@ function OutfitForm() {
 
   return (
     <div className='OutfitForm'>
-      <div className="outfit-header"></div>
+      <div className="outfit-header">
+        <Image className='logo' alt="" src={logo} />
+      </div>
       
       <div className="outfit-slider">
         {currentOutfit.id === 'outfit-1' &&
-          <div className='outfit-1'>
-            <OutfitSlider items={items} height={200} width={200} />
-            <OutfitSlider items={items} height={200} width={200} />
-              {/* <Slider {...sliderSettings} className="something">
-                {items
-                //  .filter(image => image.length > 0)
-                  .map((item, index) => (
-                    <div key={index} className='img top'>
-                      <Image className="outfit-slider-img" width={200} height={200} src={item.url} alt="" />
-                    </div>
-                  ))}
-              </Slider>
-              <Slider {...sliderSettings} className="something">
-                {items
-                //  .filter(image => image.length > 0)
-                  .map((item, index) => (
-                    <div key={index} className='img bottom'>
-                      <Image className="outfit-slider-img" width={200} height={200} src={item.url} alt="" />
-                    </div>
-                  ))}
-              </Slider> */}
-          </div>}
-        {/* {currentOutfit.id === 'outfit-1' &&
         <div className='outfit-1'>
-          <div className="img top"></div>
-          <div className="img bottom"></div>
-        </div>} */}
+          <OutfitSlider items={items} height={200} width={200} category={outfit1} />
+          <OutfitSlider items={items} height={200} width={200} category={outfit1} />
+        </div>}
+
         {currentOutfit.id === 'outfit-2' &&
         <div className='outfit-2'>
-          <OutfitSlider items={items} height={150} width={150} />
-          <OutfitSlider items={items} height={150} width={150} />
-          <OutfitSlider items={items} height={150} width={150} />
-          {/* <div className="img top"></div>
-          <div className="img middle"></div>
-          <div className="img bottom"></div> */}
+          <OutfitSlider items={items} height={150} width={150} category={outfit2} />
+          <OutfitSlider items={items} height={150} width={150} category={outfit2} />
+          <OutfitSlider items={items} height={150} width={150} category={outfit2} />
         </div>}
+
         {currentOutfit.id === 'outfit-3' &&
         <div className='outfit-3'>
-          <OutfitSlider items={items} height={125} width={125} />
-          <OutfitSlider items={items} height={125} width={125} />
-          <OutfitSlider items={items} height={125} width={125} />
-          <OutfitSlider items={items} height={125} width={125} />
-          {/* <div className="img hat"></div>
-          <div className="img top"></div>
-          <div className="img middle"></div>
-          <div className="img bottom"></div> */}
+          <OutfitSlider items={items} height={125} width={125} category={outfit3} />
+          <OutfitSlider items={items} height={125} width={125} category={outfit3} />
+          <OutfitSlider items={items} height={125} width={125} category={outfit3} />
+          <OutfitSlider items={items} height={125} width={125} category={outfit3} />
         </div>}
       </div>
 
-      <form onSubmit={submitForm} className='register-form'>
-        <button className='register-button' type="submit" >Add Outfit</button>
+      <form onSubmit={submitForm} className='outfit-form'>
+        <button className='outfit-button' type="submit" >Add Outfit</button>
       </form>
 
       <footer>
         <div className="footer-container">
+          <div className="triangulo triangulo1"></div>
+          <div className="triangulo triangulo2"></div>
           <div className="outfit-icon-container">
             <Image className={`outfit-footer-item ${currentOutfit.id === 'outfit-1' ? 'selected' : ''}`} onClick={() => setCurrentOutfit({ id: 'outfit-1' })} alt="" src={currentOutfit.id === 'outfit-1' ? out2white : out2black} />
           </div>

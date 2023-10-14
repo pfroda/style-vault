@@ -5,7 +5,14 @@
   & .outfit-header {
     height: 10vh;
     width: 100vw;
-    background-color: azure;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
+    & .logo {
+      width: 140px;
+      height: auto;
+    }
   }
   & .outfit-slider {
     /* background-color: rgba(163, 163, 227, 0.2); */
@@ -18,34 +25,22 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
-      & .something {
-        max-width: 200vw;
-        /* max-width: 200px; */
+      & .outfit3 {
+        max-width: 170vw;
       }
-      & .img {
-        /* display: flex !important;
-        align-items: center !important; */
-        /* background-color: rgba(196, 138, 138, 0.5); */
-        &.outfit-slider-img {
-          background-color: rgb(255, 255, 255);
+      & .outfit2 {
+        max-width: 180vw;
+      }
+      & .outfit1 {
+        max-width: 200vw;
+      }
+      & .img.outfit3, .img.outfit2, .img.outfit1 {
+        & .outfit-slider-img {
+          margin: auto;
         }
       }
     }
-    & .outfit-1 {
-      /* background-color: rgba(4, 4, 173, 0.1); */
-    }
-    & .outfit-2 {
-      /* background-color: rgb(0, 255, 17); */
-    }
-    & .outfit-3 {
-      /* background-color: rgb(144, 67, 124); */
-    }
   }
-}
-
-.slick-slider {
-  /* display: flex !important;
-  justify-content: center !important; */
 }
 
 .slick-arrow {
@@ -57,15 +52,9 @@
   color: rgba(128, 128, 128, 0.5) !important;
 }
 
-.slick-list {
-  /* display: flex !important; */
-  /* align-items: center !important; */
-  position: relative !important;
+.slick-slide.slick-active {
+  /* background-color: blue !important; */
 }
-.slick-slider .something .slick-initialized {
-  position: absolute !important;
-}
-
 
 .OutfitForm {
   & form {
@@ -73,7 +62,7 @@
     & button {
       height: 30px;
       padding-inline: 10px;
-      background-color: rgb(210, 170, 170);
+      background-color: rgba(114, 198, 211, 0.7);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
     }
@@ -85,17 +74,41 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background-color: rgb(224, 224, 224);
+    /* background-color: rgb(224, 224, 224); */
     height: 50px;
     bottom: 0;
     & .footer-container {
+      position: relative;
       display: flex;
       justify-content: space-around;
       align-items: center;
       width: 60%;
-      /* background-color: rgb(179, 66, 66); */
+      background-color: rgb(224, 224, 224);
+      height: 100%;
       padding: 5px;
       margin: auto;
+      border-top-right-radius: 12px;
+      border-top-left-radius: 12px;
+      border-top: 1px solid rgb(224, 224, 224);
+      & .triangulo {
+        position: absolute;
+        width: 0;
+        height: 0;
+        z-index: 20;
+        border-left: 35px solid transparent;
+        border-right: 35px solid transparent;
+        border-bottom: 50px solid rgb(224, 224, 224);
+        border-top: 3px solid transparent;
+        z-index: -1;
+      }
+      & .triangulo1 {
+        left: 5px;
+        transform: translateX(-50%);
+      }
+      & .triangulo2 {
+        right: 5px;
+        transform: translateX(50%);
+      }
       & .outfit-icon-container {
         display: flex;
         justify-content: center;
@@ -129,4 +142,17 @@
       }
     }
   }
+}
+
+
+.slick-slider {
+  /* display: flex !important;
+  justify-content: center !important; */
+}
+
+.slick-list {
+  /* position: relative !important; */
+}
+.slick-slider .something .slick-initialized {
+  /* position: absolute !important; */
 }

@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from 'next/image';
 
-const OutfitSlider = ({ items, width, height }) => {
+const OutfitSlider = ({ items, width, height, category }) => {
   const sliderSettings = {
     infinite: true,
     slidesToShow: 3,
@@ -16,9 +16,9 @@ const OutfitSlider = ({ items, width, height }) => {
   };
 
   return (
-    <Slider {...sliderSettings} className="something">
+    <Slider {...sliderSettings} className={`${category}`}>
       {items.map((item, index) => (
-        <div key={index} className='img bottom'>
+        <div key={index} className={`img ${category}`}>
           <Image className="outfit-slider-img" width={width} height={height} src={item.url} alt="" />
         </div>
       ))}
