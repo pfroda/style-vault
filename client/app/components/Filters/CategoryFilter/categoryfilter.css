@@ -1,34 +1,28 @@
 .Filter {
-    width: 100%;
-    padding: 30px;
-    overflow-x: auto;
+  width: 100%;
+  padding: 15px 20px 15px 20px;
+  overflow-x: auto;
 }
 
 .Filter::-webkit-scrollbar {
-    display: none;
-  }
-
-.filters {
-  padding-right: 50px;
+  display: none;
 }
 
 .filters ul {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 20px;
-    color: grey;
-    white-space: nowrap;
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+  color: grey;
+  white-space: nowrap;
 }
 
 li:hover, li.selected {
-    color: black;
-    filter: brightness(1.2);
-    border-bottom: 1px solid black;
-  }
+  color: black;
+  filter: brightness(1.2);
+  border-bottom: 1px solid black;
+}
 
-  .filters h4 {
-    width: fit-content;
-  }
+.filters ul li:last-of-type {
+  padding-right: 20px;
+}

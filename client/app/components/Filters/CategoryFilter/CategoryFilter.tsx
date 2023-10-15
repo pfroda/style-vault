@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { queryItemsByCategory } from '@/app/services/apiGraphQL';
 
-
 function CategoryFilter() {
   const selectedFilter = useSelector((state) => state.filter.category);
   const dispatch = useDispatch();
@@ -40,17 +39,17 @@ function CategoryFilter() {
 
   return (
     <div className='Filter'>
-        <div className="filters">
-            <ul>
-            {categories.map((category) => (
-              <li key={category}>
-                <h4 onClick={handleFilterClick} className={selectedCategory === 'All' ? 'selected' : ''}>
-                {category}
-                </h4>
-              </li>
-            ))}
-              </ul>
-        </div>
+      <div className="filters">
+        <ul>
+        {categories.map((category) => (
+          <li key={category}>
+            <h4 onClick={handleFilterClick} className={selectedCategory === 'All' ? 'selected' : ''}>
+            {category}
+            </h4>
+          </li>
+        ))}
+          </ul>
+      </div>
     </div>
   )
 }

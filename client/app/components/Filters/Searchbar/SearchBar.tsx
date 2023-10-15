@@ -8,7 +8,8 @@ function SearchBar({toggleFilters}: any) {
     <div className="Searchbar">
       <label className='search-bar-label'>
         <Image src={searchbar} className='searchbar-icon' alt='foto' />
-        <input 
+        <input
+          readOnly
           className='searchbar-input' 
           type="text" 
           name="name" 
