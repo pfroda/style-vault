@@ -9,7 +9,7 @@ import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
 import logo from '../../../public/logo1.png';
-// import logo from '../../../public/logo2.png';
+import back from '../../../public/close.png';
 
 import OutfitSlider from '../OutfitSlider/OutfitSlider';
 
@@ -46,6 +46,10 @@ function OutfitForm() {
   const outfit2 = 'outfit2';
   const outfit3 = 'outfit3';
 
+  const handleBack = () => {
+    router.back();
+  }
+
   const handleShuffle = () => {
     console.log('shuffle clicked');
     setShowShuffle(!showShuffle);
@@ -54,6 +58,7 @@ function OutfitForm() {
   return (
     <div className='OutfitForm'>
       <div className="outfit-header">
+        <Image className='back' alt="" src={back} onClick={handleBack} />
         <Image className='logo' alt="" src={logo} />
       </div>
       
