@@ -15,12 +15,10 @@
         width: 100%;
         text-align: center;
         padding-bottom: 3px;
-      }
-      & .closet-button {
-        border-bottom: 2px solid rgb(0, 0, 0);
-      }
-      & .outfit-button {
         border-bottom: 2px solid rgb(168, 168, 168);
+        &.active {
+          border-bottom: 2px solid rgb(0, 0, 0);
+        }
       }
     }
   }

@@ -20,9 +20,18 @@ function Grid() {
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
   const [displayFilters, setDisplayFilters] = useState(false);
+  const [activeItems, setActiveItems] = useState('filteredItems');
 
   const toggleFilters = () => {
     setDisplayFilters(!displayFilters);
+  };
+
+  const handleHeaderClick = (buttonId: string) => {
+    if (buttonId === 'closet') {
+      setActiveItems('filteredItems');
+    } else if (buttonId === 'outfits') {
+      setActiveItems('outfitItems');
+    }
   };
 
   useEffect(() => {
@@ -44,7 +53,6 @@ function Grid() {
     fetchItems();
   }, [user?.id, selectedCategory, selectedSeason]); 
 
-  const honduras = 'Puta espanya!';
   const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
       url: item.itemUrl,
@@ -57,9 +65,24 @@ function Grid() {
         brand: item.brand
       }))
 
+  // Esto hay que pasarlo como parametros. Dejar de momento
+  const itemCount = 7;
+  const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+  const outfitItems = Array.from({ length: itemCount }, (_, index) => ({
+  id: index + 1,
+  url: myUrl,
+  brand: `Marca ${index + 1}`,
+  }));
+  const honduras = 'Puta espanya!';
+  // Esto hay que pasarlo como parametros. Dejar de momento
+  const headers = {
+    closet: 'Closet',
+    outfit: 'Outfit'
+  };
+
   return (
     <div className='Grid'>
-      <ItemHeader closetName={honduras} />
+      <ItemHeader closetName={honduras} headers={headers} onHeaderClick={handleHeaderClick} />
       <SearchBar toggleFilters={toggleFilters}/>
       <Filters/>
       <ItemContainer items={filteredItems} />
