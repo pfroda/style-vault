@@ -1,3 +1,7 @@
+.Searchbar {
+  cursor: pointer;
+}
+
 .search-bar-label {
   display: flex;
   justify-content: center;
@@ -8,6 +12,7 @@
 .searchbar-input {
   background-color: rgb(250, 245, 245);
   color: rgb(143, 138, 138);
+  cursor: pointer;
   border-radius: 7px;
   width: 95vw;
   height: 40px;

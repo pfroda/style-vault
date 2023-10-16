@@ -24,9 +24,9 @@ function FilterPopup({displayFilters, toggleFilters}: any) {
           <h3>Filter</h3>
           <SeasonsFilter/>
           <BrandsFilter/>
+          <ColorFilter/>
           <OccasionsFilter/>
           <LocationsFilter/>
-          <ColorFilter/>
           <div className="info-popup">
             <p onClick={handleResetFilters}>Clear filters</p>
             <button onClick={toggleFilters}>Done</button>

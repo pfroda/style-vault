@@ -33,11 +33,13 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  /* margin-top: 20px; */
   /* gap: 50px; */
 }
 
 .info-popup p {
   color: grey;
+  font-size: 14px;
 }
 
 .info-popup p:hover {
@@ -47,6 +49,7 @@
 
 .info-popup button {
   background-color: black;
+  font-size: 14px;
   color: white;
   padding: 8px 62px;
   border-radius: 5px;
@@ -55,4 +58,13 @@
 .info-popup button:hover {
   box-shadow: 2px 2px 2px grey;
   cursor: pointer;
+}
+
+.filters-popup p {
+  cursor: pointer;
+}
+
+.filters-popup h3 {
+  margin-bottom: 20px;
+  text-decoration: underline;
 }
