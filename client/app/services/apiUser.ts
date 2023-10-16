@@ -58,3 +58,20 @@ export async function updateUser (userId: string, user: User) {
     console.log(error);
   }
 }
+
+export async function getUserData (userId: string) {
+  try {
+    const response = await fetch(`${url}/users/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

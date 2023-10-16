@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { LoginUser, RegisterUser, User } from '@/app/Interfaces';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
-import { registerUser, loginUser, updateUser } from '../services/apiUser';
+import { registerUser, loginUser, updateUser, getUserData } from '../services/apiUser';
 import {
   //setLoading, 
   //setError, 
@@ -49,7 +49,14 @@ function useAuth() {
     }
   }
 
-  return { user, handleRegister, handleLogin, handleUpdate };
+  const handleUserData = async (userId: string) => {
+    const res = await getUserData(userId);
+    if (res) {
+      dispatch(setUser(res));
+    }
+  }
+
+  return { user, handleRegister, handleLogin, handleUpdate, handleUserData };
 }
 
 export default useAuth

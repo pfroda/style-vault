@@ -107,8 +107,25 @@ async function updateUser(req, res) {
   }
 }
 
+async function getUserData (req, res) {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findOne({ where: { id: userId } });
+    
+    if (!user) {
+      return res.status(404).send({ error: 'User not found', message: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error getting user:', error);
+    res.status(500).send({ error: error.message, message: 'Could not get user' });
+  }
+}
+
+
 export default {
   registerUser,
   logUser,
   updateUser,
+  getUserData
 };

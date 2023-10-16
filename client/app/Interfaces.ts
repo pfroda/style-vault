@@ -11,6 +11,7 @@ export type User = {
   password: string;
   name: string;
   surname: string;
+  profilePicture: string;
   id: string;
 };
 

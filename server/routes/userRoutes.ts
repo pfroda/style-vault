@@ -7,6 +7,7 @@ import userController from '../controllers/userController';
 router.post('/users/signup', userController.registerUser);
 router.post('/users/signin', userController.logUser);
 router.put('/users/:userId/upload', userController.updateUser);
+router.get('/users/:userId', userController.getUserData);
 
 
 export default router;

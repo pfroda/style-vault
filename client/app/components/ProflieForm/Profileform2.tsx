@@ -13,7 +13,6 @@ function ProfileForm() {
   const { register, handleSubmit } = useForm<User>();
   const router = useRouter();
   const { user, handleUpdate } = useAuth();
-
   const [itemUrl, setItemUrl] = useState<string | null>(null);
 
   const submitForm = handleSubmit(async (userData) => {
@@ -65,11 +64,11 @@ function ProfileForm() {
           </div>
           <div className="input-wrapper">
             <label htmlFor="name">Name</label>
-            <input className='user-input' type="text" {...register("name")} placeholder='Name' />
+            <input className='user-input' type="text" {...register("name")} placeholder='Name' defaultValue={user?.name || ''} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="surname">Surname</label>
-            <input className='user-input' type="text" {...register("surname")} placeholder='Surname' />
+            <input className='user-input' type="text" {...register("surname")} placeholder='Surname' defaultValue={user?.surname || ''} />
           </div>
           <button className='user-button' type="submit" >Submit changes</button>
         </form>
