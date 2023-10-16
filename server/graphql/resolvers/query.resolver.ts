@@ -7,22 +7,31 @@ interface FilterConditions {
   color?: string[];
   occasion?: string[];
   season?: string[];
+  brand?: string[];
   location?: string;
   category?: string;
   userId: string;
 }
 
 export const queryResolver = {
-  getItems: async (_, { userId, color, occasion, season, location, category }: FilterConditions) => {
+  getItems: async (_, { userId, color, occasion, season, brand, location, category }: FilterConditions) => {
     console.log('hello')
     const filter: Record<string, any> = {};
-    
+    console.log(filter)
     if (userId) filter.userId = userId;
     if (color) filter.color = { [Op.contains]: color };
     if (occasion) filter.occasion = { [Op.contains]: occasion };
-    if (season) filter.season = { [Op.contains]: season };
+    if (season) filter.season = { 
+      [Op.or]: season.map(s => ({ [Op.contains]: [s] })) 
+    };
+    if (brand) filter.brand = { [Op.or]: season.map(b => ({ [Op.contains]: [b] })) };
     if (location) filter.location = location;
-    if (category) filter.category = category;
+    if (category === 'All') {
+      // don't filter if user clicks all
+  } else {
+      filter.category = category;
+  }
+
     const items = await Item.findAll({ where: filter });
     return Item.findAll({ where: filter });
   },

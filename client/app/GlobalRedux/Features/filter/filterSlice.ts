@@ -6,7 +6,8 @@ export const filterSlice = createSlice({
     name: 'filter',
     initialState: { 
       category: 'All',
-      season: []
+      season: [],
+      brand: [],
     },
     reducers: {
         setSelectedFilter: (state, action) => {
@@ -14,6 +15,8 @@ export const filterSlice = createSlice({
             state.category = action.payload.value;
           } else if (action.payload.type === 'season') {
             state.season = action.payload.value;
+          } else if (action.payload.type === 'brand') {
+            state.brand = action.payload.value;
           }
         },
       }

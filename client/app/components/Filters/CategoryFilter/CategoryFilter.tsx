@@ -3,7 +3,7 @@ import useAuth from '@/app/hooks/useAuth';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
-import { queryItemsByCategory } from '@/app/services/apiGraphQL';
+// import { queryItemsByCategory } from '@/app/services/apiGraphQL';
 
 function CategoryFilter() {
   const selectedFilter = useSelector((state) => state.filter.category);
@@ -33,8 +33,9 @@ function CategoryFilter() {
 
   function handleFilterClick(event:any) {
     const category = event.target.textContent;
+    console.log(category);
     dispatch(setSelectedFilter({ type: 'category', value: category }));
-    console.log(category)
+
   }
 
   return (

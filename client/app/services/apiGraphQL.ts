@@ -22,7 +22,7 @@ export const queryItems = (filters: {
   season?: string[];
   location?: string;
   category?: string;
-  brand?: string;
+  brand?: string[];
 }): Promise<GraphQLResponse<{ getItems: Item[] }>> => {
   const query = `
     query Query(
@@ -32,7 +32,7 @@ export const queryItems = (filters: {
       $season: [String],
       $location: String,
       $category: String,
-      $brand: String
+      $brand: [String]
     ){
       getItems(
         userId: $userId,
