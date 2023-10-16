@@ -2,6 +2,8 @@ import './filterpopup.css';
 import OccasionsFilter from '../OccasionsFilter/OccasionsFilter';
 import SeasonsFilter from '../SeasonsFilter/SeasonsFilter';
 import BrandsFilter from '../BrandsFilter/BrandsFilter';
+import LocationsFilter from '../LocationsFilter/LocationsFilter';
+import ColorFilter from '../ColorFilter/ColorFilter';
 
 function FilterPopup({toggleFilters}: any) {
   return (
@@ -11,6 +13,9 @@ function FilterPopup({toggleFilters}: any) {
           <h3>Filter</h3>
           <SeasonsFilter/>
           <BrandsFilter/>
+          <OccasionsFilter/>
+          <LocationsFilter/>
+          <ColorFilter/>
         </div>
       </div>
     </div>

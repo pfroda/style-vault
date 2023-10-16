@@ -8,6 +8,9 @@ export const filterSlice = createSlice({
       category: 'All',
       season: [],
       brand: [],
+      occasion: [],
+      location: '',
+      color: []
     },
     reducers: {
         setSelectedFilter: (state, action) => {
@@ -17,6 +20,12 @@ export const filterSlice = createSlice({
             state.season = action.payload.value;
           } else if (action.payload.type === 'brand') {
             state.brand = action.payload.value;
+          } else if (action.payload.type === 'occasion') {
+            state.occasion = action.payload.value;
+          } else if (action.payload.type === 'location') {
+            state.location = action.payload.value;
+          } else if (action.payload.type === 'color') {
+            state.color = action.payload.color;
           }
         },
       }

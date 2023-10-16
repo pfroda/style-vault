@@ -1,6 +1,6 @@
 .general-filters-container {
-  /* background-color: white; */
-  background-color: rgb(66, 66, 204);
+  background-color: white;
+  /* background-color: rgb(66, 66, 204); */
   /* border-top: 1px solid grey; */
   box-shadow: 2px 2px 7px .5px rgba(0, 0, 0, 0.3);
   z-index: 5;
