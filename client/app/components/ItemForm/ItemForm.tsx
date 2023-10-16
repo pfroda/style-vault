@@ -35,9 +35,8 @@ function ItemForm() {
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
-   console.log("item-->", selectedOccasions)
-   console.log("ImageInfo-->", selectedOccasions)
-
+  
+const hola:string = "hola"; 
 
 
 
@@ -65,7 +64,6 @@ function ItemForm() {
        const deleteElement = categoriesArray.indexOf(imageInfo?.labels)
        categoriesArray.splice(deleteElement, 1)
           categoriesArray.unshift(imageInfo?.labels)
-          console.log("------->", categoriesArray)
       }else{
         console.log("No existe", imageInfo?.labels, "cambia nombre")
       }
@@ -110,7 +108,6 @@ function ItemForm() {
     item.itemUrl = itemUrl;
     handlePostItem(item);
     router.push('/dashboard/cupboard');
-    console.log("item--->", item)
   });
    
 
@@ -121,7 +118,6 @@ const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   } else {
     setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
   }
-   console.log("Seasons escogidas:", selectedValue);
    console.log("array:", selectedSeasons);
 
 };
@@ -160,11 +156,6 @@ const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 const handleColorClick = (colorToRemove: string) => {
   setSelectedColors(prevColors => prevColors.filter(color => color !== colorToRemove));
 };
-
-
-
-
-
 
 
 
