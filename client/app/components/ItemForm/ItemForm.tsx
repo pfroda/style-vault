@@ -31,6 +31,16 @@ function ItemForm() {
 
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
+  const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+   console.log("item-->", selectedOccasions)
+   console.log("ImageInfo-->", selectedOccasions)
+
+
+
+
 
   const categoriesArray = [
     "Pants",
@@ -43,7 +53,7 @@ function ItemForm() {
     "Sandals",
     "Sneakers",
     "Heels",
-    "Outwear",
+    "Outerwear",
     "Dress",
     "Shorts",
     "One-Piece"
@@ -59,7 +69,6 @@ function ItemForm() {
       }else{
         console.log("No existe", imageInfo?.labels, "cambia nombre")
       }
-      //  console.log(categoriesArray[i])
   }
 
  
@@ -101,7 +110,63 @@ function ItemForm() {
     item.itemUrl = itemUrl;
     handlePostItem(item);
     router.push('/dashboard/cupboard');
+    console.log("item--->", item)
   });
+   
+
+const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedValue = e.target.value;
+  if (selectedSeasons.includes(selectedValue)) {
+    setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== selectedValue));
+  } else {
+    setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
+  }
+   console.log("Seasons escogidas:", selectedValue);
+   console.log("array:", selectedSeasons);
+
+};
+
+const handleSeasonClick = (seasonToRemove: string) => {
+  setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
+}
+
+
+
+const handleOccasionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedValue = e.target.value;
+  if (selectedOccasions.includes(selectedValue)) {
+    setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== selectedValue));
+  } else {
+    setSelectedOccasions(prevOccasions => [...prevOccasions, selectedValue]);
+  }
+};
+
+const handleOccasionClick = (occasionToRemove: string) => {
+  setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== occasionToRemove));
+};
+
+
+// d
+
+const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const selectedValue = e.target.value;
+  if (selectedColors.includes(selectedValue)) {
+    setSelectedColors(prevColors => prevColors.filter(color => color !== selectedValue));
+  } else {
+    setSelectedColors(prevColors => [...prevColors, selectedValue]);
+  }
+};
+
+const handleColorClick = (colorToRemove: string) => {
+  setSelectedColors(prevColors => prevColors.filter(color => color !== colorToRemove));
+};
+
+
+
+
+
+
+
 
   console.log("Label-->", imageInfo?.labels)
 
@@ -130,7 +195,8 @@ function ItemForm() {
               <label htmlFor="categories">Categories</label>
             </div>
             <select 
-              id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))} >
+              id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))} 
+              >
               {categoriesArray.map(category => (
               <option key={category} value={category}>
                 {category}
@@ -144,8 +210,22 @@ function ItemForm() {
           <div className='label-container'>
           <Image src={seasonImg} alt="Icono" />
             <label htmlFor="season">Season</label>
+            
           </div>
-          <select  id="season" className='item-input' {...register("season", { required: true })}   defaultValue="Season" 
+          <div className='seasonArray'>
+          {selectedSeasons.map((season, index) => (
+                <div 
+                className='eachSeason' 
+                key={index} 
+                onClick={() => handleSeasonClick(season)}
+              >
+                {season}
+              </div>
+              
+            ))} 
+            </div>
+          <select multiple  id="season" className='item-input' {...register("season", { required: true, setValueAs: () => selectedSeasons })} value={selectedSeasons} onChange={handleSeasonChange}  defaultValue="Season" 
+           style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
           >
             <option value="Spring">Spring</option>
             <option value="Summer">Summer</option>
@@ -156,33 +236,75 @@ function ItemForm() {
 
 
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={occasionImg} alt="Icono" />
-              <label htmlFor="occasion">Occasion</label>
-            </div>
-            <select id="occasion" className='item-input'  {...register("occasion", { required: true })} placeholder='Occasion' 
-            >
-        <option value="Lounge">Lounge</option>
-          <option value="Active">Active</option>
-          <option value="Work">Work</option>
-          <option value="Formal">Formal</option>
-          <option value="Night">Night</option>
-          <option value="Day">Day</option>
-          <option value="Semi-Formal">Semi-Formal</option>
-         </select>
-            
-          </div>
+        <div className='input-wrapper'>
+  <div className='label-container'>
+    <Image src={occasionImg} alt="Icono" />
+    <label htmlFor="occasion">Occasion</label>
+  </div>
+  <div className='occasionArray'>
+    {selectedOccasions.map((occasion, index) => (
+      <div 
+        className='eachOccasion' 
+        key={index} 
+        onClick={() => handleOccasionClick(occasion)}
+      >
+        {occasion}
+      </div>
+    ))}
+  </div>
+  <select multiple id="occasion" className='item-input' {...register("occasion", { required: true, setValueAs: () => selectedOccasions })} value={selectedOccasions} onChange={handleOccasionChange}
+    style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
+  >
+    <option value="Lounge">Lounge</option>
+    <option value="Active">Active</option>
+    <option value="Work">Work</option>
+    <option value="Formal">Formal</option>
+    <option value="Night">Night</option>
+    <option value="Day">Day</option>
+    <option value="Semi-Formal">Semi-Formal</option>
+  </select>
+</div>
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={colorImg} alt="Icono" />
-              <label htmlFor="color">Color</label>
-            </div>
-              <p className='colorDot' style={circleStyle}> </p>
-            <input id="color" 
-            className='item-input' type="text"  {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}  onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
-            </div>
+
+<div className='input-wrapper'>
+  <div className='label-container'>
+    <Image src={colorImg} alt="Icono" />
+    <label htmlFor="colorSelect">Color</label>
+  </div>
+  <div className='colorArray'>
+    {selectedColors.map((color, index) => (
+      <div 
+        className='eachColor' 
+        key={index} 
+        onClick={() => handleColorClick(color)}
+      >
+        <span className='colorDot' style={{ backgroundColor: color }}></span> {color}
+      </div>
+    ))}
+  </div>
+  <select 
+    multiple 
+    id="colorSelect" 
+    className='item-input' 
+    {...register("color", { 
+      required: true, 
+      setValueAs: () => selectedColors 
+    })} 
+    value={selectedColors} 
+    onChange={handleColorChange}
+    style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
+  >
+    <option value="Red">Red</option>
+    <option value="Blue">Blue</option>
+    <option value="Green">Green</option>
+    <option value="Yellow">Yellow</option>
+    <option value="Black">Black</option>
+    <option value="White">White</option>
+    <option value="Purple">Purple</option>
+    <option value="Orange">Orange</option>
+  </select>
+</div>
+
 
           <div className='input-wrapper'>
             <div className='label-container'>
