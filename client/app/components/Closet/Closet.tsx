@@ -1,5 +1,6 @@
 import './closet.css'
 import arrow from '../../../public/right-arrow.png';
+import edit from '../../../public/edit-profile1.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
 import Link from 'next/link';
@@ -8,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
+import { useRouter } from 'next/navigation'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
@@ -15,6 +17,7 @@ function Closet() {
   // const [closets, setClosets] = useState<ClosetInterface[]>([]);
   const { register, handleSubmit, reset } = useForm();
   const { user } = useAuth();
+  const router = useRouter();
 
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
@@ -24,6 +27,10 @@ function Closet() {
 
   const showFormCloset = () => {
     setClosetForm(!closetForm);
+  }
+
+  const handleProfile = () => {
+    router.push('/dashboard/profile');
   }
 
   useEffect(() => {
@@ -68,7 +75,7 @@ function Closet() {
             <div className="img"></div>
             <div className="name">Natalie</div>
           </div>
-          <Image className="arrow" src={arrow} alt="Right Arrow" />
+          <Image className="edit" src={edit} alt="Edit" onClick={handleProfile} />
         </div>
         <div className="header-options">
           <button className='closet-button'>Closet</button>
@@ -80,7 +87,6 @@ function Closet() {
       <div className="user-closets">
         <div className="closets-container">
           <Link className="closet-name" href="/dashboard/grid">All Clothes</Link>
-            {/* <div className="closet-name">All Clothes</div> */}
         </div>
 
         {closets.map((closet) => (

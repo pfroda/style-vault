@@ -8,8 +8,8 @@ import out3white from '../../../public/outfit-three-white.png';
 import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
-import back from '../../../public/close.png';
 
+import GoBack from '../GoBack/GoBack';
 import OutfitSlider from '../OutfitSlider/OutfitSlider';
 import Header from '../Header/Header';
 import Image from 'next/image';
@@ -45,10 +45,6 @@ function OutfitForm() {
   const outfit2 = 'outfit2';
   const outfit3 = 'outfit3';
 
-  const handleBack = () => {
-    router.back();
-  }
-
   const handleShuffle = () => {
     console.log('shuffle clicked');
     setShowShuffle(!showShuffle);
@@ -56,9 +52,9 @@ function OutfitForm() {
 
   return (
     <div className='OutfitForm'>
+      <GoBack />
       <div className="outfit-header">
         <Header />
-        <Image className='back' alt="" src={back} onClick={handleBack} />
       </div>
       
       <div className="outfit-slider">

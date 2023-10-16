@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import './register.css';
 import { useRouter } from 'next/navigation'; 
 import { RegisterUser } from '@/app/Interfaces';

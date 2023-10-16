@@ -1,0 +1,10 @@
+.GoBack {
+  position: relative;
+  & .back {
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    max-width: 18px;
+    height: 18px;
+  }
+}
