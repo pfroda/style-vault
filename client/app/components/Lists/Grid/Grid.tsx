@@ -60,7 +60,7 @@ function Grid() {
     // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
     // console.log('selectedFilterCat', selectedCategory)
     fetchItems();
-  }, [user?.id, selectedCategory, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
+  }, [user?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
@@ -95,7 +95,7 @@ function Grid() {
       <SearchBar toggleFilters={toggleFilters}/>
       <Filters/>
       <ItemContainer items={filteredItems} />
-      <FilterPopup toggleFilters={displayFilters}/>
+      <FilterPopup toggleFilters={toggleFilters} displayFilters={displayFilters}/>
       <Footer />
     </div>
   );

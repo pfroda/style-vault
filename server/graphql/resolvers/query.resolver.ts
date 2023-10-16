@@ -15,10 +15,9 @@ interface FilterConditions {
 
 export const queryResolver = {
   getItems: async (_, { userId, color, occasion, season, brand, location, category }: FilterConditions) => {
-    console.log('hello')
+    console.log('hello idiot')
     const filter: Record<string, any> = {};
     if (userId) filter.userId = userId;
-    // if (color) filter.color = { [Op.contains]: color };
 
     if (color) filter.color = { 
       [Op.or]: color.map(c => ({ [Op.contains]: [c] }))
@@ -44,7 +43,7 @@ export const queryResolver = {
   }
   console.log('FILTER:', filter)
     const items = await Item.findAll({ where: filter });
-    return Item.findAll({ where: filter });
+    return items;
   },
 
 
@@ -107,7 +106,7 @@ export const queryResolver = {
     }
     const allColors = items.map(item => item.color).flat();
     const uniqueColors = Array.from(new Set(allColors));
-    
+
     return uniqueColors;
   },
 

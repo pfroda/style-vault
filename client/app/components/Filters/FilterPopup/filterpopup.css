@@ -28,3 +28,31 @@
   bottom: 0;
   transition: left 0.6s ease;
 }
+
+.info-popup {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* gap: 50px; */
+}
+
+.info-popup p {
+  color: grey;
+}
+
+.info-popup p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.info-popup button {
+  background-color: black;
+  color: white;
+  padding: 8px 62px;
+  border-radius: 5px;
+}
+
+.info-popup button:hover {
+  box-shadow: 2px 2px 2px grey;
+  cursor: pointer;
+}
