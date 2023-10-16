@@ -17,6 +17,9 @@ function Grid() {
   const selectedCategory = useSelector((state) => state.filter.category);
   const selectedSeason = useSelector((state) => state.filter.season);
   const selectedBrands = useSelector((state) => state.filter.brand);
+  const selectedOccasion = useSelector((state) => state.filter.occasion);
+  const selectedLocation = useSelector((state) => state.filter.location);
+  const selectedColor = useSelector((state) => state.filter.color)
 
   const dispatch = useDispatch();
   const [items, setItems] = useState<Item[]>([]);
@@ -43,9 +46,12 @@ function Grid() {
           userId: user?.id!,
           category: selectedCategory,
           season: selectedSeason,
-          brand: selectedBrands
+          brand: selectedBrands,
+          occasion: selectedOccasion,
+          location: selectedLocation,
+          color: selectedColor
         });
-        console.log('GraphQL Response:', res);
+        console.log('GraphQL res Grid:', res);
         setItems(res.data?.getItems || []);
       } catch (error) {
         console.log(error);
@@ -54,7 +60,7 @@ function Grid() {
     // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
     // console.log('selectedFilterCat', selectedCategory)
     fetchItems();
-  }, [user?.id, selectedCategory, selectedSeason]); 
+  }, [user?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
@@ -89,7 +95,7 @@ function Grid() {
       <SearchBar toggleFilters={toggleFilters}/>
       <Filters/>
       <ItemContainer items={filteredItems} />
-      <FilterPopup toggleFilters={displayFilters}/>
+      <FilterPopup toggleFilters={toggleFilters} displayFilters={displayFilters}/>
       <Footer />
     </div>
   );

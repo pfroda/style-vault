@@ -3,7 +3,6 @@ import useAuth from '@/app/hooks/useAuth';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
-// import { queryItemsByCategory } from '@/app/services/apiGraphQL';
 
 function CategoryFilter() {
   const selectedFilter = useSelector((state) => state.filter.category);
@@ -40,7 +39,7 @@ function CategoryFilter() {
 
   return (
     <div className='Filter'>
-      <div className="filters">
+      <div className="category-filter">
         <ul>
         {categories.map((category) => (
           <li key={category}>

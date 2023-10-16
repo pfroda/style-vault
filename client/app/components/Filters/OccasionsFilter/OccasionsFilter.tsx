@@ -1,16 +1,58 @@
 import './occasionsfilter.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
+import { queryOccasions } from '@/app/services/apiGraphQL';
+import useAuth from '@/app/hooks/useAuth';
 
 function OccasionsFilter() {
+  const selectedOccasions = useSelector((state) => state.filter.occasion);
+  const [occasions, setOccasions] = useState<string[]>([]);
+  const { user } = useAuth();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchOccasions = async () => {
+      try {
+        const res = await queryOccasions(user?.id!);
+        console.log('graph occasions:', res)
+        setOccasions(res.data?.getOccasions || [])
+      } catch (error) {
+        console.log(occasions)
+      }
+    };
+    fetchOccasions();
+
+  }, [user?.id]);
+  // user?.id, selectedOccasions]);
+
+  const handleSelectedOccasion = async (occasion) => {
+    let updatedOccasions;
+
+    if (selectedOccasions.includes(occasion)) {
+      updatedOccasions = selectedOccasions.filter((selected) => selected !== occasion)
+    } else {
+      updatedOccasions = [...selectedOccasions, occasion];
+    }
+    console.log('updatedOcc', updatedOccasions);
+    dispatch(setSelectedFilter({ type: 'occasion', value: updatedOccasions }));
+  }
+
   return (
     <div className='OccasionsFilter'>
-        <h4>Occasions</h4>
+        <h4>Occasion</h4>
         <div className='filter-tags'>
-            <ul className='filter-tags-list'>
-                <li></li>
-            </ul>
+        <ul className="filter-tags-list">
+                    {occasions.map((occasion, index) => (
+                        <li
+                            key={index}
+                            onClick={() => handleSelectedOccasion(occasion)}
+                            className={selectedOccasions.includes(occasion) ? 'selected' : ''}
+                        >
+                            {occasion}
+                        </li>
+                    ))}
+                </ul>
         </div>
     </div>
   )

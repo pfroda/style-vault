@@ -29,7 +29,7 @@ function SeasonsFilter() {
 
   return (
     <div className='SeasonsFilter'>
-      <h4>Seasons</h4>
+      <h4>Season</h4>
       <div className='filter-tags'>
         <ul className='filter-tags-list'>
           {seasons.map((season, index) => (
