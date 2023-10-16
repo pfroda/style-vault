@@ -6,12 +6,12 @@ import cookie from 'cookie';
 const secret = "oraleputos";
 
 export default function middleware(request: NextRequest) {
+  console.log('hello token: ', token);
   const token = cookies.token || null;
   // const token = request.cookies['token']
   // const url = request.url;
   const url = request.nextUrl.pathname;
 
-  console.log('hello token: ', token);
 
   // if (request.nextUrl.pathname.startsWith('/dashboard')) {
   if (url.includes('/dashboard')) {

@@ -58,7 +58,7 @@
     & button {
       height: 30px;
       padding-inline: 10px;
-      background-color: rgba(114, 198, 211, 0.4);
+      background-color: var(--primary-color);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       
