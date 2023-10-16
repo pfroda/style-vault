@@ -103,12 +103,20 @@ function ItemForm() {
           </div>
 
           <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={seasonImg} alt="Icono" />
-              <label htmlFor="season">Season</label>
-            </div>
-            <input id="season" className='item-input' type="text" {...register("season", { required: true })} placeholder='Season' />
-          </div>
+  <div className='label-container'>
+    <Image src={seasonImg} alt="Icono" />
+    <label htmlFor="season">Season</label>
+  </div>
+  <input
+    id="season"
+    className='item-input'
+    type="text"
+    name="season[]"
+    {...register("season", { required: true })}
+    placeholder='Season'
+    multiple // Allow multiple values
+  />
+</div>
 
 
           <div className='input-wrapper'>

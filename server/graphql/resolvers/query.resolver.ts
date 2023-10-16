@@ -24,7 +24,9 @@ export const queryResolver = {
     if (season) filter.season = { 
       [Op.or]: season.map(s => ({ [Op.contains]: [s] })) 
     };
-    if (brand) filter.brand = { [Op.or]: season.map(b => ({ [Op.contains]: [b] })) };
+    if (brand) filter.brand = { 
+      [Op.or]: brand.map(b => ({ [Op.contains]: [b] }))
+    };
     if (location) filter.location = location;
     if (category === 'All') {
       // don't filter if user clicks all
