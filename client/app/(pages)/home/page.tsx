@@ -1,11 +1,13 @@
-'use client'
-import Home from '../../components/Home/Home'
-import Footer from '@/app/components/Footer/Footer'
+'use client';
+import Header from '@/app/components/Header/Header';
+import Footer from '@/app/components/Footer/Footer';
+import Social from '@/app/components/Social/SocialGrid/SocialGrid';
 
 function index() {
   return (
     <>
-      <Home />
+      <Header />
+      <Social />
       <Footer />
     </>
   )

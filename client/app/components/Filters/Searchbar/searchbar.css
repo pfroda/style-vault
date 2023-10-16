@@ -1,0 +1,31 @@
+.search-bar-label {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 10px;
+}
+
+.searchbar-input {
+  background-color: rgb(250, 245, 245);
+  color: rgb(143, 138, 138);
+  border-radius: 7px;
+  width: 95vw;
+  height: 40px;
+  padding: 10px 0px 10px 35px;
+  &::placeholder {
+    padding-left: 10px;
+  }
+  &:focus {
+    outline-style: none;
+  }
+}
+
+.searchbar-icon {
+  z-index: 99;
+  position: absolute;
+  left: 8vw;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+}

@@ -1,0 +1,28 @@
+.Filter {
+  width: 100%;
+  padding: 15px 20px 15px 20px;
+  overflow-x: auto;
+}
+
+.Filter::-webkit-scrollbar {
+  display: none;
+}
+
+.filters ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+  color: grey;
+  white-space: nowrap;
+}
+
+li:hover, li.selected {
+  color: black;
+  filter: brightness(1.2);
+  border-bottom: 1px solid black;
+}
+
+.filters ul li:last-of-type {
+  padding-right: 20px;
+}

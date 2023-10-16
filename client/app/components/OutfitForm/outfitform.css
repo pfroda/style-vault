@@ -1,13 +1,17 @@
 .OutfitForm { 
   display: flex;
   flex-direction: column;
-  & .outfit-header {
-    height: 10vh;
-    width: 100vw;
-    background-color: azure;
-  }
+  overflow: hidden;
+  position: relative;
+    & .back {
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      width: 18px;
+      height: 18px;
+    }
   & .outfit-slider {
-    background-color: rgba(163, 163, 227, 0.2);
+    /* background-color: rgba(163, 163, 227, 0.2); */
     width: 100vw;
     height: calc(90vh - 80px);
     & .outfit-1, .outfit-2, .outfit-3 {
@@ -16,24 +20,36 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      & .img {
-        height: 20vh;
-        width: 50vw;
-        background-color: rgba(196, 138, 138, 0.5);
+      justify-content: space-around;
+      & .outfit3 {
+        max-width: 170vw;
+      }
+      & .outfit2 {
+        max-width: 180vw;
+      }
+      & .outfit1 {
+        max-width: 200vw;
+      }
+      & .img.outfit3, .img.outfit2, .img.outfit1 {
+        & .outfit-slider-img {
+          margin: auto;
+        }
       }
     }
-    & .outfit-1 {
-      background-color: blue;
-    }
-    & .outfit-2 {
-      background-color: rgb(0, 255, 17);
-    }
-    & .outfit-3 {
-      background-color: rgb(144, 67, 124);
-    }
   }
+}
+
+.slick-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.slick-next:before, .slick-prev::before {
+  color: rgba(128, 128, 128, 0.5) !important;
+}
+
+.slick-slide.slick-active {
+  /* background-color: blue !important; */
 }
 
 .OutfitForm {
@@ -42,9 +58,10 @@
     & button {
       height: 30px;
       padding-inline: 10px;
-      background-color: rgb(210, 170, 170);
+      background-color: rgba(114, 198, 211, 0.4);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
+      
     }
   }
 }
@@ -54,23 +71,53 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background-color: rgb(224, 224, 224);
+    /* background-color: rgb(224, 224, 224); */
     height: 50px;
-    position: fixed;
     bottom: 0;
     & .footer-container {
+      position: relative;
       display: flex;
-      /* align-items: center; */
       justify-content: space-around;
+      align-items: center;
       width: 60%;
-      /* background-color: rgb(224, 224, 224); */
+      background-color: rgb(224, 224, 224);
+      height: 100%;
       padding: 5px;
       margin: auto;
-      & .outfit-footer-item {
-        background-color: transparent;
-        &.selected {
-          font-size: 20px;
-          background-color: rgba(165, 42, 42, 0.2);
+      border-top-right-radius: 12px;
+      border-top-left-radius: 12px;
+      border-top: 1px solid rgb(224, 224, 224);
+      & .triangulo {
+        position: absolute;
+        width: 0;
+        height: 0;
+        z-index: 20;
+        border-left: 35px solid transparent;
+        border-right: 35px solid transparent;
+        border-bottom: 50px solid rgb(224, 224, 224);
+        border-top: 3px solid transparent;
+        z-index: -1;
+      }
+      & .triangulo1 {
+        left: 5px;
+        transform: translateX(-50%);
+      }
+      & .triangulo2 {
+        right: 5px;
+        transform: translateX(50%);
+      }
+      & .outfit-icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & .outfit-footer-item {
+          width: 37px;
+          height: 37px;
+          /* background-color: blue; */
+          &.selected {
+            font-size: 20px;
+            /* background-color: rgba(165, 42, 42, 0.2); */
+          }
         }
       }
       & .shuffle-container {
@@ -78,10 +125,13 @@
         justify-content: center;
         align-items: center;
         /* background-color: rgba(0, 0, 0, 0.9); */
-        background-color: white;
+        background-color: black;
         border-radius: 50%;
         width: 30px;
         height: 30px;
+        &.white-shuffle-container {
+          background-color: white;
+        }
         & .shuffle {
           width: 18px;
           height: auto;
@@ -89,4 +139,17 @@
       }
     }
   }
+}
+
+
+.slick-slider {
+  /* display: flex !important;
+  justify-content: center !important; */
+}
+
+.slick-list {
+  /* position: relative !important; */
+}
+.slick-slider .something .slick-initialized {
+  /* position: absolute !important; */
 }

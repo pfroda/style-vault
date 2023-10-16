@@ -1,13 +1,23 @@
 import './itemheader.css'
 
-function ItemHeader({ closetName }) {
+import { useState } from 'react';
+
+function ItemHeader({ closetName, headers, onHeaderClick }) {
+  const [activeButton, setActiveButton] = useState('closet');
+
+  const handleButtonClick = (buttonId: string) => {
+    setActiveButton(buttonId);
+    onHeaderClick(buttonId);
+  };
+
   return (
     <div className='ItemHeader'>
       <h2>{closetName}</h2>
       <div className="items-list-header">
         <div className="header-options">
-          <button className='closet-button'>Closet</button>
-          <button className='outfit-button'>Outfits</button>
+          {Object.keys(headers).map((key) => (
+            <button key={key} className={`${key}-button ${activeButton === key ? 'active' : ''}`} onClick={() => handleButtonClick(key)}>{headers[key]}</button>
+          ))}
         </div>
       </div>
     </div>

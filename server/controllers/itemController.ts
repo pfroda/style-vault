@@ -13,6 +13,7 @@ async function createItem (req, res) {
       closets: item.closets || null,
       occasion: item.occasion || null,
       season: item.season || null,
+      location: item.location || null
     });
 
     res.status(201).send(newItem);
