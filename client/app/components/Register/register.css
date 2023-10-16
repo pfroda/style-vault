@@ -3,31 +3,50 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  padding-top: 8vh;
   align-items: center;
-  background-color: rgb(52, 52, 52);
+  /* background-color: rgb(223, 203, 203); */
+  gap: 20px;
+}
+
+.logo-image {
+  height: 60px;
+  width: auto;
+}
+
+.home-image {
+  width: 55vw;
+  height: auto;
 }
 
 .register-page, .login-page {
-  background-color: rgb(178, 176, 176);
-  padding: 25px;
+  /* background-color: rgb(178, 176, 176); */
+  /* padding: 25px; */
   display: flex;
   flex-direction: column;
   border-radius: 4px;
-  min-width: 300px;
+  min-width: 75vw;
 }
 
 .register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   & .register-input, .register-button {
-    /* border: 1px solid black; */
     border-radius: 4px;
     padding: 5px;
     width: 100%;
   }
+  & .register-input {
+    border: 1px solid black;
+    padding-left: 10px;
+  }
   & .register-button {
-    /* background-color: aquamarine; */
     font-weight: 500;
-    background-color: white;
+    color: white;
+    background-color: black;
+    height: 32px;
   }
   & > *:not(:first-child) {
     margin-top: 10px;
@@ -42,10 +61,12 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: white;
+  color: rgb(88, 88, 88);
 }
 
 .swap-to-link {
   /* color: rgb(126, 126, 158); */
-  font-weight: 600;
+  font-weight: 500;
+  text-decoration: underline;
+  color: black;
 }
