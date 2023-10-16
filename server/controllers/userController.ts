@@ -63,10 +63,16 @@ async function logUser (req, res) {
     }
 };
 
-async function updateUser (req, res) {
+async function updateUser(req, res) {
   try {
-    const updatedUserData = req.body;
     const userId = req.params.userId;
+    const existingUser = await User.findOne({ where: { id: userId } });
+
+    if (!existingUser) {
+      throw new Error('User not found');
+    }
+
+    const updatedUserData = req.body;
     let passwordUpdate = {};
 
     if (updatedUserData.password) {
@@ -76,10 +82,10 @@ async function updateUser (req, res) {
 
     const [updatedRowCount, updatedUser] = await User.update(
       {
-        username: updatedUserData.username,
-        email: updatedUserData.email,
-        name: updatedUserData.name,
-        surname: updatedUserData.surname,
+        username: updatedUserData.username || existingUser.username,
+        email: updatedUserData.email || existingUser.email,
+        name: updatedUserData.name || existingUser.name,
+        surname: updatedUserData.surname || existingUser.surname,
         ...passwordUpdate,
       },
       {
@@ -100,7 +106,6 @@ async function updateUser (req, res) {
     res.status(400).send({ error: error.message, message: 'Could not update user' });
   }
 }
-
 
 export default {
   registerUser,
