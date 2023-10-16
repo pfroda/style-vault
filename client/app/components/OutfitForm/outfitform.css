@@ -3,17 +3,6 @@
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  & .outfit-header {
-    height: 10vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.4);
-    & .logo {
-      width: 140px;
-      height: auto;
-    }
     & .back {
       position: absolute;
       left: 13px;
@@ -21,7 +10,6 @@
       width: 18px;
       height: 18px;
     }
-  }
   & .outfit-slider {
     /* background-color: rgba(163, 163, 227, 0.2); */
     width: 100vw;
@@ -70,9 +58,10 @@
     & button {
       height: 30px;
       padding-inline: 10px;
-      background-color: rgba(114, 198, 211, 0.7);
+      background-color: rgba(114, 198, 211, 0.4);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
+      
     }
   }
 }

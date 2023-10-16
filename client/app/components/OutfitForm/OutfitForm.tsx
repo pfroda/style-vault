@@ -8,11 +8,10 @@ import out3white from '../../../public/outfit-three-white.png';
 import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
-import logo from '../../../public/logo1.png';
 import back from '../../../public/close.png';
 
 import OutfitSlider from '../OutfitSlider/OutfitSlider';
-
+import Header from '../Header/Header';
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation'; 
@@ -58,8 +57,8 @@ function OutfitForm() {
   return (
     <div className='OutfitForm'>
       <div className="outfit-header">
+        <Header />
         <Image className='back' alt="" src={back} onClick={handleBack} />
-        <Image className='logo' alt="" src={logo} />
       </div>
       
       <div className="outfit-slider">
