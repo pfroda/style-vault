@@ -194,49 +194,118 @@ const handleColorClick = (colorToRemove: string) => {
               <Image src={categoriesImg} alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
-            <input 
-          id="category" 
-          className='item-input' 
-          type="text" 
-          {...register("category", { required: true })} 
-          placeholder={imageInfo?.labels} 
-          value={imageInfo?.labels || ''} 
-          onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}
-        />
-          </div>
+            <select 
+              id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))} 
+              >
+              {categoriesArray.map(category => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+            </select>
+           </div>
 
-          <div className='input-wrapper'>
+
+           <div className='input-wrapper'>
+          <div className='label-container'>
+          <Image src={seasonImg} alt="Icono" />
+            <label htmlFor="season">Season</label>
+            
+          </div>
+          <div className='seasonArray'>
+          {selectedSeasons.map((season, index) => (
+                <div 
+                className='eachSeason' 
+                key={index} 
+                onClick={() => handleSeasonClick(season)}
+              >
+                {season}
+              </div>
+              
+            ))} 
+            </div>
+          <select multiple  id="season" className='item-input' {...register("season", { required: true, setValueAs: () => selectedSeasons })} value={selectedSeasons} onChange={handleSeasonChange}  defaultValue="Season" 
+           style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
+          >
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Autumn">Autumn</option>
+            <option value="Winter">Winter</option>
+          </select>
+        </div>
+
+
+
+        <div className='input-wrapper'>
   <div className='label-container'>
-    <Image src={seasonImg} alt="Icono" />
-    <label htmlFor="season">Season</label>
+    <Image src={occasionImg} alt="Icono" />
+    <label htmlFor="occasion">Occasion</label>
   </div>
-  <input
-    id="season"
-    className='item-input'
-    type="text"
-    name="season[]"
-    {...register("season", { required: true })}
-    placeholder='Season'
-    multiple // Allow multiple values
-  />
+  <div className='occasionArray'>
+    {selectedOccasions.map((occasion, index) => (
+      <div 
+        className='eachOccasion' 
+        key={index} 
+        onClick={() => handleOccasionClick(occasion)}
+      >
+        {occasion}
+      </div>
+    ))}
+  </div>
+  <select multiple id="occasion" className='item-input' {...register("occasion", { required: true, setValueAs: () => selectedOccasions })} value={selectedOccasions} onChange={handleOccasionChange}
+    style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
+  >
+    <option value="Lounge">Lounge</option>
+    <option value="Active">Active</option>
+    <option value="Work">Work</option>
+    <option value="Formal">Formal</option>
+    <option value="Night">Night</option>
+    <option value="Day">Day</option>
+    <option value="Semi-Formal">Semi-Formal</option>
+  </select>
 </div>
 
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={occasionImg} alt="Icono" />
-              <label htmlFor="occasion">Occasion</label>
-            </div>
-            <input id="occasion" className='item-input' type="text" {...register("occasion", { required: true })} placeholder='Occasion' />
-          </div>
+<div className='input-wrapper'>
+  <div className='label-container'>
+    <Image src={colorImg} alt="Icono" />
+    <label htmlFor="colorSelect">Color</label>
+  </div>
+  <div className='colorArray'>
+    {selectedColors.map((color, index) => (
+      <div 
+        className='eachColor' 
+        key={index} 
+        onClick={() => handleColorClick(color)}
+      >
+        <span className='colorDot' style={{ backgroundColor: color }}></span> {color}
+      </div>
+    ))}
+  </div>
+  <select 
+    multiple 
+    id="colorSelect" 
+    className='item-input' 
+    {...register("color", { 
+      required: true, 
+      setValueAs: () => selectedColors 
+    })} 
+    value={selectedColors} 
+    onChange={handleColorChange}
+    style={{ height: "20px", overflowY: "visible", boxShadow: "1px 1px 5px gray" }}
+  >
+    <option value="Red">Red</option>
+    <option value="Blue">Blue</option>
+    <option value="Green">Green</option>
+    <option value="Yellow">Yellow</option>
+    <option value="Black">Black</option>
+    <option value="White">White</option>
+    <option value="Purple">Purple</option>
+    <option value="Orange">Orange</option>
+  </select>
+</div>
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={colorImg} alt="Icono" />
-              <label htmlFor="color">Color</label>
-            </div>
-            <input id="color" className='item-input' type="text" {...register("color", { required: true })} placeholder="Color" value={rgbToColor (imageInfo?.hexColor) || ' '}    onChange={e => setImageInfo(prev => ({ ...prev, hexColor: e.target.value }))} />
-            </div>
+
           <div className='input-wrapper'>
             <div className='label-container'>
               <Image src={brandImg} alt="Icono" />
