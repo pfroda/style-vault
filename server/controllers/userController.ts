@@ -63,7 +63,47 @@ async function logUser (req, res) {
     }
 };
 
+async function updateUser (req, res) {
+  try {
+    const updatedUserData = req.body;
+    const userId = req.params.userId;
+    let passwordUpdate = {};
+
+    if (updatedUserData.password) {
+      const newPasswordHash = await bcrypt.hash(updatedUserData.password, 10);
+      passwordUpdate = { password: newPasswordHash };
+    }
+
+    const [updatedRowCount, updatedUser] = await User.update(
+      {
+        username: updatedUserData.username,
+        email: updatedUserData.email,
+        name: updatedUserData.name,
+        surname: updatedUserData.surname,
+        ...passwordUpdate,
+      },
+      {
+        where: {
+          id: userId,
+        },
+        returning: true,
+      }
+    );
+
+    if (updatedRowCount === 0) {
+      throw new Error('User not found');
+    }
+
+    res.status(200).json(updatedUser[0]);
+  } catch (error) {
+    console.error('Error updating user:', error);
+    res.status(400).send({ error: error.message, message: 'Could not update user' });
+  }
+}
+
+
 export default {
   registerUser,
   logUser,
+  updateUser,
 };

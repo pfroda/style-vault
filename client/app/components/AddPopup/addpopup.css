@@ -4,7 +4,8 @@
   position: absolute;
   /* background-color: antiquewhite; */
   /* background-color: rgba(170, 170, 170, 0.2); */
-  background-color: #dee2e6;
+  /* background-color: #dee2e6; */
+  background-color: var(--primary-color);
   width: 100vw;
   gap: 10px;
   padding-top: 10px;
@@ -15,8 +16,8 @@
   transition: bottom 0.3s ease;
   z-index: -1;
   & button {
-    /* background-color: rgb(221, 195, 195); */
-    background-color: #f8f9fa;
+    /* background-color: #f8f9fa; */
+    background-color: white;
     width: 90vw;
     margin: auto;
     border-radius: 5px;

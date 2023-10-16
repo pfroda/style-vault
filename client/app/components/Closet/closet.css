@@ -11,9 +11,9 @@
       margin-top: 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      & .arrow {
-        height: 30px;
+      /* align-items: center; */
+      & .edit {
+        height: 18px;
         width: auto;
       }
       & .profile-content {

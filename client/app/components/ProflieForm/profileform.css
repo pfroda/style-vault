@@ -1,0 +1,58 @@
+.ProfileForm {
+  & .user-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 10px;
+    padding-inline: 10px;
+    & .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      & label {
+        padding-left: 5px;
+      }
+      & .user-input {
+        outline-style: none;
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        padding-left: 5px;
+        &::placeholder {
+          font-size: 15px;
+        }
+      }
+    }
+    & .user-button {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 50px;
+    }
+    & .input-image-wrapper {
+      & .image-content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        & .user-input-image {
+          opacity: 0;
+          z-index: 5;
+          max-width: 130px;
+          height: 25px;
+        }
+        & .actual-img {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background-color: rgb(187, 187, 187);
+        }
+        & .change-img {
+          position: absolute;
+          left: 70px;
+        }
+      }
+    }
+  }
+}
