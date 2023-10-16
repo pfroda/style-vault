@@ -96,61 +96,6 @@ export const queryResolver = {
     const closet = await Closet.findByPk(id);
     if (!closet) throw new Error('Closet not found');
     return closet.getOutfits();
-  },
-
-  getColors: async (_, { userId }) => {
-    const items = await Item.findAll({
-      attributes: ['color'],
-      where: { userId },
-      group: ['color'],
-      raw: true
-    });
-
-    if (!items.length) {
-      throw new Error('No items/colors found for this user');
-    }
-    return items.map(item => item.color);
-  },
-
-  getBrands: async (_, { userId }) => {
-    const items = await Item.findAll({
-      attributes: ['brand'],
-      where: { userId },
-      group: ['brand'],
-      raw: true
-    });
-
-    if (!items.length) {
-      throw new Error('No items/brands found for this user');
-    }
-    return items.map(item => item.brand);
-  },
-
-  getOccasions: async (_, { userId }) => {
-    const items = await Item.findAll({
-      attributes: ['occasion'],
-      where: { userId },
-      group: ['occasion'],
-      raw: true
-    });
-
-    if (!items.length) {
-      throw new Error('No items/occasions found for this user');
-    }
-    return items.map(item => item.occasion);
-  },
-
-  getLocations: async (_, { userId }) => {
-    const items = await Item.findAll({
-      attributes: ['location'],
-      where: { userId },
-      group: ['location'],
-      raw: true
-    });
-
-    if (!items.length) {
-      throw new Error('No items/locations found for this user');
-    }
-    return items.map(item => item.location);
-  }
+  } 
 };
+
