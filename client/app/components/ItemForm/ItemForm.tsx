@@ -139,7 +139,7 @@ function ItemForm() {
             </select>
            </div>
 
-{/* gsta */}
+
            <div className='input-wrapper'>
           <div className='label-container'>
           <Image src={seasonImg} alt="Icono" />
