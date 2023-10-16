@@ -1,10 +1,10 @@
 'use client';
 
-import { RegisterUser } from '@/app/Interfaces';
+import { User } from '@/app/Interfaces';
 import { createSlice, PayloadAction  } from '@reduxjs/toolkit';
 
 interface AuthState {
-  user: null | RegisterUser;
+  user: null | User;
   isAuthenticated: boolean;
 }
 
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<RegisterUser | null>) => {
+    setUser: (state, action: PayloadAction<User | null>) => {
       state.isAuthenticated = !!action.payload;
       state.user = action.payload;
     },

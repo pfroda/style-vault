@@ -86,6 +86,7 @@ async function updateUser(req, res) {
         email: updatedUserData.email || existingUser.email,
         name: updatedUserData.name || existingUser.name,
         surname: updatedUserData.surname || existingUser.surname,
+        profilePicture: updatedUserData.profilePicture || existingUser.profilePicture,
         ...passwordUpdate,
       },
       {

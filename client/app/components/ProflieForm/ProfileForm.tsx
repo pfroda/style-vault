@@ -19,22 +19,24 @@ function ProfileForm() {
   const submitForm = handleSubmit(async (userData) => {
     try {
       const selectedFile = userData.profilePicture[0];
+      let imageUrl = null;
       if (selectedFile) {
-        const imageUrl: string | null = await uploadPhotoToCloudinary(selectedFile);
-        if (imageUrl) {
-          setItemUrl(imageUrl);
-          const userId = user?.id!;
-          userData.profilePicture = imageUrl;
-          handleUpdate(userId, userData);
-          router.push('/dashboard/cupboard');
-        } else {
+        imageUrl = await uploadPhotoToCloudinary(selectedFile);
+        if (!imageUrl) {
           console.error('Error uploading photo to Cloudinary');
+          return;
         }
       }
+      setItemUrl(imageUrl);
+      const userId = user?.id!;
+      userData.profilePicture = imageUrl;
+      handleUpdate(userId, userData);
+      router.push('/dashboard/cupboard');
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   });
+  
 
   return (
     <div className='ProfileForm'>
@@ -45,7 +47,7 @@ function ProfileForm() {
           <div className="input-image-wrapper">
             <label htmlFor="profilePicture"></label>
             <div className="image-content">
-              <div className="actual-img"></div>
+              {user?.profilePicture ? <img src={user.profilePicture} alt="" className='actual-img' /> : <div className="actual-img"></div>}
               <input className='user-input-image' type="file" accept="image/*"
                 {...register("profilePicture")} />
               <div className="change-img">Change picture</div>
@@ -53,23 +55,23 @@ function ProfileForm() {
           </div>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
-            <input className='user-input' type="text" {...register("username")} placeholder='Username' defaultValue={user?.username || ''} />
+            <input className='user-input' type="text" {...register("username")} defaultValue={user?.username || ''} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="username">Email</label>
-            <input className='user-input' type="email" {...register("email")} placeholder='Email' defaultValue={user?.email || ''} />
+            <input className='user-input' type="email" {...register("email")}  defaultValue={user?.email || ''} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="username">Password</label>
-            <input className='user-input' type="password" {...register("password")} placeholder='Password' />
+            <input className='user-input' type="password" {...register("password")} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="name">Name</label>
-            <input className='user-input' type="text" {...register("name")} placeholder='Name' />
+            <input className='user-input' type="text" {...register("name")} defaultValue={user?.name || ''} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="surname">Surname</label>
-            <input className='user-input' type="text" {...register("surname")} placeholder='Surname' />
+            <input className='user-input' type="text" {...register("surname")} defaultValue={user?.surname || ''} />
           </div>
           <button className='user-button' type="submit" >Submit changes</button>
         </form>
