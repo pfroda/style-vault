@@ -2,11 +2,16 @@ import './socialgrid.css';
 
 import heartwhite from '../../../../public/heart-white.png';
 import heartblack from '../../../../public/heart-black.png';
+import searchuser from '../../../../public/search-user.png';
+import close from '../../../../public/close.png';
+import Header from '../../Header/Header';
+import SocialSearch from '../SocialSearch/SocialSearch';
 import { useState } from 'react';
 import Image from 'next/image';
 
 function SocialGrid() {
   const [isFollowed, setIsFollowed] = useState(false);
+  const [serachBar, setSearchBar] = useState(false);
 
   const handleFollow = () => {
     console.log('clicked');
@@ -22,8 +27,18 @@ function SocialGrid() {
     { id: 3, url: myUrl}
   ];
 
+  const handleSearch = () => {
+    console.log('seraching...');
+    setSearchBar(!serachBar);
+  }
+
   return (
     <div className='SocialGrid'>
+      {serachBar && <SocialSearch />}
+      <Header />
+      <div className="search-container">
+        <Image src={serachBar ? close : searchuser} alt="" className={serachBar ? 'close-button' : 'search-user-button'} onClick={handleSearch} />
+      </div>
       <div className="social-profile">
         <div className="social-header">
           <div className="social-image"></div>
