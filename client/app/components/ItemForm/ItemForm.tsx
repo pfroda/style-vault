@@ -36,6 +36,7 @@ function ItemForm() {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
   const [showColorMenu, setShowColorMenu] = useState(false);
+  const [showOccasionMenu, setShowOccasionMenu] = useState(false);
 
 
 
@@ -182,6 +183,11 @@ const circleStyle = {
     { id: 7, color: 'Purple', value: '#800080' }
   ];
 
+  const occasionsData = [
+    "Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"
+  ];
+
+  
   return (
     <div className='ItemForm'>
       <div className="img-form-container">
