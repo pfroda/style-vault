@@ -15,25 +15,17 @@ import Header from '../Header/Header';
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation'; 
-import { useForm } from 'react-hook-form';
-import { Outfit } from '@/app/Interfaces';
 import { useState } from 'react';
 
 function OutfitForm() {
-  const { register, handleSubmit } = useForm<Outfit>();
   const { user, handleRegister } = useAuth();
   const [currentOutfit, setCurrentOutfit] = useState({id: 'outfit-1'});
   const [showShuffle, setShowShuffle] = useState(false);
 
   const router = useRouter();
 
-  const submitForm = handleSubmit(async (outfit: Outfit) => {
-    handleRegister(outfit);
-    // router.push('/dashboard/cupboard');
-  });
-
-  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697288267/file_idv86n.png';
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+
   const items = [
     { id: 1, url: myUrl, brand: 'Marca 1' },
     { id: 2, url: myUrl, brand: 'Marca 2' },
@@ -87,9 +79,6 @@ function OutfitForm() {
       <div className='outfit-form'>
         <button className='outfit-button' type="submit" onClick={handleOutfit} >Add Outfit</button>
       </div>
-      {/* <form onSubmit={submitForm} className='outfit-form'>
-        <button className='outfit-button' type="submit" onClick={handleOutfit} >Add Outfit</button>
-      </form> */}
 
       <footer>
         <div className="footer-container">

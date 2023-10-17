@@ -1,6 +1,8 @@
 import { Outfit } from '../models/outfitSchema';
 import { Item } from '../models/itemSchema';
 import sharp from 'sharp';
+import axios from 'axios';
+import cloudinaryControllers from './cloudinaryControllers';
 
 async function createOutfit (req, res) {
   try {
@@ -78,19 +80,65 @@ async function editOutfit(req, res) {
   }
 }
 
-// const url = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
-// const eyesUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
-// const mouthUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+async function generateOutfitImage(req, res) {
+  const urls = req.body;
+  // const urls = [
+  //   'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg', // Imagen 1
+  //   'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg', // Imagen 2
+  //   'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg',
+  // ];
 
-async function generateImage() {
-  joinImages(['../../client/public/home-image.png', '../../client/public/home-image.png']).then((img) => {
-    img.toFile('out.png');
-  });
+  try {
+    const imageBuffers = await Promise.all(
+      urls.map(async (url, index) => {
+        let width = 200;
+        let height = 200;
+
+        if (index === (urls.length - 1)) {
+          width = 200;
+          height = 100;
+        }
+
+        const response = await axios.get(url, { responseType: 'arraybuffer' });
+        const imageBuffer = Buffer.from(response.data, 'binary');
+
+        return sharp(imageBuffer)
+          .resize(width, height)
+          .toBuffer();
+      })
+    );
+
+    const totalHeight = 200 * (urls.length - 1) + 100;
+
+    const composedImageBuffer = await sharp({
+      create: {
+        width: 200,
+        height: totalHeight,
+        channels: 4,
+        background: { r: 255, g: 255, b: 255, alpha: 0 },
+      },
+    })
+      .composite(
+        imageBuffers.map((buffer, index) => ({
+          input: buffer,
+          top: index * 200,
+          left: 0,
+        }))
+      )
+      .png()
+      .toBuffer();
+
+    // await sharp(composedImageBuffer).toFile('output.png');
+    const cloudinaryResponse = await cloudinaryControllers.uploadOutfitToCloudinary(composedImageBuffer);
+
+    console.log('Imagen compuesta y guardada exitosamente.');
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-generateImage();
-
+// generateOutfitImage();
 
 export default {
-  createOutfit, deleteOutfit, editOutfit, generateImage
+  createOutfit, deleteOutfit, editOutfit, generateOutfitImage
 }

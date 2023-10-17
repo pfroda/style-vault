@@ -44,6 +44,34 @@ async function uploadToCloudinary(req, res) {
   }
 }
 
+async function uploadOutfitToCloudinary(imageBuffer) {
+  try {
+    if (!imageBuffer || !(imageBuffer instanceof Buffer)) {
+      throw new Error('Invalid image buffer provided');
+    }
+
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          resource_type: "image",
+          use_filename: true,
+          unique_filename: true,
+        },
+        (error, result) => {
+          if (error) {
+            reject({ success: false, error });
+          } else {
+            resolve({ success: true, result });
+          }
+        }
+      ).end(imageBuffer);
+    });
+  } catch (error) {
+    console.error('Error uploading to Cloudinary:', error);
+    throw error;
+  }
+}
+
 export default {
-  uploadToCloudinary
+  uploadToCloudinary, uploadOutfitToCloudinary
 };
