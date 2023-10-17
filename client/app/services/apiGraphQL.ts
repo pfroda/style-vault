@@ -65,6 +65,7 @@ export const queryItemById = (userId: string, id: string): Promise<GraphQLRespon
         category
         color
         occasion
+        location
         season
         brand
       }
