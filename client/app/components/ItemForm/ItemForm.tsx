@@ -37,6 +37,8 @@ function ItemForm() {
 
   const [showColorMenu, setShowColorMenu] = useState(false);
 
+
+
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
   };
@@ -118,7 +120,6 @@ const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   } else {
     setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
   }
-   console.log("Seasons escogidas:", selectedValue);
    console.log("array:", selectedSeasons);
 };
 
@@ -149,6 +150,7 @@ const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   }
 };
 
+
 // const handleColorClick = (colorToRemove: string) => {
 //   setSelectedColors(prevColors => prevColors.filter(color => color !== colorToRemove));
 // };
@@ -159,6 +161,9 @@ const handleColorClick = (color: string) => {
     setSelectedColors((prevColors) => [...prevColors, color]);
   }
 };
+
+console.log("colores--->",selectedColors)
+
 
 
 console.log("Label-->", imageInfo?.labels)
@@ -252,25 +257,8 @@ const circleStyle = {
             <Image src={colorImg} alt="Icono" />
             <label htmlFor="colorSelect">Color</label>
           </div>
-          {/* <div className='colorArray'>
-            {selectedColors.map((color, index) => (
-              <div className='eachColor' key={index} onClick={() => handleColorClick(color)}>
-                <span className='colorDot' style={{ backgroundColor: color }}></span> {color}
-              </div>))}
-          </div> */}
-          {/* <select multiple id="colorSelect" className='item-input' {...register("color", { required: true, setValueAs: () => selectedColors })} value={selectedColors} onChange={handleColorChange}
-             style={{ display: showColorMenu ? 'block' : 'none' }}>
-            <option className='hey' value="Red">Red</option>
-            <option className='hey' value="Blue">Blue</option>
-            <option className='hey' value="Green">Green</option>
-            <option className='hey' value="Yellow">Yellow</option>
-            <option className='hey' value="Black">Black</option>
-            <option className='hey' value="White">White</option>
-            <option className='hey' value="Purple">Purple</option>
-            <option className='hey' value="Orange">Orange</option>
-          </select> */}
-        </div>
         
+        </div>
         <ul className="colors-dropdown" style={{ display: showColorMenu ? 'flex' : 'none' }}>
           {colorsData.map((colorItem) => (
             <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
@@ -305,3 +293,26 @@ const circleStyle = {
 }
 
 export default ItemForm
+
+
+
+
+
+
+  {/* <div className='colorArray'>
+            {selectedColors.map((color, index) => (
+              <div className='eachColor' key={index} onClick={() => handleColorClick(color)}>
+                <span className='colorDot' style={{ backgroundColor: color }}></span> {color}
+              </div>))}
+          </div> */}
+          {/* <select multiple id="colorSelect" className='item-input' {...register("color", { required: true, setValueAs: () => selectedColors })} value={selectedColors} onChange={handleColorChange}
+             style={{ display: showColorMenu ? 'block' : 'none' }}>
+            <option className='hey' value="Red">Red</option>
+            <option className='hey' value="Blue">Blue</option>
+            <option className='hey' value="Green">Green</option>
+            <option className='hey' value="Yellow">Yellow</option>
+            <option className='hey' value="Black">Black</option>
+            <option className='hey' value="White">White</option>
+            <option className='hey' value="Purple">Purple</option>
+            <option className='hey' value="Orange">Orange</option>
+          </select> */}

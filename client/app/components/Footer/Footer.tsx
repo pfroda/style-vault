@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
-function Footer() {
+function  Footer () {
   const pathname = usePathname();
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(pathname);
