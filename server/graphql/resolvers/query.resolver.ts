@@ -2,6 +2,9 @@ import { Op, Sequelize, Model, DataType } from "sequelize";
 import { Item } from "../../models/itemSchema";
 import { Outfit } from "../../models/outfitSchema";
 import { Closet } from "../../models/closetSchema";
+import { User } from "../../models/userSchema";
+import { FavoriteItem } from "../../models/favoriteItemSchema";
+import { FavoriteOutfit } from "../../models/favoriteOutfitSchema";
 
 interface FilterConditions {
   color?: string[];
@@ -15,7 +18,6 @@ interface FilterConditions {
 
 export const queryResolver = {
   getItems: async (_, { userId, color, occasion, season, brand, location, category }: FilterConditions) => {
-    console.log('hello idiot')
     const filter: Record<string, any> = {};
     if (userId) filter.userId = userId;
 
@@ -178,7 +180,52 @@ export const queryResolver = {
     const closet = await Closet.findByPk(id);
     if (!closet) throw new Error('Closet not found');
     return closet.getOutfits();
-  } 
+  },
+
+  getAllUsers: async () => {
+    return User.findAll();
+  },
+
+  getUserById: async (_, { id }) => {
+    const user = await User.findByPk(id);
+    if (!user) throw new Error('User not found');
+    return user;
+  },
+
+  getFollowers: async (_, { userId }) => {
+    const user = await User.findByPk(userId, {
+      include: [{ model: User, as: 'followers' }]
+    });
+    if (!user) throw new Error('User not found');
+    return user.followers;
+  },
+
+  getFollowing: async (_, { userId }) => {
+    const user = await User.findByPk(userId, {
+      include: [{ model: User, as: 'following' }]
+    });
+    if (!user) throw new Error('User not found');
+    return user.following;
+  },
+
+  getFavoriteItems: async (_, { userId }) => {
+    const favoriteItems = await FavoriteItem.findAll({
+        where: { userId },
+        include: [ Item ] 
+    });
+    if (!favoriteItems.length) throw new Error('No favorite items found for this user');
+    return favoriteItems;
+},
+
+  getFavoriteOutfits: async (_, { userId }) => {
+    const favoriteOutfits = await FavoriteOutfit.findAll({
+        where: { userId },
+        include: [ Outfit ]  
+    });
+    if (!favoriteOutfits.length) throw new Error('No favorite outfits found for this user');
+    return favoriteOutfits;
+},
+
 };
 
 

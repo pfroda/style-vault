@@ -1,4 +1,5 @@
 import { Item } from '../models/itemSchema';
+import { UserActivity } from '../models/userActivitySchema';
 
 async function createItem (req, res) {
   try {
@@ -16,7 +17,14 @@ async function createItem (req, res) {
       location: item.location || null
     });
 
-    res.status(201).send(newItem);
+   const activity = await UserActivity.create({
+      type: 'NewItemToCloset', 
+      userId: item.userId,
+      itemId: newItem.id,
+      timestamp: new Date()  
+    });
+
+    res.status(201).send(newItem, activity);
   } catch (error) {
     console.error('Error creating item:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the item' });

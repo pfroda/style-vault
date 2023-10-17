@@ -6,7 +6,6 @@ import { Closet } from './closetSchema';
 import { FavoriteItem } from './favoriteItemSchema';
 import { FavoriteOutfit } from './favoriteOutfitSchema';
 
-
 export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   @Attribute(DataTypes.UUID)
   @PrimaryKey
@@ -47,7 +46,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
   declare favoriteItems?: NonAttribute<FavoriteItem[]>;
 
   @HasMany(() => FavoriteOutfit, 'userId')
-  declare favoriteOutfits?: NonAttribute<FavoriteOutfit[]>;
+  declare favoriteOutfits?: NonAttribute<FavoriteOutfit[]>;3
 
   @BelongsToMany(() => User, {
     through: 'userFollows',
@@ -64,6 +63,9 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     },
   })
   declare following?: NonAttribute<User[]>;
+
+  addFollowing?: (user: User) => Promise<void>;
+  removeFollowing?: (user: User) => Promise<void>;
 
 }
 

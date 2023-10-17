@@ -1,4 +1,5 @@
 import { Closet } from '../models/closetSchema';
+import { UserActivity } from '../models/userActivitySchema';
 
 async function createCloset (req, res) {
   try {
@@ -10,7 +11,15 @@ async function createCloset (req, res) {
       name: closet.name,
     });
 
-    res.status(201).send(newCloset);
+    const activity = await UserActivity.create({
+      type: 'NewCloset', 
+      userId: closet.userId,
+      closetId: newCloset.id,
+      timestamp: new Date()  
+    });
+
+
+    res.status(201).send(newCloset, activity);
   } catch (error) {
     console.error('Error creating closet:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the closet' });

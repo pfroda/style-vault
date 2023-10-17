@@ -210,3 +210,90 @@ export const queryLocations = (userId: string): Promise<GraphQLResponse<{ getLoc
   `;
   return fetchGraphQL(query, { userId });
 };
+
+// export const queryAllUsers = (): Promise<GraphQLResponse<{ getAllUsers: User[] }>> => {
+//   const query = `
+//   query Query { 
+//     getAllUsers {
+//       id
+//       username
+//       profilePicture
+//       name
+//       closets {
+//         id
+//         userId
+//         name
+//         items {
+//           id
+//           userId
+//           category
+//           itemUrl
+//           occasion
+//           season
+//           color
+//           brand
+//         }
+//         outfits {
+//           id
+//           userId
+//           name
+//           occasion
+//           season
+//         }
+//       }
+//     }
+//   }    
+//   `;  
+//   return fetchGraphQL(query);
+// };
+
+// export const queryUserById = (id: string): Promise<GraphQLResponse<{ getUserById: User }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { id });
+// };
+
+// export const queryFollowing = (userId: string): Promise<GraphQLResponse<{ getFollowing: { users: User[], count: number } }>> => {
+//   const query = `
+  
+//   `; 
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFollowers = (userId: string): Promise<GraphQLResponse<{ getFollowers: { users: User[], count: number } }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFavoritedOutfits = (userId: string): Promise<GraphQLResponse<{ getFavoritedOutfits: Outfit[] }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFavoritedItems = (userId: string): Promise<GraphQLResponse<{ getFavoritedItems: Item[] }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getItems(userId: $userId) {
+        itemUrl
+        category
+      }
+    }
+    `;
+  return fetchGraphQL(query, { userId });
+};
+  
+
+
+

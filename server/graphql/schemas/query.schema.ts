@@ -13,5 +13,11 @@ export const queries = `#graphql
     getBrands(userId: String!): [String]!
     getOccasions(userId: String!): [String]!
     getLocations(userId: String!): [String]!
+    getAllUsers: [User!]!
+    getUserById(id: String!): User
+    getFollowers(userId: String!): [User!]!
+    getFollowing(userId: String!): [User!]!
+    getFavoriteItems(userId: String!): [FavoriteItem!]!
+    getFavoriteOutfits(userId: String!): [FavoriteOutfit!]!
   }
 `;
