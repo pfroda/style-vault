@@ -1,5 +1,6 @@
 import { Outfit } from '../models/outfitSchema';
 import { Item } from '../models/itemSchema';
+import sharp from 'sharp';
 
 async function createOutfit (req, res) {
   try {
@@ -77,6 +78,19 @@ async function editOutfit(req, res) {
   }
 }
 
+// const url = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+// const eyesUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+// const mouthUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+
+async function generateImage() {
+  joinImages(['../../client/public/home-image.png', '../../client/public/home-image.png']).then((img) => {
+    img.toFile('out.png');
+  });
+}
+
+generateImage();
+
+
 export default {
-  createOutfit, deleteOutfit, editOutfit
-};
+  createOutfit, deleteOutfit, editOutfit, generateImage
+}

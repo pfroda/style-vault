@@ -46,8 +46,12 @@ function OutfitForm() {
   const outfit3 = 'outfit3';
 
   const handleShuffle = () => {
-    console.log('shuffle clicked');
     setShowShuffle(!showShuffle);
+  }
+
+  const handleOutfit = () => {
+    console.log('handling outfit');
+    router.push('/dashboard/outfitsubmit');
   }
 
   return (
@@ -80,9 +84,12 @@ function OutfitForm() {
         </div>}
       </div>
 
-      <form onSubmit={submitForm} className='outfit-form'>
-        <button className='outfit-button' type="submit" >Add Outfit</button>
-      </form>
+      <div className='outfit-form'>
+        <button className='outfit-button' type="submit" onClick={handleOutfit} >Add Outfit</button>
+      </div>
+      {/* <form onSubmit={submitForm} className='outfit-form'>
+        <button className='outfit-button' type="submit" onClick={handleOutfit} >Add Outfit</button>
+      </form> */}
 
       <footer>
         <div className="footer-container">

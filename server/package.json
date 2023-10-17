@@ -13,7 +13,6 @@
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
-  
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -33,7 +32,8 @@
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.33.0",
-    "sequelize-typescript": "^2.1.5"
+    "sequelize-typescript": "^2.1.5",
+    "sharp": "^0.32.6"
   },
   "devDependencies": {
     "@sequelize/core": "^7.0.0-alpha.29",

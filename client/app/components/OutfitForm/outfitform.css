@@ -53,7 +53,7 @@
 }
 
 .OutfitForm {
-  & form {
+  & .outfit-form {
     margin: auto;
     & button {
       height: 30px;

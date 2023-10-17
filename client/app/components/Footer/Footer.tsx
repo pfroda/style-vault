@@ -30,7 +30,7 @@ function  Footer () {
 
   const links = [
     {
-      href: '/home',
+      href: '/dashboard/social',
       imgSrc: pathname === '/home' ? home : home,
       text: 'Home',
     },

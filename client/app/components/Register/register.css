@@ -47,6 +47,9 @@
     color: white;
     background-color: black;
     height: 32px;
+    &:focus {
+      outline-style: none;
+    }
   }
   & > *:not(:first-child) {
     margin-top: 10px;
