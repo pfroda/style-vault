@@ -7,38 +7,72 @@ import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import GoBack from '../../GoBack/GoBack';
 import Image from 'next/image';
-import { Item } from '@/app/Interfaces';
 import { useForm } from 'react-hook-form';
 import trashIcon from '../../../../public/icon-delete.svg'
-
+import { editItem, deleteItem } from '@/app/services/apiItem';
 
 function ItemDetails() {
   const { user } = useAuth();
+  const { register, handleSubmit, setValue } = useForm();
   const { handleEditItem } = useItems();
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
 
   const [item, setItem] = useState<any>(null);
+  const [visibleDelete, setVisibleDelete] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [visibleUpdate, setVisibleUpdate] = useState(false);
 
-  const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
-  const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
-  const categoriesData = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
+//   const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
+//   const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
+//   const categoriesData = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
 
   useEffect(() => {
     if (id) {
         queryItemById(user?.id!, id).then((itemData) => {
             setItem(itemData?.data?.getItemById);
             console.log(itemData.data.getItemById);
-            console.log('item location:', item.location)
+            setValue('location', item.location);
+            setValue('closet', item.closet);
       });
     }
   }, [id]);
 
-
-  const updateForm = () => {
-
+  const handleDeleteAlert = () => {
+    setVisibleDelete(!visibleDelete);
   }
+
+  const handleDelete = () => {
+    console.log('deleting item');
+    if (id) {
+        deleteItem(id);
+    }
+    setConfirmDelete(true);
+    router.push('/dashboard/grid');
+  }
+
+  const updateForm = handleSubmit(async (formData) => {
+    // e.preventDefault();
+    console.log('updating form');
+    setVisibleUpdate(true);
+
+    if (id) {
+        const updatedItem = {
+            userId: user?.id!,
+            itemUrl: item?.itemUrl,
+            color: item?.color,
+            brand: item?.brand,
+            location: formData.location,
+            closet: formData.closet
+        };
+        console.log(updatedItem)
+        await editItem(id, updatedItem)
+    }
+    setTimeout(() => {
+        setVisibleUpdate(false);
+      }, 2500);
+  })
 
   return (
     <div className='ItemDetails'>
@@ -77,7 +111,7 @@ function ItemDetails() {
                     </div>
                 <div className="input-wrapper">
                     <div className="itemdetails-container">
-                        <label htmlFor="occasion">Occasion</label>
+                        <label htmlFor="occasion" >Occasion</label>
                         <ul className="itemdetails-ul">
                         {item.occasion.map((o) => (
                             <li className="itemdetails-li" key={o.id}>{o}</li>
@@ -90,26 +124,35 @@ function ItemDetails() {
 
                 <div className="input-wrapper">
                     <div className="itemdetails-container">
-                        <label htmlFor="location">Location</label>
-                        <input type="text" defaultValue={item.location}/>
+                        <label htmlFor="location" id="occasionlab">Location</label>
+                        <input type="text"
+                        {...register('location')}
+                        defaultValue={item?.location}/>
                     </div>
                 </div>
 
                 <div className="input-wrapper">
                     <div className="itemdetails-container">
                         <label htmlFor="closet">Closet</label>
-                        <input type="text" defaultValue={item.closet}/>
+                        <input type="text"
+                        {...register('closet')}
+                        defaultValue={item.closet}/>
                     </div>
                 </div>
 
                 <div className="itemdetails-actions">
-                    <div className="itemdetails-delete">
-                        <p>Delete item</p>
+                    <div className="itemdetails-delete" onClick={handleDeleteAlert}>
+                        {/* <p>Delete item</p> */}
                         <Image src={trashIcon} alt="trash"/>
                     </div>
                     <div className="itemdetails-update">
                         <button type="submit">Update item</button>
                     </div>
+                </div>
+                <div className="message-confirmation">
+                        {visibleUpdate && <div className="update-confirm" ><p>Yey! Item successfully updated!</p></div>}
+                        {visibleDelete && <div className="delete-secure" onClick={() => handleDelete()} ><p>Sure? <span className='delete-secure-confirm'>Delete item ></span></p></div>}
+
                 </div>
 
                 </form>

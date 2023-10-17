@@ -54,6 +54,7 @@
 .itemdetails-actions {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .itemdetails-actions button {
@@ -95,27 +96,27 @@
  
  /* change default colors for dots in filter */
  
- .colorDot.red {
+.colorDot.red {
      background-color: #fd6767 !important;
    }
    
- .colorDot.blue {
+.colorDot.blue {
      background-color: #619bfe !important;
    }
    
- .colorDot.green {
+.colorDot.green {
      background-color: #468146 !important;
    }
  
-   .colorDot.yellow {
+.colorDot.yellow {
      background-color: #fff872 !important;
    }
 
-   .itemdetails-ul {
+.itemdetails-ul {
     display: flex;
    }
 
-   .itemdetails-li {
+.itemdetails-li {
     font-size: 12px;
     border: 1px solid rgba(185, 183, 183, 0.484);
     color: grey;
@@ -124,3 +125,48 @@
     margin: 0px 0px 0px 5px;
     cursor: pointer;
    }
+
+.itemdetails-container input {
+    /* max width only works with pixels wtf */
+    max-width: 100px; 
+    align-items: center;
+    text-align: center;
+}
+
+.itemdetails-actions {
+    padding-top: 20px;
+}
+.itemdetails-delete {
+    position: relative;
+}
+
+.itemdetails-delete:hover {
+    transform: rotate(30deg);
+   }
+
+.delete-secure p, .update-confirm p {
+    font-size: 12px;
+    color: grey;
+}
+
+.delete-secure {
+    display: inline-block;
+    flex: 1; /* Make both buttons take equal horizontal space */
+}
+
+.update-confirm p {
+    text-align: right;
+}
+
+.delete-secure-confirm {
+    text-decoration: underline;
+}
+
+.message-confirmation {
+    display: flex;
+    justify-content: space-between;
+}
+
+#occasionlab {
+    max-width: fit-content !important;
+}
