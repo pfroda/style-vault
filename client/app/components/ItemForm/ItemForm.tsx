@@ -191,7 +191,7 @@ const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
 return (
   <div className='ItemForm'>
     <div className="img-form-container">
-      {itemUrl && <img src={itemUrl} alt="" />}
+      {itemUrl && <img  src={itemUrl} alt="" />}
       {photoIsLoading && <div className='spinner'></div>}
     </div>
     <div className="custom-file-input">

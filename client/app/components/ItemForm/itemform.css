@@ -4,6 +4,7 @@
   & .custom-file-input {
     position: relative;
     margin-top: 10px;
+    
     & .img-form {
       position: absolute;
       opacity: 0;
@@ -14,18 +15,24 @@
       background-color: #3498db;
     }
     & label {
-      border: 1px solid grey;
-      border-radius: 5px;
+      /* border: 1px solid grey; */
+      /* border-radius: 5px; */
       padding: 3px;
       padding-inline: 20px;
       margin: auto;
       width: fit-content;
+      box-shadow: 5px 3px #dad1d1;
+      height: 40px;
+      
+      
+
     }
   }
   & .img-form-container {
     width: 90vw;
     margin: auto;
-    border: 2px solid rgba(0, 0, 0, 0.6);
+    box-shadow: 1px 2px 2px 5px #f0ecec;
+    border-radius: 5px;
     height: 40vh;
     display: flex;
     justify-content: center;
@@ -224,3 +231,5 @@
     }
   }
 }
+
+
