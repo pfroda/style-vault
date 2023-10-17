@@ -10,8 +10,7 @@ import { Item } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 function Grid() {
   const selectedCategory = useSelector((state) => state.filter.category);
@@ -65,13 +64,15 @@ function Grid() {
   const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
       url: item.itemUrl,
-      brand: item.brand
+      brand: item.brand,
+      id: item.id
     }))
     : items
       .filter(item => item.category === selectedCategory)
       .map((item) => ({
         url: item.itemUrl,
-        brand: item.brand
+        brand: item.brand,
+        id: item.id
       }))
 
   // Esto hay que pasarlo como parametros. Dejar de momento

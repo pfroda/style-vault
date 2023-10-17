@@ -1,0 +1,53 @@
+.SocialSearch {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 55px);
+  /* background-color: rgb(192, 192, 216); */
+  /* z-index: 5; */
+  & .social-header-container {
+    height: 10vh;
+    background-color: var(--header-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & input {
+      border-radius: 3px;
+      width: 90%;
+      height: 60%;
+      padding-left: 35px;
+      font-size: 14px;
+      &:focus {
+        outline-style: none;
+      }
+    }
+    & .search-user {
+      width: 16px;
+      height: fit-content;
+      position: absolute;
+      left: 8vw;
+    }
+  }
+  & .social-results {
+    background-color: white;
+    height: calc(90vh - 55px);
+    & .user-result {
+      height: 60px;
+      /* background-color: beige; */
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding-inline: 20px;
+      gap: 12px;
+      border-bottom: var(--primary-border);
+      & .profile-image {
+        background-color: rgb(161, 154, 154);
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+      }
+      & .profile-username {
+        font-size: 14px;
+      }
+    }
+  }
+}
