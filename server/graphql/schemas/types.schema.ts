@@ -30,4 +30,33 @@ export const types = `#graphql
     season: [String]!
   }
 
+  type User {
+    id: String!
+    username: String!
+    profilePicture: String
+    name: String
+    items: [Item]!
+    outfits: [Outfit]!
+    closets: [Closet]!
+    followers: [User]!
+    following: [User]!
+    followersCount: Int!
+    followingCount: Int!
+    favoriteItems: [FavoriteItem!]!
+    favoriteOutfits: [FavoriteOutfit!]!
+  }
+
+  type FavoriteItem {
+    id: String!
+    userId: String!
+    itemId: String!
+    item: Item!
+  }
+
+  type FavoriteOutfit {
+    id: String!
+    userId: String!
+    outfitId: String!
+    outfit: Outfit!
+  }
 `;

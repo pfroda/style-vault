@@ -19,4 +19,3 @@ export class FavoriteItem extends Model<InferAttributes<FavoriteItem>, InferCrea
 }
 
 
-

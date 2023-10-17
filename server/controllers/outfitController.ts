@@ -1,5 +1,6 @@
 import { Outfit } from '../models/outfitSchema';
 import { Item } from '../models/itemSchema';
+import { UserActivity } from '../models/userActivitySchema';
 import sharp from 'sharp';
 import axios from 'axios';
 import cloudinaryControllers from './cloudinaryControllers';
@@ -16,17 +17,14 @@ async function createOutfit (req, res) {
       season: outfit.season
     });
 
-    // // Busca los Items por sus IDs
-    // const items = await Item.findAll({
-    //   where: {
-    //     id: item.id,
-    //   },
-    // });
+    const activity = await UserActivity.create({
+      type: 'NewOutfitToCloset', 
+      userId: outfit.userId,
+      outfitId: newOutfit.id,
+      timestamp: new Date()  
+    });
 
-    // // Asocia los Items con el Outfit
-    // await newOutfit.set('items', items);
-
-    res.status(201).send(newOutfit);
+    res.status(201).send(newOutfit, activity);
   } catch (error) {
     console.error('Error creating outfit:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the outfit' });

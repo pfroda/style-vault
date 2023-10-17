@@ -3,6 +3,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import { Item } from './itemSchema';
 import { Closet } from './closetSchema';
 import { FavoriteOutfit } from './favoriteOutfitSchema';
+import { User } from './userSchema';
 
 export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttributes<Outfit>> {
   @Attribute(DataTypes.UUID)

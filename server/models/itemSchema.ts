@@ -3,6 +3,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import { Outfit } from './outfitSchema';
 import { Closet } from './closetSchema';
 import { FavoriteItem } from './favoriteItemSchema';
+import { User } from './userSchema';
 
 export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
   @Attribute(DataTypes.UUID)
@@ -46,7 +47,6 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
   @HasMany(() => FavoriteItem, 'itemId')
   declare favorites?: NonAttribute<FavoriteItem[]>;
 
-  
 }
 
 
