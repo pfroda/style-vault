@@ -5,7 +5,7 @@
   aspect-ratio: 1/1;
   border-right: var(--primary-border);
   border-bottom: var(--primary-border);
-  margin: 2px;
+  /* margin: 2px; */
 }
 
 .item .image {
