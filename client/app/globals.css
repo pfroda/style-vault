@@ -3,3 +3,119 @@
   --primary-color: rgb(183, 231, 238);
   --header-color: #F1EDED;
 }
+
+/* Forms styles */
+.filter-tags {
+  padding-bottom: 30px;
+}
+
+.filter-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  list-style: none;
+  padding: 0px;
+}
+
+.filters ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+.filter-tags-list li {
+  font-size: 12px;
+  border: 1px solid rgba(185, 183, 183, 0.484);
+  color: grey;
+  border-radius: 50px;
+  padding: 4px 8px;
+  margin: 10px 10px 0px 0px;
+  cursor: pointer;
+}
+
+.filter-tags-list li:hover, .filter-tags-list li.selected {
+  color: grey;
+  background-color: rgba(192, 192, 192, 0.413);
+  filter: brightness(1.2);
+  box-shadow: 0 0 1px grey(0, 0, 0, 0.2);
+}
+
+.filters ul li:last-of-type {
+  padding-right: 20px;
+}
+
+
+/* color dots and change default colors for dots in filter */
+
+.colorDot {
+  height: 15px;
+  width: 15px;
+  background-color: black;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle !important; 
+}
+
+
+.colorDot.red {
+   background-color: #fd6767 !important;
+ }
+
+.colorDot.blue {
+   background-color: #619bfe !important;
+ }
+
+.colorDot.green {
+   background-color: #468146 !important;
+ }
+
+.colorDot.yellow {
+   background-color: #fff872 !important;
+ }
+
+.colorDot.orange {
+  background-color: #faa250 !important;
+}
+
+.colorDot.purple {
+  background-color: #cd7cff !important;
+}
+
+.colorDot.fuchsia {
+  background-color: #ff7cc6 !important;
+}
+
+.colorDot.navy {
+  background-color: #1d2f75 !important;
+}
+
+.colorDot.teal {
+  background-color: #155e63 !important;
+}
+
+.colorDot.aqua {
+  background-color: #2ea9b1 !important;
+}
+
+.colorDot.lime {
+  background-color: #c6ff7c !important;
+}
+
+.colorDot.olive {
+  background-color: #7c8d34 !important;
+}
+
+.colorDot.maroon {
+  background-color: #aa453a !important;
+}
+
+.colorDot.gray {
+  background-color: #6e7078 !important;
+}
+
+.colorDot.silver {
+  background-color: #acadb2e6 !important;
+}

@@ -1,4 +1,6 @@
 import './colorfilter.css';
+import '../../../globals.css';
+
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';

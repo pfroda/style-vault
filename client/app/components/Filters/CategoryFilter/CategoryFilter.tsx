@@ -40,7 +40,7 @@ function CategoryFilter() {
         <ul>
         {categories.map((category) => (
           <li key={category}>
-            <h4 onClick={handleFilterClick} className={selectedCategory === 'All' ? 'selected' : ''}>
+            <h4 onClick={handleFilterClick} className={selectedCategory === 'category' ? 'selected' : ''}>
             {category}
             </h4>
           </li>
