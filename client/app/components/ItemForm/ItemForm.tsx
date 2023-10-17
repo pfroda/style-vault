@@ -178,30 +178,6 @@ function ItemForm() {
     console.log("array:", selectedSeasons);
   };
 
-<<<<<<< HEAD
-
-  // const handleSeasonClick = (seasonToRemove: string) => {
-  //   setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
-  // }
-
-  // const handleSeasonClick = (seasonToRemove: string) => {
-  //   if (selectedSeasons.includes(seasonToRemove)) {
-  //     setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
-  //   } else {
-  //     setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
-  //   }
-  // };
-
-console.log(imageInfo?.logos)
-
-  const handleSeasonClick = (seasonToRemove: string) => {
-    if (selectedSeasons.includes(seasonToRemove)) {
-      setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
-    } else {
-      setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
-    }
-  };
-=======
 const handleSeasonClick = (seasonToRemove: string) => {
   if (selectedSeasons.includes(seasonToRemove)) {
     setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
@@ -209,7 +185,6 @@ const handleSeasonClick = (seasonToRemove: string) => {
     setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
   }
 };
->>>>>>> predev
 
 const handleOccasionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   const selectedValue = e.target.value;
@@ -238,12 +213,6 @@ const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 };
 
 
-<<<<<<< HEAD
-
-
-
-
-=======
 const handleColorClick = (color: string) => {
   if (selectedColors.includes(color)) {
     setSelectedColors((prevColors) => prevColors.filter((c) => c !== color));
@@ -251,7 +220,6 @@ const handleColorClick = (color: string) => {
     setSelectedColors((prevColors) => [...prevColors, color]);
   }
 };
->>>>>>> predev
 
 const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
@@ -269,21 +237,6 @@ const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Se
 
 const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
 
-<<<<<<< HEAD
-  
-
-
-  return (
-    <div className='ItemForm'>
-      <div className="img-form-container">
-        {itemUrl && <img src={itemUrl} alt="" />}
-        {photoIsLoading && <div className='spinner'></div>}
-      </div>
-      <div className="custom-file-input">
-        <input className="img-form" type="file" onChange={handleFileChange} />
-        <label htmlFor="file-input">Select a Photo</label>
-      </div>
-=======
 
 
 return (
@@ -296,7 +249,6 @@ return (
       <input className="img-form" type="file" onChange={handleFileChange} />
       <label htmlFor="file-input">Select a Photo</label>
     </div>
->>>>>>> predev
 
       {showForm &&
       <form onSubmit={submitForm} className='item-form'>
@@ -344,57 +296,7 @@ return (
             <Image src={occasionImg} alt="Icono" />
             <label htmlFor="occasion">Occasion</label>
           </div>
-<<<<<<< HEAD
-
-          <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
-            {occasionsData.map((occasionItem) => (
-              <li className={`li-wrapper ${selectedOccasions.includes(occasionItem) ? 'active' : ''}`} key={occasionItem} onClick={() => handleOccasionClick(occasionItem)}>
-                {occasionItem}
-              </li>
-            ))}
-          </ul>
-          {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
-
-          {/* OCASSIONS DROPDOWN */}
-
-          {/* COLORS DROPDOWN */}
-          <div className='input-wrapper' onClick={toggleColorMenu}>
-            <div className='label-container colorDropdownButton'>
-              <Image src={colorImg} alt="Icono" />
-              <label htmlFor="colorSelect">Color</label>
-            </div>
-            <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
-          </div>
-
-          <ul className={`colors-dropdown ${showColorMenu ? 'activedropdown' : ''}`}>
-            {colorsData.map((colorItem) => (
-              <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
-                <div className="color" style={{ backgroundColor: colorItem.value }}></div>
-                {colorItem.color}
-              </li>
-            ))}
-          </ul>
-          {/* COLORS DROPDOWN */}
-
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={brandImg} alt="Icono" />
-              <label htmlFor="brand">Brand</label>
-            </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
-          </div>
-
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={locationImg} alt="Icono" />
-              <label htmlFor="location">Location</label>
-            </div>
-            <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
-          </div>
-
-=======
           <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
->>>>>>> predev
         </div>
 
         <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
