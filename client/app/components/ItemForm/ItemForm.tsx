@@ -20,6 +20,7 @@ import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
+import Item from '../Lists/Item/Item';
 
 function ItemForm() {
   const { register, handleSubmit, reset } = useForm<Item>();
@@ -103,19 +104,62 @@ function ItemForm() {
   const submitForm = handleSubmit(async (item: Item) => {
     item.userId = user?.id!;
     item.itemUrl = itemUrl;
+    item.category = selectedCategory;
+    item.occasion = selectedOccasions;
+    item.season = selectedSeasons;
+    item.color = selectedColors;
+    // item.brand = imageInfo?.logos
+    
     handlePostItem(item);
     router.push('/dashboard/cupboard');
     console.log("item--->", item)
   });
 
-      console.log("item--->", item)
+  // const submitForm = handleSubmit(async (item: Item) => {
+  //   console.log("item valores!! -->", item)
+  //   if (!user?.id) {
+  //     console.error("No hay userId disponible");
+  //     return; // Salir de la función si no hay userId
+  //   }
+  
+  //   if (!itemUrl) {
+  //     console.error("No hay itemUrl disponible");
+  //     return; 
+  //   }
+  
+  //   if (!item.category) {
+  //     console.error("La categoría no está siendo registrada");
+  //   }
+  //   if (!item.occasion) {
+  //     console.error("La occasion no está siendo registrada");
+  //   }
+  //   if (!item.season) {
+  //     console.error("La season no está siendo registrada");
+  //   }
+  
+  //   item.userId = user.id;
+  //   item.itemUrl = itemUrl;
+  //   item.category = selectedCategory;
+  
+  //   try {
+  //     await handlePostItem(item);
+  //     console.log("Item enviado con éxito:", item);
+  //   } catch (error) {
+  //     console.error("Error al enviar el item:", error);
+  //   }
+  
+  //   // Navegar a otra ruta
+  //   router.push('/dashboard/cupboard');
+  // });
+  
 
 
   const handleCategorySelect = (category: string) => {
-    console.log("click")
+    console.log("Selected category inside function:", category);
     setSelectedCategory(category);
+
   };
-  
+
   // const handleCategorySelect = (category: string) => {
   //   if (selectedCategory.includes(category)) {
   //     setSelectedCategory(prevCategory => prevCategory.filter(cat => cat !== category));
@@ -148,7 +192,7 @@ function ItemForm() {
   //   }
   // };
 
-
+console.log(imageInfo?.logos)
 
   const handleSeasonClick = (seasonToRemove: string) => {
     if (selectedSeasons.includes(seasonToRemove)) {
@@ -219,7 +263,6 @@ function ItemForm() {
 
   const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
 
-
   
 
 
@@ -242,7 +285,7 @@ function ItemForm() {
           <div className='input-wrapper' onClick={toggleCategoryMenu}>
             <div className='label-container colorDropdownButton'>
               <Image src={categoriesImg} alt="Icono" />
-              <label htmlFor="categories">Categories</label>
+              <label htmlFor="category">Categories</label>
             </div>
             <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
           </div>
@@ -252,7 +295,8 @@ function ItemForm() {
             <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
           ))}
           </ul>
-          <input type="hidden" {...register("category")} value={selectedCategory} />
+          {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
+          {/* <input type="hidden" {...register("category")} value={selectedCategory} /> */}
           {/* CATEOGRY DROPDOWN */}
           
           {/* SEASON DROPDOWN */}
@@ -289,6 +333,8 @@ function ItemForm() {
               </li>
             ))}
           </ul>
+          {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
+
           {/* OCASSIONS DROPDOWN */}
 
           {/* COLORS DROPDOWN */}
