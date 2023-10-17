@@ -5,6 +5,7 @@ import defaultUserImage from '../../../public/user.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
 import Link from 'next/link';
+import Header from '../Header/Header';
 import { queryClosets } from '@/app/services/apiGraphQL';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -74,11 +75,12 @@ function Closet() {
   return (
     <div className='Closet'>
       <div className="closet-header">
-        <div className="style-vault">Style-vault</div>
+        <Header />
+        {/* <div className="style-vault">Style-vault</div> */}
         <div className="profile">
           <div className="profile-content">
           <Image className="img" alt="" src={user?.profilePicture || defaultUserImage} width={100} height={100} />
-            <div className="name">Natalie</div>
+            <div className="name">{user?.name ? user?.name : user?.username}</div>
           </div>
           <Image className="edit" src={edit} alt="Edit" onClick={handleProfile} />
         </div>

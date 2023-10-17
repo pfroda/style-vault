@@ -2,12 +2,14 @@
 import './profileform.css'
 import Header from '../Header/Header';
 import GoBack from '../GoBack/GoBack';
+import Image from 'next/image';
 import { useState } from 'react';
 import { User } from '@/app/Interfaces';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation'; 
 import { uploadPhotoToCloudinary } from "@/app/services/apiCloudinary";
 import useAuth from '@/app/hooks/useAuth';
+import defaultUserImage from '../../../public/user.png';
 
 function ProfileForm() {
   const { register, handleSubmit } = useForm<User>();
@@ -47,7 +49,8 @@ function ProfileForm() {
           <div className="input-image-wrapper">
             <label htmlFor="profilePicture"></label>
             <div className="image-content">
-              {user?.profilePicture ? <img src={user.profilePicture} alt="" className='actual-img' /> : <div className="actual-img"></div>}
+              {/* {user?.profilePicture ? <img src={user.profilePicture} alt="" className='actual-img' /> : <div className="actual-img"></div>} */}
+              <Image className="actual-img" alt="" src={user?.profilePicture || defaultUserImage} width={100} height={100} />
               <input className='user-input-image' type="file" accept="image/*"
                 {...register("profilePicture")} />
               <div className="change-img">Change picture</div>

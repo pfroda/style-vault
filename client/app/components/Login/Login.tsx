@@ -1,6 +1,6 @@
 'use client'
 import '../Register/register.css';
-import homeimage from '../../../public/home-image.png';
+import homeimage from '../../../public/home-image3.png';
 import logo from '../../../public/logo3.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'; 
