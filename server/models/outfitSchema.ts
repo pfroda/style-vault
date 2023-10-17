@@ -1,7 +1,8 @@
-import { Attribute, PrimaryKey, NotNull, BelongsToMany, Default } from '@sequelize/core/decorators-legacy';
+import { Attribute, PrimaryKey, NotNull, BelongsToMany, Default, HasMany} from '@sequelize/core/decorators-legacy';
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
 import { Item } from './itemSchema';
 import { Closet } from './closetSchema';
+import { FavoriteOutfit } from './favoriteOutfitSchema';
 
 export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttributes<Outfit>> {
   @Attribute(DataTypes.UUID)
@@ -28,5 +29,8 @@ export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttribut
 
   @BelongsToMany(() => Item, { through: 'ItemOutfit' })
   declare items?: NonAttribute<Item[]>;
+
+  @HasMany(() => FavoriteOutfit, 'outfitId')
+  declare favorites?: NonAttribute<FavoriteOutfit[]>;
 
 }
