@@ -15,7 +15,6 @@ function ColorFilter() {
         const fetchColors = async () => {
             try {
                 const res = await queryColors(user?.id!);
-                console.log('graph colors:', res);
                 setColors(res.data?.getColors || []);
             } catch (error) {
                 console.log(error);
@@ -32,7 +31,6 @@ function ColorFilter() {
         } else {
             updatedColors = [...selectedColors, color]
         }
-        console.log('updatedColors', updatedColors);
         dispatch(setSelectedFilter({ type: 'color', value: updatedColors }))
     };
 

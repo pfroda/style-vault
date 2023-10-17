@@ -6,12 +6,10 @@ import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice
 
 function CategoryFilter() {
   const selectedFilter = useSelector((state) => state.filter.category);
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const dispatch = useDispatch();
 
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const { user } = useAuth();
-
-  // categories - would need a separate doc
+  // categories - would prob need a separate doc
   const categories = [
   'All',
   'Pants',
@@ -32,7 +30,6 @@ function CategoryFilter() {
 
   function handleFilterClick(event:any) {
     const category = event.target.textContent;
-    console.log(category);
     dispatch(setSelectedFilter({ type: 'category', value: category }));
 
   }

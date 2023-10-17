@@ -15,16 +15,14 @@ function OccasionsFilter() {
     const fetchOccasions = async () => {
       try {
         const res = await queryOccasions(user?.id!);
-        console.log('graph occasions:', res)
         setOccasions(res.data?.getOccasions || [])
       } catch (error) {
-        console.log(occasions)
+        console.log(error)
       }
     };
     fetchOccasions();
 
   }, [user?.id]);
-  // user?.id, selectedOccasions]);
 
   const handleSelectedOccasion = async (occasion) => {
     let updatedOccasions;
@@ -34,7 +32,6 @@ function OccasionsFilter() {
     } else {
       updatedOccasions = [...selectedOccasions, occasion];
     }
-    console.log('updatedOcc', updatedOccasions);
     dispatch(setSelectedFilter({ type: 'occasion', value: updatedOccasions }));
   }
 
