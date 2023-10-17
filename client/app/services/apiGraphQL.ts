@@ -1,4 +1,4 @@
-import { Item, Outfit, Closet  } from "../Interfaces"
+import { Item, Outfit, Closet, User  } from "../Interfaces"
 
 const GRAPHQL_URL = "http://localhost:3001/graphql";
 
@@ -210,6 +210,67 @@ export const queryLocations = (userId: string): Promise<GraphQLResponse<{ getLoc
     }
   `;
   return fetchGraphQL(query, { userId });
+};
+
+export const queryUsersForSearch = (username: string) : Promise<GraphQLResponse<{ getAllUsers: User[] }>> => {
+  const query = `
+  query Query {
+    getAllUsers {
+      id
+      username
+      profilePicture
+    }
+  }
+  `;
+  return fetchGraphQL(query, {username});
+};
+
+export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserById: User }>> => {
+  const query = `
+  query Query {
+    getAllUsers {
+      id
+      username
+      profilePicture
+      name
+      closets {
+        id
+        userId
+        name
+        items {
+          userId
+          id
+          category
+          itemUrl
+          occasion
+          season
+          color
+          brand
+        }
+        outfits {
+          id
+          userId
+          name
+          occasion
+          season
+        }
+      }
+      followers {
+        id
+        username
+        profilePicture
+      }
+      following {
+        id
+        username
+        profilePicture
+      }
+      followersCount
+      followingCount
+    }
+  }
+  `;
+  return fetchGraphQL(query, { id });
 };
 
 // export const queryAllUsers = (): Promise<GraphQLResponse<{ getAllUsers: User[] }>> => {
