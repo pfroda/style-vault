@@ -33,9 +33,10 @@ function ItemForm() {
 
   // Google Cloud states
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
-  const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
-  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
+  const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showOccasionMenu, setShowOccasionMenu] = useState(false);
@@ -109,6 +110,11 @@ function ItemForm() {
     router.push('/dashboard/cupboard');
     console.log("item--->", item)
   });
+
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+  };
+  
 
   const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -205,6 +211,7 @@ function ItemForm() {
       <form onSubmit={submitForm} className='item-form'>
         <div className='input-container'>
           
+          {/* CATEOGRY DROPDOWN */}
           <div className='input-wrapper' onClick={toggleCategoryMenu}>
             <div className='label-container colorDropdownButton'>
               <Image src={categoriesImg} alt="Icono" />
@@ -212,22 +219,13 @@ function ItemForm() {
             </div>
             <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
           </div>
-          {/* <select 
-            id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}>
-            {categoriesArray.map(category => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-            ))}
-          </select> */}
+
           <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
-            {categoriesArray.map((categoryItem) => (
-              <li className="li-wrapper" key={categoryItem}>
-              {/* <li className="{`li-wrapper ${categoriesArray.includes(categoryItem) ? 'active' : ''}`}" key={categoryItem}> */}
-                {categoryItem}
-              </li>
-            ))}
+          {categoriesArray.map((categoryItem) => (
+            <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
+          ))}
           </ul>
+          {/* CATEOGRY DROPDOWN */}
           
           {/* SEASON DROPDOWN */}
           <div className='input-wrapper' onClick={toggleSeasonMenu}>
@@ -362,3 +360,21 @@ export default ItemForm
           <option className='hey' value="Purple">Purple</option>
           <option className='hey' value="Orange">Orange</option>
         </select> */}
+
+
+          // CATEGORY ANTIGUO
+                  {/* <select 
+            id="category" className='item-input' {...register("category", { required: true })} value={imageInfo?.labels || ''}  onChange={e => setImageInfo(prev => ({ ...prev, labels: e.target.value }))}>
+            {categoriesArray.map(category => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+            ))}
+          </select> */}
+          {/* <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
+            {categoriesArray.map((categoryItem) => (
+              <li className="li-wrapper" key={categoryItem}>
+                {categoryItem}
+              </li>
+            ))}
+          </ul> */}
