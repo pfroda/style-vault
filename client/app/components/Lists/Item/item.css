@@ -14,6 +14,12 @@
   background-color: rgba(177, 157, 157, 0.2);
 }
 
+.item .image:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+  opacity: 1;
+}
+
 .item .brand {
   display: flex;
   align-items: center;

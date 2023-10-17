@@ -32,15 +32,13 @@ export const queryResolver = {
     };
 
     if (brand) filter.brand = { 
-      [Op.or]: brand.map(b => ({ [Op.contains]: [b] }))
+      [Op.or]: brand.map(b => ({ [Op.eq]: b }))
     };
     if (location) filter.location = location;
     
-    if (category === 'All') {
-      // don't filter if user clicks all
-  } else {
-      filter.category = category;
-  }
+    if (category !== 'All') { filter.category = category;
+  };
+
   console.log('FILTER:', filter)
     const items = await Item.findAll({ where: filter });
     return items;

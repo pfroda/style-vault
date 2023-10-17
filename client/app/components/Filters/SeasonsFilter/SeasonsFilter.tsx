@@ -8,22 +8,14 @@ function SeasonsFilter() {
   const selectedSeasons = useSelector((state) => state.filter.season);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log('Selected seasons:', selectedSeasons);
-  }, [selectedSeasons]);
-
-
   const handleSelectedSeason = (season) => {
     let updatedSeasons;
 
     if (selectedSeasons.includes(season)) {
-      // Remove season if it's selected
       updatedSeasons = selectedSeasons.filter((selected) => selected !== season);
     } else {
-      // Add season if it's not selected
       updatedSeasons = [...selectedSeasons, season];
     }
-
     dispatch(setSelectedFilter({ type: 'season', value: updatedSeasons }));
   }
 

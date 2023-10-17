@@ -16,7 +16,6 @@ function LocationsFilter() {
     const fetchLocations = async () => {
       try {
         const res = await queryLocations(user?.id!);
-        console.log('graph locations:', res)
         setLocations(res.data?.getLocations || [])
       } catch (error) {
         console.log(error)

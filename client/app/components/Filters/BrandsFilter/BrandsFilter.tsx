@@ -15,21 +15,13 @@ function BrandsFilter() {
         const fetchBrands = async () => {
             try {
                 const res = await queryBrands(user?.id!);
-                console.log('graphql brands:', res);
                 setBrands(res.data?.getBrands || []);
             } catch (error) {
                 console.log(error);
             }
         };
         fetchBrands();
-    }, [user?.id, selectedBrands]);
-
-    // useEffect(() => {
-    //     // Dispatch action when select brands chnge
-    //     console.log('selected brands', selectedBrands);
-
-    //     dispatch(setSelectedFilter({ type: 'brand', value: selectedBrands }));
-    // }, [selectedBrands]);
+    }, [user?.id]);
 
     const handleSelectedBrand = async (brand) => {
         let updatedBrands;

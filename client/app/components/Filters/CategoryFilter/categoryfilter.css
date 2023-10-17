@@ -15,10 +15,11 @@
   flex-wrap: nowrap;
   gap: 20px;
   white-space: nowrap;
+  cursor: pointer;
 }
 
-.category-filter li:hover, .category-filter li.selected {
-  /* color: rgb(0, 0, 0); */
+.category-filter li:hover, .category-filter .selected li {
+  color: rgb(0, 0, 0);
   /* filter: brightness(1.2); */
   border-bottom: 1px solid rgb(0, 0, 0);
 }
