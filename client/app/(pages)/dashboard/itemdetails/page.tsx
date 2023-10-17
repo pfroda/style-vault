@@ -9,6 +9,7 @@ function index() {
     <>
     <Header/>
     <ItemDetails />
+    <Footer/>
     </>
   )
 }
