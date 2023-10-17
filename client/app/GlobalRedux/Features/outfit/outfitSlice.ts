@@ -3,11 +3,13 @@ import { Outfit } from '@/app/Interfaces';
 import { createSlice, PayloadAction  } from '@reduxjs/toolkit';
 
 interface OutfitState {
-  outfits: Outfit[]
+  outfits: Outfit[];
+  outfitUrl: string;
 }
 
 const initialState: OutfitState = {
   outfits: [],
+  outfitUrl: '',
 };
 
 export const outfitSlice = createSlice({
@@ -26,9 +28,12 @@ export const outfitSlice = createSlice({
         state.outfits[index] = action.payload;
       }
     },
+    setOutfitUrl: (state, action: PayloadAction<string>) => {
+      state.outfitUrl = action.payload;
+    },
   }
 })
 
-export const { addOutfit, removeOutfit, updateOutfit } = outfitSlice.actions;
+export const { addOutfit, removeOutfit, updateOutfit, setOutfitUrl  } = outfitSlice.actions;
 
 export default outfitSlice.reducer;

@@ -129,9 +129,10 @@ async function generateOutfitImage(req, res) {
       .toBuffer();
 
     // await sharp(composedImageBuffer).toFile('output.png');
-    const cloudinaryResponse = await cloudinaryControllers.uploadOutfitToCloudinary(composedImageBuffer);
+    const cloudinaryResponse: any = await cloudinaryControllers.uploadOutfitToCloudinary(composedImageBuffer);
 
-    console.log('Imagen compuesta y guardada exitosamente.');
+    console.log('Cloudinary URL:', cloudinaryResponse.result.url);
+    res.json(cloudinaryResponse.result.url);
   } catch (error) {
     console.error(error);
   }

@@ -211,3 +211,16 @@ export const queryLocations = (userId: string): Promise<GraphQLResponse<{ getLoc
   `;
   return fetchGraphQL(query, { userId });
 };
+
+
+export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+  const query = `
+    query Query($userId: String!) {
+      getItems(userId: $userId) {
+        itemUrl
+        category
+      }
+    }
+    `;
+  return fetchGraphQL(query, { userId });
+};
