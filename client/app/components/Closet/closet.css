@@ -65,23 +65,35 @@
       flex-basis: calc(50% - 10px);
       max-width: calc(50% - 10px);
       aspect-ratio: 1/1;
-      background-color: rgba(162, 162, 162, 0.1);
-      border: 1px solid black;
+      /* background-color: rgba(162, 162, 162, 0.1); */
+      border: 1.5px solid rgb(183, 183, 183);
       border-radius: 12px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 5px;
+      & .closet-image {
+        width: 75%;
+        height: auto;
+      }
+      & .closet-active {
+        opacity: 0.2;
+      }
       & form {
         display: flex;
         flex-direction: column;
         width: 90%;
         gap: 10px;
+        position: absolute;
+        z-index: 5;
         & .close-closet {
           position: absolute;
-          top: 5px;
-          right: 8px;
+          top: -30px;
+          right: 5px;
+          z-index: -1;
         }
-        & input{
+        & input {
           padding-top: 2px;
           padding-bottom: 2px;
           /* padding-left: 8px; */
@@ -90,7 +102,8 @@
           background-color: transparent;
           &::placeholder {
             text-align: center;
-            /* padding-left: 12px; */
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
           }
           &:focus {
             outline-style: none;
@@ -105,7 +118,7 @@
         }
       }
       & .closet-name {
-        max-width: 20vw;
+        width: fit-content;
         text-align: center;
       }
       &:last-child {

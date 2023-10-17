@@ -1,0 +1,36 @@
+.OutfitSubmit {
+  height: 100vh;
+  background-color: antiquewhite;
+  & .outfit-form-header {
+    height: 45px;
+    border-bottom: var(--primary-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  & .image-outfit-container {
+    & .outfit-image {
+      margin: auto;
+      max-height: 75vh;
+    }
+  }
+  & .outfit-form {
+    margin-top: 20px;
+    /* position: relative; */
+    & .outfit-name-input {
+      /* position: absolute; */
+      /* top: 0; */
+      width: 60vw;
+      margin: auto;
+      padding: 5px 0px 5px 10px;
+      border-radius: 3px;
+    }
+    & .outfit-button {
+      padding: 5px 20px 5px 20px;
+      margin: auto;
+      margin-top: 20px;
+      background-color: var(--primary-color);
+      border-radius: 5px;
+    }
+  }
+}

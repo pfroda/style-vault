@@ -6,5 +6,6 @@ import outfitController from '../controllers/outfitController';
 router.post('/outfit/add', outfitController.createOutfit);
 router.delete('/outfit/delete/:outfitId', outfitController.deleteOutfit);
 router.put('/outfit/edit/:outfitId', outfitController.editOutfit);
+router.post('/outfit/image', outfitController.generateOutfitImage);
 
 export default router;

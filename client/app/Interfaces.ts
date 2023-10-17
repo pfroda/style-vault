@@ -39,7 +39,8 @@ export type Outfit = {
   name: string;
   closets?: Closet[];
   occasion: string[]; 
-  season: string[]; 
+  season: string[];
+  outfitUrl: string;
 }
 
 export interface Closet {

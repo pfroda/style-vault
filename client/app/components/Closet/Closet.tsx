@@ -2,6 +2,10 @@ import './closet.css'
 import arrow from '../../../public/right-arrow.png';
 import edit from '../../../public/edit-profile1.png';
 import defaultUserImage from '../../../public/user.png';
+import closet1 from '../../../public/closet1.png';
+import closet2 from '../../../public/closet2.png';
+import closet3 from '../../../public/closet3.png';
+import closet4 from '../../../public/closet4.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
 import Link from 'next/link';
@@ -92,12 +96,14 @@ function Closet() {
       </div>
 
       <div className="user-closets">
-        <div className="closets-container">
-          <Link className="closet-name" href="/dashboard/grid">All Clothes</Link>
-        </div>
+        <Link href="/dashboard/grid" className="closets-container">
+          <Image alt="" className='closet-image' src={closet1} />
+          <div className="closet-name">All Clothes</div>
+        </Link>
 
         {closets.map((closet) => (
           <div key={closet.id} className="closets-container">
+              <Image alt="" className='closet-image' src={closet1} />
               <div className="closet-name">
                 {closet.name}
               </div>
@@ -105,6 +111,7 @@ function Closet() {
         ))}
 
         <div className="closets-container">
+          <Image alt="" className={`closet-image ${closetForm ? 'closet-active' : ''}`} src={closet4} />
           {closetForm ? (
             <>
               <form onSubmit={submitForm} className='register-form'>
@@ -114,7 +121,7 @@ function Closet() {
               </form>
             </>
           ) : ( 
-          <div onClick={showFormCloset} className="closet-name">Add new closet</div>)}
+          <div className="closet-name" onClick={showFormCloset}>Add New Closet</div>)}
         </div>
       </div>
     </div>

@@ -9,20 +9,42 @@ import out3black from '../../../public/outfit-three-black.png';
 import out4white from '../../../public/outfit-four-white.png';
 import out4black from '../../../public/outfit-four-black.png';
 
+import { queryItemsForOutfits } from '../../services/apiGraphQL';
+import { createOutfitImage } from '@/app/services/apiOutfit';
 import GoBack from '../GoBack/GoBack';
 import OutfitSlider from '../OutfitSlider/OutfitSlider';
 import Header from '../Header/Header';
 import Image from 'next/image';
 import useAuth from '@/app/hooks/useAuth';
 import { useRouter } from 'next/navigation'; 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setOutfitUrl } from '@/app/GlobalRedux/Features/outfit/outfitSlice';
+import { Item } from '@/app/Interfaces';
 
 function OutfitForm() {
   const { user, handleRegister } = useAuth();
   const [currentOutfit, setCurrentOutfit] = useState({id: 'outfit-1'});
   const [showShuffle, setShowShuffle] = useState(false);
+  const [userItems, setUserItems] = useState<Item[]>([]);
 
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   queryItemsForOutfits(user?.id!)
+  //     .then(items => {
+  //       setUserItems(items);
+  //     })
+  // }, []);
+  useEffect(() => {
+    queryItemsForOutfits(user?.id!).then(response => {
+      console.log('respuesta', response);
+      if (response.getItems) {
+        setUserItems(response.getItems);
+      }
+    });
+  }, []);
 
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
 
@@ -33,18 +55,33 @@ function OutfitForm() {
     { id: 4, url: myUrl, brand: 'Marca 2' },
   ];
 
-  const outfit1 = 'outfit1';
-  const outfit2 = 'outfit2';
-  const outfit3 = 'outfit3';
+  const imagesUrls = [
+    { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' },
+    { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' }
+  ];
+
+  const itemsUrls = [myUrl, myUrl, myUrl, myUrl];
 
   const handleShuffle = () => {
     setShowShuffle(!showShuffle);
   }
 
   const handleOutfit = () => {
-    console.log('handling outfit');
+    createOutfitImage(itemsUrls)
+      .then(outfitUrl => {
+        console.log(outfitUrl);
+        dispatch(setOutfitUrl(outfitUrl));
+      })
     router.push('/dashboard/outfitsubmit');
   }
+
+  const TwoPiecesOutfit = [['One-Piece', 'Dress'], ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
+  const ThreePiecesOutfit = [['Tops', 'Shirts'], ['Pants', 'Shorts'], ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
+  const FourPiecesOutfit = [['Outerwear'], ['Tops', 'Shirts'], ['Pants', 'Shorts'], ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
+
+  const outfit1 = 'outfit1';
+  const outfit2 = 'outfit2';
+  const outfit3 = 'outfit3';
 
   return (
     <div className='OutfitForm'>
@@ -77,7 +114,7 @@ function OutfitForm() {
       </div>
 
       <div className='outfit-form'>
-        <button className='outfit-button' type="submit" onClick={handleOutfit} >Add Outfit</button>
+        <button className='outfit-button' type="submit" onClick={handleOutfit} >Create Outfit</button>
       </div>
 
       <footer>

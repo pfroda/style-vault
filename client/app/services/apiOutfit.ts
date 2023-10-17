@@ -57,3 +57,23 @@ export async function deleteOutfit(id: string) {
     throw new Error('Error deleting the outfit');
   }
 }
+
+export async function createOutfitImage (imagesUrls: string[]) {
+  console.log('caca: ', JSON.stringify(imagesUrls));
+  try {
+    const response = await fetch(`${url}/outfit/image`, {
+      method: "POST",
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(imagesUrls),
+    })
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
