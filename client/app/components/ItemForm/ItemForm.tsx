@@ -36,6 +36,7 @@ function ItemForm() {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
+  
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   const [showColorMenu, setShowColorMenu] = useState(false);
@@ -56,9 +57,6 @@ function ItemForm() {
     setShowCategoryMenu(!showCategoryMenu);
   };
 
-  // console.log("item-->", selectedOccasions)
-  // console.log("ImageInfo-->", selectedOccasions)
-
   const categoriesArray = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
  
   for (let i = 0; i < categoriesArray.length; i++){
@@ -66,7 +64,6 @@ function ItemForm() {
       const deleteElement = categoriesArray.indexOf(imageInfo?.labels);
       categoriesArray.splice(deleteElement, 1);
         categoriesArray.unshift(imageInfo?.labels)
-        console.log("------->", categoriesArray)
     } else {
       console.log("No existe", imageInfo?.labels, "cambia nombre")
     }
@@ -111,10 +108,22 @@ function ItemForm() {
     console.log("item--->", item)
   });
 
+      console.log("item--->", item)
+
+
   const handleCategorySelect = (category: string) => {
+    console.log("click")
     setSelectedCategory(category);
   };
   
+  // const handleCategorySelect = (category: string) => {
+  //   if (selectedCategory.includes(category)) {
+  //     setSelectedCategory(prevCategory => prevCategory.filter(cat => cat !== category));
+  //   } else {
+  //     setSelectedCategory(prevCategory => [...prevCategory, category]);
+  //   }
+  //   console.log("array:", selectedCategory);
+  // };
 
   const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
@@ -126,9 +135,21 @@ function ItemForm() {
     console.log("array:", selectedSeasons);
   };
 
+
   // const handleSeasonClick = (seasonToRemove: string) => {
   //   setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
   // }
+
+  // const handleSeasonClick = (seasonToRemove: string) => {
+  //   if (selectedSeasons.includes(seasonToRemove)) {
+  //     setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
+  //   } else {
+  //     setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
+  //   }
+  // };
+
+
+
   const handleSeasonClick = (seasonToRemove: string) => {
     if (selectedSeasons.includes(seasonToRemove)) {
       setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
@@ -177,8 +198,10 @@ function ItemForm() {
     }
   };
 
-// console.log("colores--->",selectedColors)
-// console.log("Label-->", imageInfo?.labels)
+
+
+
+
 
   const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
@@ -195,6 +218,10 @@ function ItemForm() {
   const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
 
   const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
+
+
+  
+
 
   return (
     <div className='ItemForm'>
@@ -225,6 +252,7 @@ function ItemForm() {
             <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
           ))}
           </ul>
+          <input type="hidden" {...register("category")} value={selectedCategory} />
           {/* CATEOGRY DROPDOWN */}
           
           {/* SEASON DROPDOWN */}
