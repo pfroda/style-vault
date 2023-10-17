@@ -1,5 +1,7 @@
 import './closet.css'
 import arrow from '../../../public/right-arrow.png';
+import edit from '../../../public/edit-profile1.png';
+import defaultUserImage from '../../../public/user.png';
 import Image from 'next/image';
 import { Closet as ClosetInterface } from '@/app/Interfaces';
 import Link from 'next/link';
@@ -8,13 +10,19 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
+import { useRouter } from 'next/navigation'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
 function Closet() {
   // const [closets, setClosets] = useState<ClosetInterface[]>([]);
   const { register, handleSubmit, reset } = useForm();
-  const { user } = useAuth();
+  const { user, handleUserData } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    handleUserData(user?.id!);
+  }, []);
 
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
@@ -24,6 +32,10 @@ function Closet() {
 
   const showFormCloset = () => {
     setClosetForm(!closetForm);
+  }
+
+  const handleProfile = () => {
+    router.push('/dashboard/profile');
   }
 
   useEffect(() => {
@@ -65,10 +77,10 @@ function Closet() {
         <div className="style-vault">Style-vault</div>
         <div className="profile">
           <div className="profile-content">
-            <div className="img"></div>
+          <Image className="img" alt="" src={user?.profilePicture || defaultUserImage} width={100} height={100} />
             <div className="name">Natalie</div>
           </div>
-          <Image className="arrow" src={arrow} alt="Right Arrow" />
+          <Image className="edit" src={edit} alt="Edit" onClick={handleProfile} />
         </div>
         <div className="header-options">
           <button className='closet-button'>Closet</button>
@@ -80,7 +92,6 @@ function Closet() {
       <div className="user-closets">
         <div className="closets-container">
           <Link className="closet-name" href="/dashboard/grid">All Clothes</Link>
-            {/* <div className="closet-name">All Clothes</div> */}
         </div>
 
         {closets.map((closet) => (

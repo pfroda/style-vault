@@ -16,6 +16,8 @@ import { useDispatch } from 'react-redux';
 function Grid() {
   const selectedCategory = useSelector((state) => state.filter.category);
   const selectedSeason = useSelector((state) => state.filter.season);
+  const selectedBrands = useSelector((state) => state.filter.brand);
+
   const dispatch = useDispatch();
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
@@ -41,6 +43,7 @@ function Grid() {
           userId: user?.id!,
           category: selectedCategory,
           season: selectedSeason,
+          brand: selectedBrands
         });
         console.log('GraphQL Response:', res);
         setItems(res.data?.getItems || []);

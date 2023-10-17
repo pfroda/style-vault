@@ -7,22 +7,33 @@ interface FilterConditions {
   color?: string[];
   occasion?: string[];
   season?: string[];
+  brand?: string[];
   location?: string;
   category?: string;
   userId: string;
 }
 
 export const queryResolver = {
-  getItems: async (_, { userId, color, occasion, season, location, category }: FilterConditions) => {
+  getItems: async (_, { userId, color, occasion, season, brand, location, category }: FilterConditions) => {
     console.log('hello')
     const filter: Record<string, any> = {};
-    
+    console.log(filter)
     if (userId) filter.userId = userId;
     if (color) filter.color = { [Op.contains]: color };
     if (occasion) filter.occasion = { [Op.contains]: occasion };
-    if (season) filter.season = { [Op.contains]: season };
+    if (season) filter.season = { 
+      [Op.or]: season.map(s => ({ [Op.contains]: [s] })) 
+    };
+    if (brand) filter.brand = { 
+      [Op.or]: brand.map(b => ({ [Op.contains]: [b] }))
+    };
     if (location) filter.location = location;
-    if (category) filter.category = category;
+    if (category === 'All') {
+      // don't filter if user clicks all
+  } else {
+      filter.category = category;
+  }
+
     const items = await Item.findAll({ where: filter });
     return Item.findAll({ where: filter });
   },
@@ -74,6 +85,62 @@ export const queryResolver = {
     return closet;
   },
 
+  getColors: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['color'],
+      where: { userId },
+      group: ['color'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/colors found for this user');
+    }
+    return items.map(item => item.color);
+  },
+
+  getBrands: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['brand'],
+      where: { userId },
+      group: ['brand'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/brands found for this user');
+    }
+    return items.map(item => item.brand);
+  },
+
+  getOccasions: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['occasion'],
+      where: { userId },
+      group: ['occasion'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/occasions found for this user');
+    }
+    return items.map(item => item.occasion);
+  },
+
+  getLocations: async (_, { userId }) => {
+    const items = await Item.findAll({
+      attributes: ['location'],
+      where: { userId },
+      group: ['location'],
+      raw: true
+    });
+
+    if (!items.length) {
+      throw new Error('No items/locations found for this user');
+    }
+    return items.map(item => item.location);
+  },
+
 
   getItemsByCategory: async (_, { userId, category }) => {
     const items = await Item.findAll({ 
@@ -98,4 +165,5 @@ export const queryResolver = {
     return closet.getOutfits();
   } 
 };
+
 

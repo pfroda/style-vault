@@ -1,6 +1,7 @@
 import './filterpopup.css';
 import OccasionsFilter from '../OccasionsFilter/OccasionsFilter';
 import SeasonsFilter from '../SeasonsFilter/SeasonsFilter';
+import BrandsFilter from '../BrandsFilter/BrandsFilter';
 
 function FilterPopup({toggleFilters}: any) {
   return (
@@ -9,6 +10,7 @@ function FilterPopup({toggleFilters}: any) {
         <div className='filters-popup'>
           <h3>Filter</h3>
           <SeasonsFilter/>
+          <BrandsFilter/>
         </div>
       </div>
     </div>

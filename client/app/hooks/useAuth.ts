@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import { LoginUser, RegisterUser } from '@/app/Interfaces';
+import { LoginUser, RegisterUser, User } from '@/app/Interfaces';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
-import { registerUser, loginUser } from '../services/apiUser';
+import { registerUser, loginUser, updateUser, getUserData } from '../services/apiUser';
 import {
   //setLoading, 
   //setError, 
@@ -41,7 +41,22 @@ function useAuth() {
     }
   }
 
-  return { user, handleRegister, handleLogin };
+  const handleUpdate = async (userId: string, user: User) => {
+    const res = await updateUser(userId, user);
+    if (res) {
+      dispatch(setUser(res));
+      setCookie('token', res.accessToken);
+    }
+  }
+
+  const handleUserData = async (userId: string) => {
+    const res = await getUserData(userId);
+    if (res) {
+      dispatch(setUser(res));
+    }
+  }
+
+  return { user, handleRegister, handleLogin, handleUpdate, handleUserData };
 }
 
 export default useAuth

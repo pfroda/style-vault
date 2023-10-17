@@ -1,4 +1,4 @@
-import { RegisterUser, LoginUser } from "../Interfaces";
+import { RegisterUser, LoginUser, User } from "../Interfaces";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL
 
@@ -37,5 +37,41 @@ export async function loginUser (user: LoginUser) {
     return data;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function updateUser (userId: string, user: User) {
+  try {
+    const response = await fetch(`${url}/users/${userId}/upload`, {
+      method: "PUT",
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user)
+    })
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUserData (userId: string) {
+  try {
+    const response = await fetch(`${url}/users/${userId}`, {
+      method: 'GET',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 }

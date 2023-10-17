@@ -5,6 +5,16 @@ export type RegisterUser = {
   id: string;
 };
 
+export type User = {
+  username: string;
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+  profilePicture: string;
+  id: string;
+};
+
 export type LoginUser = {
   email: string;
   password: string;
