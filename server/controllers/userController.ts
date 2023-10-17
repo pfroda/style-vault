@@ -44,23 +44,20 @@ async function registerUser(req, res) {
 
 async function logUser (req, res) {
   const login: User = req.body;
-  // console.log('received user data', login)
   try {
     const user = await User.findOne({ where: { email: login.email } });
-    // console.log('user in database', user)
     const validatedPass = await bcrypt.compare(login.password, user.password);
 
     if (!validatedPass) throw new Error();
     const accessToken = jwt.sign({ id: user.id }, TOKEN_SECRET);
-    // console.log('Generated access token:', accessToken);
     res.cookie('token', accessToken, {httpOnly: true, secure: true, SameSite: 'true', expires: new Date(Date.now() + 60 * 60 * 1000 * 24)});
-    // res.json({id: user.id})
     res.status(200).send({accessToken, id: user.id})
     } catch (error) {
       res
         .status(401)
         .send({ error: '401', message: 'Username or password is incorrect' });
     }
+
 };
 
 async function updateUser(req, res) {
