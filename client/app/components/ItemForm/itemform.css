@@ -1,6 +1,8 @@
 .ItemForm {
   position: relative;
-  padding-top: 20px;;
+  padding-top: 20px;
+  padding-bottom: 8px;
+  overflow: hidden;
   & .custom-file-input {
     position: relative;
     margin-top: 10px;
@@ -67,7 +69,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-    padding-bottom: 43px;
+    padding-bottom: 40px;
     
      
 
@@ -100,8 +102,9 @@
       }
     }
   }
-  & .register-button {
-    padding: 12px; 
+  & .add-item-button {
+    height: 50px;
+    /* padding: 12px;  */
     width: 100vw; 
     position: fixed; 
     bottom: 0; 
@@ -267,4 +270,14 @@ label.prueba {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.go-back-item-form {
+  position: relative;
+}
+
+.go-back-item-form > * {
+  top: -10px !important;
+  left: 7px !important;
+  position: absolute;
 }

@@ -11,6 +11,7 @@ import useAuth from '@/app/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import closeIcon from '../../../../public/icon-close.svg';
+import closeIcon1 from '../../../../public/close.png';
 
 function FilterPopup({displayFilters, toggleFilters}: any) {
   const [brands, setBrands] = useState<string[]>([]);
@@ -39,7 +40,7 @@ function FilterPopup({displayFilters, toggleFilters}: any) {
     <div className="FilterPopup">
       <div className={`general-filters-container ${displayFilters ? 'popup-active' : ''}`}>
         <div className='filters-popup'>
-          <Image onClick={toggleFilters} alt="close" src={closeIcon}></Image>
+          <Image className='close-filter' onClick={toggleFilters} alt="close" src={closeIcon1}></Image>
           <h3>Filter</h3>
           {brands.length > 0 ? (
             <>

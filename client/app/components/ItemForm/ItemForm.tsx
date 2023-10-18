@@ -20,6 +20,7 @@ import { colorsData, occasionsData, seasonsData } from '@/app/utils/mockData';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
+import GoBack from '../GoBack/GoBack';
 import { queryClosets } from '@/app/services/apiGraphQL';
 import { useForm } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
@@ -205,123 +206,119 @@ function ItemForm() {
   // const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
     /* img-form-container   cuadro de la foto*/
-// label           boton
+  // label           boton
   return (
   
-   
+  <div className='ItemForm'>
 
-    <div className='ItemForm'>
-      <div className="img-form-container">
-        {itemUrl && <img  src={itemUrl} alt="" />}
-        {photoIsLoading && <div className='spinner'></div>}
-      </div>
-      
-      <input 
-      className="img-form" 
-      type="file" 
-      ref={fileInputRef} 
-      onChange={handleFileChange} 
-      style={{ display: 'none' }} // Esto es para ocultar el input
-    />
-      <div className="custom-file-input">
-        <input className="img-form" type="file" onChange={handleFileChange} />
-        <label className='prueba' htmlFor="file-input">Select a Photo</label>
-      </div>
+    <div className="go-back-item-form">
+      <GoBack />
+    </div>
 
-      
-        <form onSubmit={submitForm} className='item-form'>
-          <div className='input-container'>
+    <div className="img-form-container">
+      {itemUrl && <img  src={itemUrl} alt="" />}
+      {photoIsLoading && <div className='spinner'></div>}
+    </div>
+    
+    <input className="img-form" type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
+
+    <div className="custom-file-input">
+      <input className="img-form" type="file" onChange={handleFileChange} />
+      <label className='prueba' htmlFor="file-input">Select a Photo</label>
+    </div>
+
+    <form onSubmit={submitForm} className='item-form'>
+      <div className='input-container'>
             
-            {/* CATEGORY DROPDOWN */}
-            <div className='input-wrapper' onClick={toggleCategoryMenu}>
-              <div className='label-container colorDropdownButton'>
-                <Image src={shirtImg} alt="Icono" />
-                <label htmlFor="categories">Categories</label>
-              </div>
-              <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
-            </div>
+        {/* CATEGORY DROPDOWN */}
+        <div className='input-wrapper' onClick={toggleCategoryMenu}>
+          <div className='label-container colorDropdownButton'>
+            <Image src={shirtImg} alt="Icono" />
+            <label htmlFor="categories">Categories</label>
+          </div>
+          <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
+        </div>
 
-            <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
-            {categoriesArray.map((categoryItem) => (
-              <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
-            ))}
-            </ul>
-            {/* CATEGORY DROPDOWN */}
-            
-            {/* SEASON DROPDOWN */}
-            <div className='input-wrapper' onClick={toggleSeasonMenu}>
-              <div className='label-container colorDropdownButton'>
-                <Image src={seasonImg} alt="Icono" />
-                <label htmlFor="season">Season</label>
-              </div>
-              <Image className="expand-icon" src={showSeasonMenu ? expandLess : expandMore} alt="" />
-            </div>
-
-          <ul className={`colors-dropdown ${showSeasonMenu ? 'activedropdown' : ''}`}>
-            {seasonsData.map((seasonItem) => (
-              <li className={`li-wrapper ${selectedSeasons.includes(seasonItem) ? 'active' : ''}`} key={seasonItem} onClick={() => handleSeasonClick(seasonItem)}>
-                {seasonItem}
-              </li>
-            ))}
-          </ul>
-          {/* SEASONS DROPDOWN */}
+        <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
+        {categoriesArray.map((categoryItem) => (
+          <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
+        ))}
+        </ul>
+        {/* CATEGORY DROPDOWN */}
         
-          {/* OCASSIONS DROPDOWN */}
-          <div className='input-wrapper' onClick={toggleOccasionsMenu}>
-            <div className='label-container colorDropdownButton'>
-              <Image src={calendarImg} alt="Icono" />
-              <label htmlFor="occasion">Occasion</label>
-            </div>
-            <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
+        {/* SEASON DROPDOWN */}
+        <div className='input-wrapper' onClick={toggleSeasonMenu}>
+          <div className='label-container colorDropdownButton'>
+            <Image src={seasonImg} alt="Icono" />
+            <label htmlFor="season">Season</label>
           </div>
+          <Image className="expand-icon" src={showSeasonMenu ? expandLess : expandMore} alt="" />
+        </div>
 
-          <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
-            {occasionsData.map((occasionItem) => (
-              <li className={`li-wrapper ${selectedOccasions.includes(occasionItem) ? 'active' : ''}`} key={occasionItem} onClick={() => handleOccasionClick(occasionItem)}>
-                {occasionItem}
-              </li>
-            ))}
-          </ul>
-          {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
-          {/* OCASSIONS DROPDOWN */}
-
-          {/* COLORS DROPDOWN */}
-          <div className='input-wrapper' onClick={toggleColorMenu}>
-            <div className='label-container colorDropdownButton'>
-              <Image src={colorBuck} alt="Icono" />
-              <label htmlFor="colorSelect">Color</label>
-            </div>
-            <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
+        <ul className={`colors-dropdown ${showSeasonMenu ? 'activedropdown' : ''}`}>
+          {seasonsData.map((seasonItem) => (
+            <li className={`li-wrapper ${selectedSeasons.includes(seasonItem) ? 'active' : ''}`} key={seasonItem} onClick={() => handleSeasonClick(seasonItem)}>
+              {seasonItem}
+            </li>
+          ))}
+        </ul>
+        {/* SEASONS DROPDOWN */}
+      
+        {/* OCASSIONS DROPDOWN */}
+        <div className='input-wrapper' onClick={toggleOccasionsMenu}>
+          <div className='label-container colorDropdownButton'>
+            <Image src={calendarImg} alt="Icono" />
+            <label htmlFor="occasion">Occasion</label>
           </div>
+          <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
+        </div>
 
-          <ul className={`colors-dropdown ${showColorMenu ? 'activedropdown' : ''}`}>
-            {colorsData.map((colorItem) => (
-              <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
-                <div className="color" style={{ backgroundColor: colorItem.value }}></div>
-                {colorItem.color}
-              </li>
-            ))}
-          </ul>
-          {/* COLORS DROPDOWN */}
+        <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
+          {occasionsData.map((occasionItem) => (
+            <li className={`li-wrapper ${selectedOccasions.includes(occasionItem) ? 'active' : ''}`} key={occasionItem} onClick={() => handleOccasionClick(occasionItem)}>
+              {occasionItem}
+            </li>
+          ))}
+        </ul>
+        {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
+        {/* OCASSIONS DROPDOWN */}
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={brandImg} alt="Icono" />
-              <label htmlFor="brand">Brand</label>
-            </div>
-            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
+        {/* COLORS DROPDOWN */}
+        <div className='input-wrapper' onClick={toggleColorMenu}>
+          <div className='label-container colorDropdownButton'>
+            <Image src={colorBuck} alt="Icono" />
+            <label htmlFor="colorSelect">Color</label>
           </div>
+          <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
+        </div>
 
-          <div className='input-wrapper'>
-            <div className='label-container'>
-              <Image src={locationImg} alt="Icono" />
-              <label htmlFor="location">Location</label>
-            </div>
-            <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
+        <ul className={`colors-dropdown ${showColorMenu ? 'activedropdown' : ''}`}>
+          {colorsData.map((colorItem) => (
+            <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
+              <div className="color" style={{ backgroundColor: colorItem.value }}></div>
+              {colorItem.color}
+            </li>
+          ))}
+        </ul>
+        {/* COLORS DROPDOWN */}
+
+        <div className='input-wrapper'>
+          <div className='label-container'>
+            <Image src={brandImg} alt="Icono" />
+            <label htmlFor="brand">Brand</label>
           </div>
+          <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
+        </div>
 
-          {/* CLOSET DROPDOWN */}
-          
+        <div className='input-wrapper'>
+          <div className='label-container'>
+            <Image src={locationImg} alt="Icono" />
+            <label htmlFor="location">Location</label>
+          </div>
+          <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
+        </div>
+
+        {/* CLOSET DROPDOWN */}
         <div className='input-wrapper' onClick={toggleClosetMenu}>
           <div className='label-container colorDropdownButton'>
             <Image src={closetImg} alt="Icono" />
@@ -337,16 +334,12 @@ function ItemForm() {
             </li>))}
         </ul>
         {/* CLOSET DROPDOWN */}
+
         </div>
-        <button className='register-button' type="submit">Add Item</button>
+        <button className='add-item-button' type="submit">Add Item</button>
       </form>
     </div>
-
-     
-    
-    
   )
-  
 }
 
 export default ItemForm
