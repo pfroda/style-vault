@@ -1,13 +1,13 @@
 'use client';
-import Header from '@/app/components/Header/Header';
 import Footer from '@/app/components/Footer/Footer';
-import Closet from '@/app/components/Closet/Closet';
+import SocialProfile from '@/app/components/Social/SocialProfile/SocialProfile';
 
 function index() {
     return (
       <>
       {/* <Closet></Closet> */}
       {/* <ItemDetails /> */} <p>hello idiot!</p>
+      <SocialProfile/>
       <Footer/>
       </>
     )

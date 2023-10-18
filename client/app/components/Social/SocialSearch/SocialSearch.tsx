@@ -6,11 +6,18 @@ import { useState } from 'react';
 import { queryUsersForSearch } from '@/app/services/apiGraphQL';
 import { useRouter } from 'next/navigation'; 
 import useAuth from '@/app/hooks/useAuth';
+import useFriend from '@/app/hooks/useFriend';
+import { useDispatch } from 'react-redux';
+import { setFriend } from '@/app/GlobalRedux/Features/friend/friendSlice';
+import { User } from '@/app/Interfaces';
 
 function SocialSearch() {
   const [searchResults, setSearchResults] = useState<User[]>([]);
-  const [clickedUser, setClickedUser] = useState([]);
+  // const [clickedUser, setClickedUser] = useState([]);
   const { user } = useAuth();
+  // const { friend } = useFriend();
+  const dispatch = useDispatch();
+
   const router = useRouter();
   
   let searchTimeout: any;
@@ -50,8 +57,9 @@ function SocialSearch() {
   const handleResultClick = (user) => {
     console.log('clicked mf');
     console.log(user);
-    setClickedUser(user);
-    router.push(`/dashboard/socialprofile?user=${user?.username}`)
+    // setClickedUser(user);
+    dispatch(setFriend(user));
+    router.push(`/dashboard/explore/profile/?${user?.username}`)
   }
 
   return (

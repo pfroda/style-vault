@@ -7,6 +7,7 @@ import itemReducer from './Features/item/itemSlice';
 import closetReducer from './Features/closet/closetSlice';
 import outfitReducer from './Features/outfit/outfitSlice';
 import filterReducer from './Features/filter/filterSlice';
+import friendReducer from './Features/friend/friendSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     item: itemReducer,
     closet: closetReducer,
     outfit: outfitReducer,
-    filter: filterReducer
+    filter: filterReducer,
+    friend: friendReducer
   },
   middleware: [thunk]
 })

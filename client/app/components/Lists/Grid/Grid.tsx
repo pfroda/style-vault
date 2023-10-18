@@ -9,8 +9,10 @@ import { queryItems } from '@/app/services/apiGraphQL';
 import { Item } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
+import useFriend from '@/app/hooks/useFriend';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'next/navigation';
 
 function Grid() {
   const selectedCategory = useSelector((state) => state.filter.category);
@@ -20,9 +22,13 @@ function Grid() {
   const selectedLocation = useSelector((state) => state.filter.location);
   const selectedColor = useSelector((state) => state.filter.color)
 
+  const searchParams = useSearchParams();
+  const friendUsername = searchParams.get('friend');
+
   const dispatch = useDispatch();
   const [items, setItems] = useState<Item[]>([]);
   const { user } = useAuth();
+  const { friend } = useFriend(); 
   const [displayFilters, setDisplayFilters] = useState(false);
   const [activeItems, setActiveItems] = useState('filteredItems');
 
@@ -41,17 +47,37 @@ function Grid() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const  res = await queryItems({
-          userId: user?.id!,
-          category: selectedCategory,
-          season: selectedSeason,
-          brand: selectedBrands,
-          occasion: selectedOccasion,
-          location: selectedLocation,
-          color: selectedColor
-        });
-        console.log('GraphQL res Grid:', res);
-        setItems(res.data?.getItems || []);
+
+        if (friendUsername) {
+
+          const  res = await queryItems({
+            userId: friend?.id!,
+            category: selectedCategory,
+            season: selectedSeason,
+            brand: selectedBrands,
+            occasion: selectedOccasion,
+            location: selectedLocation,
+            color: selectedColor
+          });
+          console.log('GraphQL res Grid:', res);
+          console.log('FRRRRRIENDS PARAMS:', friendUsername)
+          setItems(res.data?.getItems || []);
+
+        } else {
+          const  res = await queryItems({
+            userId: user?.id!,
+            category: selectedCategory,
+            season: selectedSeason,
+            brand: selectedBrands,
+            occasion: selectedOccasion,
+            location: selectedLocation,
+            color: selectedColor
+          });
+          console.log('GraphQL res Grid:', res);
+          console.log('FRRRRRIENDS PARAMS:', friendUsername)
+          setItems(res.data?.getItems || []);
+
+        }
       } catch (error) {
         console.log(error);
       }
@@ -59,7 +85,7 @@ function Grid() {
     // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
     // console.log('selectedFilterCat', selectedCategory)
     fetchItems();
-  }, [user?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
+  }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
     ? items.map((item) => ({
