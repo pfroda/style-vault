@@ -8,8 +8,11 @@ function useItems() {
   const item = useSelector((state: RootState) => state.item.items);
   const dispatch = useDispatch();
 
-  const handlePostItem = async (item: Item) => {
-    const res = await postItem(item);
+  const handlePostItem = async ({
+    item,
+    closetId
+  }:{ item: Item, closetId: string} ) => {
+    const res = await postItem(item, closetId);
     if (res) {
       dispatch(addItem(res));
     }

@@ -1,6 +1,6 @@
 .OutfitSubmit {
   height: 100vh;
-  background-color: antiquewhite;
+  /* background-color: antiquewhite; */
   & .outfit-form-header {
     height: 45px;
     border-bottom: var(--primary-border);
@@ -11,26 +11,86 @@
   & .image-outfit-container {
     & .outfit-image {
       margin: auto;
-      max-height: 75vh;
+      max-height: 65vh;
     }
   }
   & .outfit-form {
     margin-top: 20px;
-    /* position: relative; */
-    & .outfit-name-input {
-      /* position: absolute; */
-      /* top: 0; */
-      width: 60vw;
-      margin: auto;
-      padding: 5px 0px 5px 10px;
-      border-radius: 3px;
+    & .input-wrapper-name {
+      /* background-color: blue; */
+      border-bottom: var(--primary-border);
+      border-top: var(--primary-border);
+      display: flex;
+      gap: 10px;
+      padding: 12px 0px 12px 10px;
+      & .icon-name {
+        width: 25px;
+        height: auto;
+        aspect-ratio: 1/1;
+      }
+      & .outfit-name-input {
+        &:focus {
+          outline-style: none;
+        }
+      }
     }
-    & .outfit-button {
-      padding: 5px 20px 5px 20px;
-      margin: auto;
-      margin-top: 20px;
+    & .button-container {
+      height: 50px;
       background-color: var(--primary-color);
-      border-radius: 5px;
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(-50%); 
+      & .outfit-button {
+        padding: 5px 30px 5px 30px;
+        background-color: white;
+        border: .5px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
     }
   }
 }
+
+
+.input-wrapper {
+  position: relative;
+  padding-inline: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: var(--primary-border);
+  display: flex;
+  justify-content: space-between;
+  & .label-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & img {
+      width: 25px;
+      height: auto;
+      aspect-ratio: 1/1;
+    }
+  }
+  & input {
+    text-align: end;
+    &:focus {
+      outline-style: none;
+    }
+  }
+}
+
+.OutfitSubmit {
+  & .outfit-form-container {
+    & .outfit-form {
+       & .activedropdown {
+        padding-bottom: 70px;
+      }
+    }
+  }
+}
+
+
+

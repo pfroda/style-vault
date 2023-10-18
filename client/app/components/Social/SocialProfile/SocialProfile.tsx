@@ -1,33 +1,37 @@
-import './closet.css'
-import edit from '../../../public/edit-profile1.png';
-import defaultUserImage from '../../../public/user.png';
-import closet1 from '../../../public/closet1.png';
-import closet4 from '../../../public/closet4.png';
+import '../../Closet/closet.css';
+
+// import './closet.css'
+import edit from '../../../../public/edit-profile1.png';
+import defaultUserImage from '../../../../public/user.png';
+import closet1 from '../../../../public/closet1.png';
+import closet4 from '../../../../public/closet4.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import Header from '../Header/Header';
+import Header from '../../Header/Header';
 import { queryClosets } from '@/app/services/apiGraphQL';
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
+import useFriend from '@/app/hooks/useFriend';
 import { useRouter } from 'next/navigation'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
-function Closet() {
-  const { register, handleSubmit, reset } = useForm();
+function SocialProfile() {
   const { user, handleUserData } = useAuth();
+  const {friend, handleFriendData} = useFriend()
   const router = useRouter();
 
   useEffect(() => {
-    handleUserData(user?.id!);
+    handleFriendData(friend?.id!);
+    console.log('FRIEND ID:', friend?.id);
+    console.log('MY ID:', user?.id)
+    console.log('FRIEND DATA:', friend);
+    console.log('MY DATA:', user)
   }, []);
 
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
-
-  console.log(closets)
   
   const { handlePostCloset } = useCloset();
   const [closetForm, setClosetForm] = useState(false);
@@ -43,23 +47,15 @@ function Closet() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await queryClosets(user?.id!);
-        console.log('lo que queremos:', res.data?.getClosets);
+        const res = await queryClosets(friend?.id!);
         dispatch(setClosetState(res.data?.getClosets || []));
       } catch (error) {
         console.log(error);
       }
     };
     fetchItems();
-  }, [user?.id, dispatch]); 
+  }, [friend?.id, dispatch]); 
 
-  const submitForm = handleSubmit(async (closet) => {
-    closet.userId = user?.id!;
-    console.log(closet);
-    handlePostCloset(closet);
-    setClosetForm(false);
-    reset();
-  });
 
   return (
     <div className='Closet'>
@@ -67,20 +63,18 @@ function Closet() {
         <Header />
         <div className="profile">
           <div className="profile-content">
-          <Image className="img" alt="" src={user?.profilePicture || defaultUserImage} width={100} height={100} />
-            <div className="name">{user?.name ? user?.name : user?.username}</div>
+          <Image className="img" alt="" src={friend?.profilePicture || defaultUserImage} width={100} height={100} />
+            <div className="name">{friend?.name ? friend?.name : friend?.username}</div>
           </div>
-          <Image className="edit" src={edit} alt="Edit" onClick={handleProfile} />
         </div>
         <div className="header-options">
           <button className='closet-button'>Closet</button>
           <button className='outfit-button'>Outfits</button>
-          <button className='loves-button'>Loves</button>
         </div>
       </div>
 
       <div className="user-closets">
-        <Link href="/dashboard/grid" className="closets-container">
+        <Link href={`/dashboard/grid?friend=${friend?.username}`} className="closets-container">
           <Image alt="" className='closet-image' src={closet1} />
           <div className="closet-name">All Clothes</div>
         </Link>
@@ -93,23 +87,9 @@ function Closet() {
               </div>
           </div>
         ))}
-
-        <div className="closets-container">
-          <Image alt="" className={`closet-image ${closetForm ? 'closet-active' : ''}`} src={closet4} />
-          {closetForm ? (
-            <>
-              <form onSubmit={submitForm} className='register-form'>
-                <div onClick={showFormCloset} className="close-closet">X</div>
-                <input className='closet-input' type="text" {...register("name", { required: true })} placeholder='Closet name' />
-                <button className='closet-button' type="submit" >Add Closet</button>
-              </form>
-            </>
-          ) : ( 
-          <div className="closet-name" onClick={showFormCloset}>Add New Closet</div>)}
-        </div>
       </div>
     </div>
   )
 }
 
-export default Closet
+export default SocialProfile;

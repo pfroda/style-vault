@@ -16,6 +16,7 @@ import calendarImg  from '../../../public/calendar.png';
 import colorBuck  from '../../../public/fill.png';
 import locationImg  from '../../../public/loc.png';
 
+import { colorsData, occasionsData, seasonsData } from '@/app/utils/mockData';
 import { useDispatch, useSelector } from 'react-redux';
 import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
@@ -31,9 +32,7 @@ import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
-import { colorsData } from '@/app/utils/mockData';
-import { occasionsData } from '@/app/utils/mockData';
-import { seasonsData } from '@/app/utils/mockData';
+
 
 function ItemForm() {
   const { register, handleSubmit, reset } = useForm<Item>();
@@ -53,11 +52,13 @@ function ItemForm() {
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedCloset, setSelectedCloset] = useState<string>('');
+  const [categoriesArray, setCategoriesArray] = useState<string[]>(["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dresses", "Shorts", "One-Piece"
+  ]);
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showOccasionMenu, setShowOccasionMenu] = useState(false);
   const [showSeasonMenu, setShowSeasonMenu] = useState(false);
-  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
 console.log("CLOSETS--->",closets)
@@ -79,25 +80,26 @@ const hasClosets = closets?.data?.getClosets?.length > 0;
     setShowClosetMenu(!showClosetMenu);
   };
 
-  const [categoriesArray, setCategoriesArray] = useState<string[]>([
-    "Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dresses", "Shorts", "One-Piece"
-  ]);
-;
-
-useEffect(() => {
-  if (imageInfo?.labels && categoriesArray.includes(imageInfo?.labels)) {
-    const updatedCategories = [
-      imageInfo?.labels,
-      ...categoriesArray.filter(category => category !== imageInfo?.labels)
-    ];
-    setCategoriesArray(updatedCategories);
-
-    if (!selectedCategory) {
-      setSelectedCategory(updatedCategories[0]);
+  useEffect(() => {
+    if (imageInfo?.labels && categoriesArray.includes(imageInfo?.labels)) {
+      const updatedCategories = [
+        imageInfo?.labels,
+        ...categoriesArray.filter(category => category !== imageInfo?.labels)
+      ];
+      setCategoriesArray(updatedCategories);
+  
+      if (!selectedCategory) {
+        setSelectedCategory(updatedCategories[0]);
+      }
     }
-  }
-}, [imageInfo]);
+  }, [imageInfo]);
 
+  useEffect(() => {
+    if (!selectedCategory) {
+      setSelectedCategory(categoriesArray[0]);
+      console.log(categoriesArray[0]);
+    }
+  }, [categoriesArray, selectedCategory]);
  
   useEffect(() => {
     if (itemUrl) {
@@ -105,12 +107,11 @@ useEffect(() => {
     }
   }, [itemUrl]);
 
-  
   useEffect(() => {
     queryClosets(user?.id!)
-      .then(data => {
-        console.log(data);
-        dispatch(setClosetState(data))
+      .then(res => {
+        console.log(res);
+        dispatch(setClosetState(res.data?.getClosets))
       })
   }, []);
 
@@ -137,7 +138,6 @@ useEffect(() => {
         closestColor = color;
       }
     });
-  
     return closestColor;
   }
   
@@ -150,9 +150,6 @@ useEffect(() => {
       }
     }
   }, [imageInfo]);
-  
-   
-
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -186,9 +183,13 @@ useEffect(() => {
     item.occasion = selectedOccasions;
     item.season = selectedSeasons;
     item.color = selectedColors;
-    item.closets = selectedCloset
-        
-    handlePostItem(item);
+    item.closets = selectedCloset;
+    // item.brand = imageInfo?.logos
+    
+    handlePostItem({
+      item: item,
+      closetId: selectedCloset
+    });
     router.push('/dashboard/cupboard');
     console.log("item--->", item)
   });
@@ -197,169 +198,163 @@ useEffect(() => {
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
-  
 
-const handleSeasonClick = (seasonToRemove: string) => {
-  if (selectedSeasons.includes(seasonToRemove)) {
-    setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
-  } else {
-    setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
-  }
-};
+  const handleSeasonClick = (seasonToRemove: string) => {
+    if (selectedSeasons.includes(seasonToRemove)) {
+      setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== seasonToRemove));
+    } else {
+      setSelectedSeasons(prevSeasons => [...prevSeasons, seasonToRemove]);
+    }
+  };
 
-const handleOccasionClick = (occasionToRemove: string) => {
-  if (selectedOccasions.includes(occasionToRemove)) {
-    setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== occasionToRemove));
-  } else {
-    setSelectedOccasions(prevOccasions => [...prevOccasions, occasionToRemove]);
-  }
-};
+  const handleOccasionClick = (occasionToRemove: string) => {
+    if (selectedOccasions.includes(occasionToRemove)) {
+      setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== occasionToRemove));
+    } else {
+      setSelectedOccasions(prevOccasions => [...prevOccasions, occasionToRemove]);
+    }
+  };
 
-const handleColorClick = (color: string) => {
-  if (selectedColors.includes(color)) {
-    setSelectedColors((prevColors) => prevColors.filter((c) => c !== color));
-  } else {
-    setSelectedColors((prevColors) => [...prevColors, color]);
-  }
-};
+  const handleColorClick = (color: string) => {
+    if (selectedColors.includes(color)) {
+      setSelectedColors((prevColors) => prevColors.filter((c) => c !== color));
+    } else {
+      setSelectedColors((prevColors) => [...prevColors, color]);
+    }
+  };
 
-const handleClosetSelect = (closetId: string) => {
-  setSelectedCloset(closetId);
-  // toggleClosetMenu();
-};
+  const handleClosetSelect = (closetId: string) => {
+    setSelectedCloset(closetId);
+  };
 
-// const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
+  const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
 
-return (
-  <div className='ItemForm'>
-    <div className="img-form-container">
-      {itemUrl && <img  src={itemUrl} alt="" />}
-      {photoIsLoading && <div className='spinner'></div>}
-    </div>
-    <div className="custom-file-input">
-      <input className="img-form" type="file" onChange={handleFileChange} />
-      <label htmlFor="file-input">Select a Photo</label>
-    </div>
+  return (
+    <div className='ItemForm'>
+      <div className="img-form-container">
+        {itemUrl && <img  src={itemUrl} alt="" />}
+        {photoIsLoading && <div className='spinner'></div>}
+      </div>
+      <div className="custom-file-input">
+        <input className="img-form" type="file" onChange={handleFileChange} />
+        <label htmlFor="file-input">Select a Photo</label>
+      </div>
 
-      {showForm &&
-      <form onSubmit={submitForm} className='item-form'>
-        <div className='input-container'>
-          
-          {/* CATEOGRY DROPDOWN */}
-          <div className='input-wrapper' onClick={toggleCategoryMenu}>
-            <div className='label-container colorDropdownButton'>
-              <Image src={shirtImg} alt="Icono" />
-              <label htmlFor="categories">Categories</label>
+        {showForm &&
+        <form onSubmit={submitForm} className='item-form'>
+          <div className='input-container'>
+            
+            {/* CATEOGRY DROPDOWN */}
+            <div className='input-wrapper' onClick={toggleCategoryMenu}>
+              <div className='label-container colorDropdownButton'>
+                <Image src={shirtImg} alt="Icono" />
+                <label htmlFor="categories">Categories</label>
+              </div>
+              <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
             </div>
-            <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
-          </div>
 
-          <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
-          {categoriesArray.map((categoryItem) => (
-            <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
-          ))}
+            <ul className={`colors-dropdown ${showCategoryMenu ? 'activedropdown' : ''}`}>
+            {categoriesArray.map((categoryItem) => (
+              <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
+            ))}
+            </ul>
+            {/* CATEOGRY DROPDOWN */}
+            
+            {/* SEASON DROPDOWN */}
+            <div className='input-wrapper' onClick={toggleSeasonMenu}>
+              <div className='label-container colorDropdownButton'>
+                <Image src={seasonImg} alt="Icono" />
+                <label htmlFor="season">Season</label>
+              </div>
+              <Image className="expand-icon" src={showSeasonMenu ? expandLess : expandMore} alt="" />
+            </div>
+
+          <ul className={`colors-dropdown ${showSeasonMenu ? 'activedropdown' : ''}`}>
+            {seasonsData.map((seasonItem) => (
+              <li className={`li-wrapper ${selectedSeasons.includes(seasonItem) ? 'active' : ''}`} key={seasonItem} onClick={() => handleSeasonClick(seasonItem)}>
+                {seasonItem}
+              </li>
+            ))}
           </ul>
-          {/* CATEOGRY DROPDOWN */}
-          
-          {/* SEASON DROPDOWN */}
-          <div className='input-wrapper' onClick={toggleSeasonMenu}>
+          {/* SEASONS DROPDOWN */}
+        
+          {/* OCASSIONS DROPDOWN */}
+          <div className='input-wrapper' onClick={toggleOccasionsMenu}>
             <div className='label-container colorDropdownButton'>
-              <Image src={seasonImg} alt="Icono" />
-              <label htmlFor="season">Season</label>
+              <Image src={calendarImg} alt="Icono" />
+              <label htmlFor="occasion">Occasion</label>
             </div>
-            <Image className="expand-icon" src={showSeasonMenu ? expandLess : expandMore} alt="" />
+            <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
           </div>
 
-        <ul className={`colors-dropdown ${showSeasonMenu ? 'activedropdown' : ''}`}>
-          {seasonsData.map((seasonItem) => (
-            <li className={`li-wrapper ${selectedSeasons.includes(seasonItem) ? 'active' : ''}`} key={seasonItem} onClick={() => handleSeasonClick(seasonItem)}>
-              {seasonItem}
-            </li>
-          ))}
-        </ul>
-        {/* SEASONS DROPDOWN */}
-      
-        {/* OCASSIONS DROPDOWN */}
-        <div className='input-wrapper' onClick={toggleOccasionsMenu}>
+          <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
+            {occasionsData.map((occasionItem) => (
+              <li className={`li-wrapper ${selectedOccasions.includes(occasionItem) ? 'active' : ''}`} key={occasionItem} onClick={() => handleOccasionClick(occasionItem)}>
+                {occasionItem}
+              </li>
+            ))}
+          </ul>
+          {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
+          {/* OCASSIONS DROPDOWN */}
+
+          {/* COLORS DROPDOWN */}
+          <div className='input-wrapper' onClick={toggleColorMenu}>
+            <div className='label-container colorDropdownButton'>
+              <Image src={colorBuck} alt="Icono" />
+              <label htmlFor="colorSelect">Color</label>
+            </div>
+            <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
+          </div>
+
+          <ul className={`colors-dropdown ${showColorMenu ? 'activedropdown' : ''}`}>
+            {colorsData.map((colorItem) => (
+              <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
+                <div className="color" style={{ backgroundColor: colorItem.value }}></div>
+                {colorItem.color}
+              </li>
+            ))}
+          </ul>
+          {/* COLORS DROPDOWN */}
+
+          <div className='input-wrapper'>
+            <div className='label-container'>
+              <Image src={brandImg} alt="Icono" />
+              <label htmlFor="brand">Brand</label>
+            </div>
+            <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
+          </div>
+
+          <div className='input-wrapper'>
+            <div className='label-container'>
+              <Image src={locationImg} alt="Icono" />
+              <label htmlFor="location">Location</label>
+            </div>
+            <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
+          </div>
+
+          {/* CLOSET DROPDOWN */}
+        <div className='input-wrapper' onClick={toggleClosetMenu}>
           <div className='label-container colorDropdownButton'>
-            <Image src={calendarImg} alt="Icono" />
-            <label htmlFor="occasion">Occasion</label>
+            <Image src={closetImg} alt="Icono" />
+            <label htmlFor="closets">Closet</label>
           </div>
-          <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
+          <Image className="expand-icon" src={showClosetMenu ? expandLess : expandMore} alt="" />
         </div>
 
-        <ul className={`colors-dropdown ${showOccasionMenu ? 'activedropdown' : ''}`}>
-          {occasionsData.map((occasionItem) => (
-            <li className={`li-wrapper ${selectedOccasions.includes(occasionItem) ? 'active' : ''}`} key={occasionItem} onClick={() => handleOccasionClick(occasionItem)}>
-              {occasionItem}
-            </li>
-          ))}
+        <ul className={`colors-dropdown ${showClosetMenu ? 'activedropdown' : ''}`}>
+          {closets.map((closetItem: any) => (
+            <li className={`li-wrapper ${selectedCloset === closetItem.id ? 'active' : ''}`}
+              key={closetItem.id} onClick={() => handleClosetSelect(closetItem.id)}>{closetItem.name}
+            </li>))}
         </ul>
-        {/* <input type="hidden" value={selectedCategory} {...register("category")} /> */}
-
-        {/* OCASSIONS DROPDOWN */}
-
-        {/* COLORS DROPDOWN */}
-        <div className='input-wrapper' onClick={toggleColorMenu}>
-          <div className='label-container colorDropdownButton'>
-            <Image src={colorBuck} alt="Icono" />
-            <label htmlFor="colorSelect">Color</label>
-          </div>
-          <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
-        </div>
-
-        <ul className={`colors-dropdown ${showColorMenu ? 'activedropdown' : ''}`}>
-          {colorsData.map((colorItem) => (
-            <li className={`li-wrapper ${selectedColors.includes(colorItem.color) ? 'active' : ''}`} key={colorItem.id} onClick={() => handleColorClick(colorItem.color)}>
-              <div className="color" style={{ backgroundColor: colorItem.value }}></div>
-              {colorItem.color}
-            </li>
-          ))}
-        </ul>
-        {/* COLORS DROPDOWN */}
-
-        <div className='input-wrapper'>
-          <div className='label-container'>
-            <Image src={brandImg} alt="Icono" />
-            <label htmlFor="brand">Brand</label>
-          </div>
-          <input id="brand" className='item-input' type="text" {...register("brand", { required: true })} placeholder="Brand" value={imageInfo?.logos || ''} onChange={e => setImageInfo(prev => ({ ...prev, logos: e.target.value }))} />
-        </div>
-
-        <div className='input-wrapper'>
-          <div className='label-container'>
-            <Image src={locationImg} alt="Icono" />
-            <label htmlFor="location">Location</label>
-          </div>
-          <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
-        </div>
-
         {/* CLOSET DROPDOWN */}
-        {hasClosets && (
-  <>
-      <div className='input-wrapper' onClick={toggleClosetMenu}>
-        <div className='label-container colorDropdownButton'>
-          <Image src={closetImg} alt="Icono" />
-          <label htmlFor="closets">Closet</label>
+
         </div>
-        <Image className="expand-icon" src={showClosetMenu ? expandLess : expandMore} alt="" />
-      </div>
-    
-      <ul className={`colors-dropdown ${showClosetMenu ? 'activedropdown' : ''}`}>
-        {closets?.data?.getClosets?.map((closetItem: any) => (
-          <li className={`li-wrapper ${selectedCloset === closetItem.id ? 'active' : ''}`}
-            key={closetItem.id} onClick={() => handleClosetSelect(closetItem.id)}>{closetItem.name}
-         </li>))}
-    </ul>
-  </>
-)}
-{/* CLOSET DROPDOWN */}
-      </div>
-      <button className='register-button' type="submit">Add Item</button>
-    </form>}
-  </div>
-)
+        <button className='register-button' type="submit">Add Item</button>
+      </form>}
+    </div>
+  )
 }
 
 export default ItemForm

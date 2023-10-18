@@ -18,6 +18,17 @@ function useAuth() {
 
   useEffect(() => {
     console.log(user);
+    if (!user) {
+      const userId = localStorage.getItem('userID')
+      if (!userId) return;
+      getUserData(userId)
+        .then(userData => {
+          dispatch(setUser(userData));
+        })
+    } else {
+      localStorage.setItem('userID', user.id)
+    }
+
   }, [user]);
 
   const handleRegister = async (user: RegisterUser) => {

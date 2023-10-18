@@ -1,9 +1,17 @@
 import { Item } from '../models/itemSchema';
 import { UserActivity } from '../models/userActivitySchema';
+import { Closet } from '../models/closetSchema';
 
 async function createItem (req, res) {
   try {
-    const item: Item = req.body;
+    const item: Item = req.body.item;
+    const closetId: string = req.body.closetId;
+
+    const closetFound = await Closet.findByPk(closetId);
+
+    if (!closetFound) {
+      throw new Error('Closet not found!');
+    }
 
     const newItem = await Item.create({
       userId: item.userId,
@@ -11,18 +19,19 @@ async function createItem (req, res) {
       category: item.category,
       color: item.color,
       itemUrl: item.itemUrl,
-      closets: item.closets || null,
       occasion: item.occasion || null,
       season: item.season || null,
       location: item.location || null
     });
 
-  //  const activity = await UserActivity.create({
-  //     type: 'NewItemToCloset', 
-  //     userId: item.userId,
-  //     itemId: newItem.id,
-  //     timestamp: new Date()  
-  //   });
+    // add outfit to closet using closet.addOutfits
+    await closetFound.addItems([newItem.id]);
+    //  const activity = await UserActivity.create({
+    //     type: 'NewItemToCloset', 
+    //     userId: item.userId,
+    //     itemId: newItem.id,
+    //     timestamp: new Date()  
+    //   });
 
     res.status(201).send(newItem);
     // res.status(201).send(newItem, activity);

@@ -2,7 +2,7 @@ import { Outfit } from "../Interfaces";
 
 const url = process.env.NEXT_PUBLIC_BASE_URL
 
-export async function postOutfit (outfit: Outfit) {
+export async function postOutfit (outfit: Outfit, closetId: string) {
   try {
     const response = await fetch(`${url}/outfit/add`, {
       method: "POST",
@@ -11,7 +11,7 @@ export async function postOutfit (outfit: Outfit) {
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(outfit),
+      body: JSON.stringify({ outfit, closetId }),
     })
     const data = await response.json();
     console.log(data);

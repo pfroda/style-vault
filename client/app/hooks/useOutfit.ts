@@ -8,8 +8,11 @@ function useOutfit() {
   const outfit = useSelector((state: RootState) => state.outfit.outfits);
   const dispatch = useDispatch();
 
-  const handlePostOutfit = async (outfit: Outfit) => {
-    const res = await postOutfit(outfit);
+  const handlePostOutfit = async ({ 
+    outfit, 
+    closetId
+  }: { outfit: Outfit, closetId: string }) => {
+    const res = await postOutfit(outfit, closetId);
     if (res) {
       dispatch(addOutfit(res));
     }
