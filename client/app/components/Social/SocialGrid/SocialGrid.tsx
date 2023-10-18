@@ -28,7 +28,6 @@ function SocialGrid() {
   ];
 
   const handleSearch = () => {
-    console.log('seraching...');
     setSearchBar(!serachBar);
   }
 
