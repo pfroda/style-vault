@@ -274,19 +274,19 @@ export const queryFavoritedItems = (userId: string): Promise<GraphQLResponse<{ g
   return fetchGraphQL(query, { userId });
 };
 
-export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+
+export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
   const query = `
-    query Query($userId: String!) {
-      getItems(userId: $userId) {
-        itemUrl
-        category
-      }
+  query Query($userId: String!) {
+    getUserItems(userId: $userId) {
+      id
+      category
+      itemUrl
     }
-    `;
+  }
+  `;
   return fetchGraphQL(query, { userId });
 };
-
-
 
 export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserProfile: User }>> => {
   const query = `
@@ -336,20 +336,130 @@ export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUser
   return fetchGraphQL(query, { id });
 };
 
-export const queryUserFeed = (userId: string): Promise<GraphQLResponse<{ getFeed: ActivityFeed[] }>> => {
+// export const queryAllUsers = (): Promise<GraphQLResponse<{ getAllUsers: User[] }>> => {
+//   const query = `
+//   query Query { 
+//     getAllUsers {
+//       id
+//       username
+//       profilePicture
+//       name
+//       closets {
+//         id
+//         userId
+//         name
+//         items {
+//           id
+//           userId
+//           category
+//           itemUrl
+//           occasion
+//           season
+//           color
+//           brand
+//         }
+//         outfits {
+//           id
+//           userId
+//           name
+//           occasion
+//           season
+//         }
+//       }
+//     }
+//   }    
+//   `;  
+//   return fetchGraphQL(query);
+// };
+
+// export const queryUserById = (id: string): Promise<GraphQLResponse<{ getUserById: User }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { id });
+// };
+
+// export const queryFollowing = (userId: string): Promise<GraphQLResponse<{ getFollowing: { users: User[], count: number } }>> => {
+//   const query = `
+  
+//   `; 
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFollowers = (userId: string): Promise<GraphQLResponse<{ getFollowers: { users: User[], count: number } }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFavoritedOutfits = (userId: string): Promise<GraphQLResponse<{ getFavoritedOutfits: Outfit[] }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+// export const queryFavoritedItems = (userId: string): Promise<GraphQLResponse<{ getFavoritedItems: Item[] }>> => {
+//   const query = `
+  
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
+
+export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
   const query = `
   query Query($userId: String!) {
-  getFeed(userId: $userId) {
-    message
-    timestamp
+    getUserItems(userId: $userId) {
+      id
+      category
+      itemUrl
     }
   }
   `;
   return fetchGraphQL(query, { userId });
 };
 
+export const queryItemsFromUserCloset = (userId: string): Promise<GraphQLResponse<{ getItemsFromUserCloset: Item[] }>> => {
+  const query = `
+  query Query($userId: String!, $closetId: String!) {
+    getItemsFromUserCloset(userId: $userId, closetId: $closetId) {
+      id
+      userId
+      closets {
+        id
+        name
+      }
+      category
+      itemUrl
+      occasion
+      season
+      color
+      brand
+      location
+    }
+  }
+  `;
+  return fetchGraphQL(query, { userId });
+};
 
-
-
-
+export const queryOutfitsFromUserCloset = (userId: string): Promise<GraphQLResponse<{ getOutfitsFromUserCloset: Outfit[] }>> => {
+  const query = `
+  query Query($userId: String!, $closetId: String!) {
+    getOutfitsFromUserCloset(userId: $userId, closetId: $closetId) {
+      id
+      userId
+      name
+      closets {
+        id
+        name
+      }
+      occasion
+      season
+    }
+  }
+  
+  `;
+  return fetchGraphQL(query, { userId });
+};
 

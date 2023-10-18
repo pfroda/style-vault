@@ -57,11 +57,13 @@
     margin: auto;
     & button {
       height: 30px;
-      padding-inline: 10px;
+      padding-inline: 30px;
       background-color: var(--primary-color);
+      border-top: var(--primary-border);
+      border-left: var(--primary-border);
+      border-right: var(--primary-border);
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      
     }
   }
 }
