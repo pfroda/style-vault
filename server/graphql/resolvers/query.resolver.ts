@@ -39,10 +39,9 @@ export const queryResolver = {
     };
     if (location) filter.location = location;
     
-    if (category !== 'All') { filter.category = category;
-  };
+    if (category !== 'All') { filter.category = category };
 
-  console.log('FILTER:', filter)
+  console.log('FILTER:', filter);
     const items = await Item.findAll({ where: filter });
     return items;
   },
@@ -289,10 +288,56 @@ export const queryResolver = {
     }));
   
     return feed;
-  }
-  
+  }, 
+  getUserItems: async (_, { userId }) => {
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error("User not found!");
+        }
+        const items = await Item.findAll({ where: { userId: user.id } });
+        return items;
+    } catch (error) {
+        console.error("Error fetching items for user:", error);
+        throw new Error("Could not fetch items for the user");
+    }
+  },
 
-  
+  getItemsFromUserCloset: async (_, { userId, closetId }) => {
+    try {
+      const closet = await Closet.findOne({ 
+        where: { id: closetId, userId: userId },
+        include: { model: Item, as: 'items' } 
+      });
+      
+      if (!closet) {
+        throw new Error("Closet not found or doesn't belong to the user!");
+      }
+
+      return closet.items;
+    } catch (error) {
+      console.error("Error fetching items for closet:", error);
+      throw new Error("Could not fetch items for the specified closet");
+    }
+  },
+
+  getOutfitsFromUserCloset: async (_, { userId, closetId }) => {
+    try {
+      const closet = await Closet.findOne({ 
+        where: { id: closetId, userId: userId },
+        include: { model: Outfit, as: 'outfits' }  
+      });
+      
+      if (!closet) {
+        throw new Error("Closet not found or doesn't belong to the user!");
+      }
+
+      return closet.outfits;
+    } catch (error) {
+      console.error("Error fetching outfits for closet:", error);
+      throw new Error("Could not fetch outfits for the specified closet");
+    }
+  }
 };
 
 

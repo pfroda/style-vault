@@ -275,19 +275,19 @@ export const queryFavoritedItems = (userId: string): Promise<GraphQLResponse<{ g
   return fetchGraphQL(query, { userId });
 };
 
-export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+
+export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
   const query = `
-    query Query($userId: String!) {
-      getItems(userId: $userId) {
-        itemUrl
-        category
-      }
+  query Query($userId: String!) {
+    getUserItems(userId: $userId) {
+      id
+      category
+      itemUrl
     }
-    `;
+  }
+  `;
   return fetchGraphQL(query, { userId });
 };
-
-
 
 export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserProfile: User }>> => {
   const query = `
@@ -349,7 +349,48 @@ export const queryUserFeed = (userId: string): Promise<GraphQLResponse<{ getFeed
   return fetchGraphQL(query, { userId });
 };
 
+export const queryItemsFromUserCloset = (userId: string): Promise<GraphQLResponse<{ getItemsFromUserCloset: Item[] }>> => {
+  const query = `
+  query Query($userId: String!, $closetId: String!) {
+    getItemsFromUserCloset(userId: $userId, closetId: $closetId) {
+      id
+      userId
+      closets {
+        id
+        name
+      }
+      category
+      itemUrl
+      occasion
+      season
+      color
+      brand
+      location
+    }
+  }
+  `;
+  return fetchGraphQL(query, { userId });
+};
 
+export const queryOutfitsFromUserCloset = (userId: string): Promise<GraphQLResponse<{ getOutfitsFromUserCloset: Outfit[] }>> => {
+  const query = `
+  query Query($userId: String!, $closetId: String!) {
+    getOutfitsFromUserCloset(userId: $userId, closetId: $closetId) {
+      id
+      userId
+      name
+      closets {
+        id
+        name
+      }
+      occasion
+      season
+    }
+  }
+  
+  `;
+  return fetchGraphQL(query, { userId });
+};
 
 
 
