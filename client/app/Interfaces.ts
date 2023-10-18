@@ -13,7 +13,17 @@ export type User = {
   surname: string;
   profilePicture: string;
   id: string;
+  items: Item[]
+  outfits: Outfit[]
+  closets: Closet[]
+  followers: [User]
+  following: [User]
+  followersCount: number;
+  followingCount: number;
+  favoriteItems: FavoriteItem[];
+  favoriteOutfits: FavoriteOutfit[];
 };
+
 
 export type LoginUser = {
   email: string;
@@ -49,6 +59,25 @@ export interface Closet {
   name: string;
   items?: Item[];
   outfits?: Outfit[];
+}
+
+export interface FavoriteItem {
+  id: string;
+  userId: string;
+  itemId: string;
+  item: Item
+}
+
+export interface FavoriteOutfit {
+  id: string;
+  userId: string;
+  outfitId: string;
+  outfit: Outfit
+}
+
+export interface ActivityFeed {
+  message: string
+  timestamp: string
 }
 
 // export interface Item {
