@@ -32,6 +32,8 @@ import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
+import { levenshtein, findClosestCategory } from '@/app/utils/searchAlgorithm';
+
 
 function ItemForm() {
   const { register, handleSubmit, reset } = useForm<Item>();
@@ -60,6 +62,8 @@ function ItemForm() {
   const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
+
+
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
   };
@@ -77,25 +81,14 @@ function ItemForm() {
   };
 
   useEffect(() => {
-    if (imageInfo?.labels && categoriesArray.includes(imageInfo?.labels)) {
-      const updatedCategories = [
-        imageInfo?.labels,
-        ...categoriesArray.filter(category => category !== imageInfo?.labels)
-      ];
-      setCategoriesArray(updatedCategories);
-  
-      if (!selectedCategory) {
-        setSelectedCategory(updatedCategories[0]);
+    if (imageInfo?.labels) {
+      const matchedCategory = findClosestCategory(imageInfo?.labels, categoriesArray);
+      if (matchedCategory) {
+        setSelectedCategory(matchedCategory);
       }
     }
-  }, [imageInfo]);
+  }, [imageInfo, categoriesArray]);
 
-  useEffect(() => {
-    if (!selectedCategory) {
-      setSelectedCategory(categoriesArray[0]);
-      console.log(categoriesArray[0]);
-    }
-  }, [categoriesArray, selectedCategory]);
  
   useEffect(() => {
     if (itemUrl) {
@@ -111,41 +104,17 @@ function ItemForm() {
       })
   }, []);
 
-  function hexToRgb(hex: string): [number, number, number] {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return [r, g, b];
-  }
-  
-  function findClosestColor(rgb: number[], colorsData: any[]): string {
-    const [r1, g1, b1] = rgb;
-  
-    let closestColor = colorsData[0];
-    let smallestDistance = Infinity;
-  
-    colorsData.forEach(({ color, value }) => {
-      const [r2, g2, b2] = hexToRgb(value);
-      const distance = Math.sqrt((r2 - r1) ** 2 + (g2 - g1) ** 2 + (b2 - b1) ** 2);
-  
-      if (distance < smallestDistance) {
-        smallestDistance = distance;
-        closestColor = color;
-      }
-    });
-    return closestColor;
-  }
-  
+ 
+
   useEffect(() => {
     if (imageInfo?.hexColor) {
-      const rgbArray = imageInfo.hexColor;
-      const closestColorName = findClosestColor(rgbArray, colorsData);
+      const closestColorName = rgbToColor(imageInfo.hexColor);
       if (!selectedColors.includes(closestColorName)) {
         setSelectedColors([closestColorName]);
       }
     }
   }, [imageInfo]);
+
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -190,6 +159,7 @@ function ItemForm() {
     console.log("item--->", item)
   });
 
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
@@ -222,7 +192,7 @@ function ItemForm() {
     setSelectedCloset(closetId);
   };
 
-  const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
+  // const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
 
   return (
@@ -329,6 +299,7 @@ function ItemForm() {
           </div>
 
           {/* CLOSET DROPDOWN */}
+          
         <div className='input-wrapper' onClick={toggleClosetMenu}>
           <div className='label-container colorDropdownButton'>
             <Image src={closetImg} alt="Icono" />
@@ -344,7 +315,6 @@ function ItemForm() {
             </li>))}
         </ul>
         {/* CLOSET DROPDOWN */}
-
         </div>
         <button className='register-button' type="submit">Add Item</button>
       </form>}
