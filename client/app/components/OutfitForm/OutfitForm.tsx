@@ -32,19 +32,13 @@ function OutfitForm() {
   const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   queryItemsForOutfits(user?.id!)
-  //     .then(items => {
-  //       setUserItems(items);
-  //     })
+  //   queryItemsForOutfits(user?.id!).then(response => {
+  //     console.log('respuesta', response);
+  //     if (response.getItems) {
+  //       setUserItems(response.getItems);
+  //     }
+  //   });
   // }, []);
-  useEffect(() => {
-    queryItemsForOutfits(user?.id!).then(response => {
-      console.log('respuesta', response);
-      if (response.getItems) {
-        setUserItems(response.getItems);
-      }
-    });
-  }, []);
 
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
 
@@ -60,7 +54,7 @@ function OutfitForm() {
     { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' }
   ];
 
-  const itemsUrls = [myUrl, myUrl, myUrl, myUrl];
+  const itemsUrls = [myUrl, myUrl, myUrl];
 
   const handleShuffle = () => {
     setShowShuffle(!showShuffle);

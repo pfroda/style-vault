@@ -26,6 +26,8 @@ function Closet() {
 
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
+
+  console.log(closets)
   
   const { handlePostCloset } = useCloset();
   const [closetForm, setClosetForm] = useState(false);
