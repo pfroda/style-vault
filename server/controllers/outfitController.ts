@@ -1,5 +1,6 @@
 import { Outfit } from '../models/outfitSchema';
 import { Item } from '../models/itemSchema';
+import { Closet } from '../models/closetSchema';
 import { UserActivity } from '../models/userActivitySchema';
 import sharp from 'sharp';
 import axios from 'axios';
@@ -7,16 +8,32 @@ import cloudinaryControllers from './cloudinaryControllers';
 
 async function createOutfit (req, res) {
   try {
-    const outfit: Outfit = req.body;
+    const outfit: Outfit = req.body.outfit;
+    const closetId: string = req.body.closetId;
 
+    // get closet from ID first, check exists
+    const closetFound = await Closet.findByPk(closetId);
+
+    if (!closetFound) {
+      throw new Error('Closet not found!');
+    }
+
+    // create outfit
     const newOutfit = await Outfit.create({
       userId: outfit.userId,
       name: outfit.name,
-      closets: outfit.closets || null,
-      occasion: outfit.occasion,
-      season: outfit.season
+      occasion: outfit.occasion || null,
+      season: outfit.season || null
     });
 
+    // add outfit to closet using closet.addOutfits
+    await closetFound.addOutfits([newOutfit.id]);
+
+    console.log(closetFound)
+    console.log(newOutfit)
+    console.log(await closetFound.getOutfits())
+
+    // create activity for feed :)
     // const activity = await UserActivity.create({
     //   type: 'NewOutfitToCloset', 
     //   userId: outfit.userId,

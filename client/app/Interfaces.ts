@@ -37,9 +37,9 @@ export type Outfit = {
   id: string;
   userId: string;
   name: string;
-  closets?: Closet[];
-  occasion: string[]; 
-  season: string[];
+  closets?: string;
+  occasion?: string[]; 
+  season?: string[];
   outfitUrl: string;
 }
 
