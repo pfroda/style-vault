@@ -5,6 +5,7 @@ import { Closet } from "../../models/closetSchema";
 import { User } from "../../models/userSchema";
 import { FavoriteItem } from "../../models/favoriteItemSchema";
 import { FavoriteOutfit } from "../../models/favoriteOutfitSchema";
+import { UserActivity } from "../../models/userActivitySchema";
 
 interface FilterConditions {
   color?: string[];
@@ -76,7 +77,9 @@ export const queryResolver = {
   },
 
   getOutfitById: async (_, { userId, id }) => {
-    const outfit = await Outfit.findByPk(id);
+    const outfit = await Outfit.findByPk(id, {
+      include: [{ association: 'closets' }]
+    });
     if (!outfit) throw new Error('Item not found');
     
     if (outfit.userId !== userId) throw new Error('Not authorized to view this item');
@@ -190,6 +193,24 @@ export const queryResolver = {
     return user;
   },
 
+  getUserProfile: async (_, { id }) => {
+    const user = await User.findByPk(id, {
+      include: [
+        { association: 'followers' },
+        { association: 'following' }
+      ]
+    });
+    if (!user) throw new Error('User not found');
+
+    const followersCount = await user.followers.length;
+    const followingCount = await user.following.length;
+    return {
+      ...user.toJSON(), 
+      followersCount,
+      followingCount
+    };
+  },
+
   getFollowers: async (_, { userId }) => {
     const user = await User.findByPk(userId, {
       include: [{ model: User, as: 'followers' }]
@@ -213,7 +234,7 @@ export const queryResolver = {
     });
     if (!favoriteItems.length) throw new Error('No favorite items found for this user');
     return favoriteItems;
-},
+  },
 
   getFavoriteOutfits: async (_, { userId }) => {
     const favoriteOutfits = await FavoriteOutfit.findAll({
@@ -222,8 +243,56 @@ export const queryResolver = {
     });
     if (!favoriteOutfits.length) throw new Error('No favorite outfits found for this user');
     return favoriteOutfits;
-},
+  },
 
+  getFeed: async (_, { userId }) => {
+    const user = await User.findByPk(userId, {
+      include: {
+        association: 'following', 
+        attributes: ['id']
+      }
+    });
+  
+    if (!user) {
+      throw new Error("User not found.");
+    }
+  
+    const followingIds = user.following.map(user => user.id);
+  
+    const activities = await UserActivity.findAll({
+      where: {
+        userId: followingIds 
+      },
+      order: [['timestamp', 'DESC']],
+    });
+  
+    const feed = await Promise.all(activities.map(async (activity) => {
+      const activityUser = await User.findByPk(activity.userId);
+      let message = "";
+  
+      switch (activity.type) {
+        case 'NewItemToCloset':
+          message = `${activityUser.username} added an item to their closet.`;
+          break;
+        case 'NewOutfitToCloset':
+          message = `${activityUser.username} added an outfit to their closet.`;
+          break;
+        case 'NewCloset':
+          message = `${activityUser.username} created a new closet.`;
+          break;
+      }
+  
+      return {
+        message: message,
+        timestamp: activity.timestamp,
+      };
+    }));
+  
+    return feed;
+  }
+  
+
+  
 };
 
 
