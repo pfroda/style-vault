@@ -63,6 +63,7 @@ function ItemForm() {
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
 
+
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
   };
@@ -103,41 +104,17 @@ function ItemForm() {
       })
   }, []);
 
-  function hexToRgb(hex: string): [number, number, number] {
-    const bigint = parseInt(hex.slice(1), 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return [r, g, b];
-  }
-  
-  function findClosestColor(rgb: number[], colorsData: any[]): string {
-    const [r1, g1, b1] = rgb;
-  
-    let closestColor = colorsData[0];
-    let smallestDistance = Infinity;
-  
-    colorsData.forEach(({ color, value }) => {
-      const [r2, g2, b2] = hexToRgb(value);
-      const distance = Math.sqrt((r2 - r1) ** 2 + (g2 - g1) ** 2 + (b2 - b1) ** 2);
-  
-      if (distance < smallestDistance) {
-        smallestDistance = distance;
-        closestColor = color;
-      }
-    });
-    return closestColor;
-  }
-  
+ 
+
   useEffect(() => {
     if (imageInfo?.hexColor) {
-      const rgbArray = imageInfo.hexColor;
-      const closestColorName = findClosestColor(rgbArray, colorsData);
+      const closestColorName = rgbToColor(imageInfo.hexColor);
       if (!selectedColors.includes(closestColorName)) {
         setSelectedColors([closestColorName]);
       }
     }
   }, [imageInfo]);
+
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -215,7 +192,7 @@ function ItemForm() {
     setSelectedCloset(closetId);
   };
 
-  const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
+  // const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
 
   return (
