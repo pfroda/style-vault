@@ -46,7 +46,6 @@ function Closet() {
     const fetchItems = async () => {
       try {
         const res = await queryClosets(user?.id!);
-        console.log('lo que queremos:', res.data?.getClosets);
         dispatch(setClosetState(res.data?.getClosets || []));
       } catch (error) {
         console.log(error);
@@ -62,6 +61,11 @@ function Closet() {
     setClosetForm(false);
     reset();
   });
+
+  const handleClosetClick = () => {
+    console.log('lets closetify');
+    
+  }
 
   return (
     <div className='Closet'>
@@ -88,7 +92,7 @@ function Closet() {
         </Link>
 
         {closets.map((closet) => (
-          <div key={closet.id} className="closets-container">
+          <div key={closet.id} className="closets-container" onClick={handleClosetClick}>
               <Image alt="" className='closet-image' src={closet2} />
               <div className="closet-name">
                 {closet.name}

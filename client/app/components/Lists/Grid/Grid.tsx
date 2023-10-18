@@ -95,8 +95,7 @@ function Grid() {
         console.log(error);
       }
     };
-    // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
-    // console.log('selectedFilterCat', selectedCategory)
+
     fetchItemsAndOutfits();
   }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
@@ -116,11 +115,11 @@ function Grid() {
 
 
   // Esto hay que pasarlo como parametros. Dejar de momento
-  const honduras = 'Puta espanya!';
+  const honduras = 'All clothes';
   
   const headers = {
-    closet: 'Closet',
-    outfit: 'Outfit'
+    closet: 'Items',
+    outfit: 'Outfits'
   };
 
   return (
