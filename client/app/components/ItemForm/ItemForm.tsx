@@ -54,7 +54,7 @@ function ItemForm() {
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showOccasionMenu, setShowOccasionMenu] = useState(false);
   const [showSeasonMenu, setShowSeasonMenu] = useState(false);
-  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
   const toggleColorMenu = () => {
