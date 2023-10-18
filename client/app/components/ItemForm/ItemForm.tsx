@@ -32,6 +32,7 @@ import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
+import { levenshtein, findClosestCategory } from '@/app/utils/searchAlgorithm';
 
 
 function ItemForm() {
@@ -61,8 +62,6 @@ function ItemForm() {
   const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
-console.log("CLOSETS--->",closets)
-const hasClosets = closets?.data?.getClosets?.length > 0;
 
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
@@ -81,25 +80,14 @@ const hasClosets = closets?.data?.getClosets?.length > 0;
   };
 
   useEffect(() => {
-    if (imageInfo?.labels && categoriesArray.includes(imageInfo?.labels)) {
-      const updatedCategories = [
-        imageInfo?.labels,
-        ...categoriesArray.filter(category => category !== imageInfo?.labels)
-      ];
-      setCategoriesArray(updatedCategories);
-  
-      if (!selectedCategory) {
-        setSelectedCategory(updatedCategories[0]);
+    if (imageInfo?.labels) {
+      const matchedCategory = findClosestCategory(imageInfo?.labels, categoriesArray);
+      if (matchedCategory) {
+        setSelectedCategory(matchedCategory);
       }
     }
-  }, [imageInfo]);
+  }, [imageInfo, categoriesArray]);
 
-  useEffect(() => {
-    if (!selectedCategory) {
-      setSelectedCategory(categoriesArray[0]);
-      console.log(categoriesArray[0]);
-    }
-  }, [categoriesArray, selectedCategory]);
  
   useEffect(() => {
     if (itemUrl) {
@@ -334,6 +322,7 @@ const hasClosets = closets?.data?.getClosets?.length > 0;
           </div>
 
           {/* CLOSET DROPDOWN */}
+          
         <div className='input-wrapper' onClick={toggleClosetMenu}>
           <div className='label-container colorDropdownButton'>
             <Image src={closetImg} alt="Icono" />
@@ -349,7 +338,6 @@ const hasClosets = closets?.data?.getClosets?.length > 0;
             </li>))}
         </ul>
         {/* CLOSET DROPDOWN */}
-
         </div>
         <button className='register-button' type="submit">Add Item</button>
       </form>}
