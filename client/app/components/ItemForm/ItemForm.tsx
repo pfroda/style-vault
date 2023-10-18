@@ -31,6 +31,9 @@ import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
 import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
+import { colorsData } from '@/app/utils/mockData';
+import { occasionsData } from '@/app/utils/mockData';
+import { seasonsData } from '@/app/utils/mockData';
 
 function ItemForm() {
   const { register, handleSubmit, reset } = useForm<Item>();
@@ -57,6 +60,9 @@ function ItemForm() {
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
 
+console.log("CLOSETS--->",closets)
+const hasClosets = closets?.data?.getClosets?.length > 0;
+
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
   };
@@ -72,45 +78,25 @@ function ItemForm() {
   const toggleClosetMenu = () => {
     setShowClosetMenu(!showClosetMenu);
   };
-  
-  const categoriesArray = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
- 
-  for (let i = 0; i < categoriesArray.length; i++){
-    if (categoriesArray[i] === imageInfo?.labels) {
-      const deleteElement = categoriesArray.indexOf(imageInfo?.labels);
-      categoriesArray.splice(deleteElement, 1);
-        categoriesArray.unshift(imageInfo?.labels)
-    } else {
-      // console.log("No existe", imageInfo?.labels, "cambia nombre")
-    }
-  }
 
-//   useEffect(() => {
-//     if (!selectedCategory) {
-//     setSelectedCategory(categoriesArray[0]);
-//     console.log(categoriesArray[0])
-// }
-//   }, [categoriesArray]);
-  useEffect(() => {
-    console.log("antes",categoriesArray[0])
+  const [categoriesArray, setCategoriesArray] = useState<string[]>([
+    "Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dresses", "Shorts", "One-Piece"
+  ]);
+;
+
+useEffect(() => {
+  if (imageInfo?.labels && categoriesArray.includes(imageInfo?.labels)) {
+    const updatedCategories = [
+      imageInfo?.labels,
+      ...categoriesArray.filter(category => category !== imageInfo?.labels)
+    ];
+    setCategoriesArray(updatedCategories);
 
     if (!selectedCategory) {
-      setSelectedCategory(categoriesArray[0]);
-      console.log(categoriesArray[0]);
+      setSelectedCategory(updatedCategories[0]);
     }
-  }, [categoriesArray, selectedCategory]);
-
-
-  // No borrar esto, es para el color. 
-  
-//   useEffect(() => {
-//     if (!selectedColors.length && imageInfo?.hexColor) {
-//         const color = rgbToColor(imageInfo.hexColor);
-//         if (color) {
-//             setSelectedColors([color]);
-//         }
-//     }
-// }, [imageInfo?.hexColor, selectedColors]);
+  }
+}, [imageInfo]);
 
  
   useEffect(() => {
@@ -127,6 +113,46 @@ function ItemForm() {
         dispatch(setClosetState(data))
       })
   }, []);
+
+  function hexToRgb(hex: string): [number, number, number] {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return [r, g, b];
+  }
+  
+  function findClosestColor(rgb: number[], colorsData: any[]): string {
+    const [r1, g1, b1] = rgb;
+  
+    let closestColor = colorsData[0];
+    let smallestDistance = Infinity;
+  
+    colorsData.forEach(({ color, value }) => {
+      const [r2, g2, b2] = hexToRgb(value);
+      const distance = Math.sqrt((r2 - r1) ** 2 + (g2 - g1) ** 2 + (b2 - b1) ** 2);
+  
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        closestColor = color;
+      }
+    });
+  
+    return closestColor;
+  }
+  
+  useEffect(() => {
+    if (imageInfo?.hexColor) {
+      const rgbArray = imageInfo.hexColor;
+      const closestColorName = findClosestColor(rgbArray, colorsData);
+      if (!selectedColors.includes(closestColorName)) {
+        setSelectedColors([closestColorName]);
+      }
+    }
+  }, [imageInfo]);
+  
+   
+
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -161,27 +187,17 @@ function ItemForm() {
     item.season = selectedSeasons;
     item.color = selectedColors;
     item.closets = selectedCloset
-    // item.brand = imageInfo?.logos
-    
+        
     handlePostItem(item);
     router.push('/dashboard/cupboard');
     console.log("item--->", item)
   });
 
+
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
   };
   
-
-  // const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const selectedValue = e.target.value;
-  //   if (selectedSeasons.includes(selectedValue)) {
-  //     setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== selectedValue));
-  //   } else {
-  //     setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
-  //   }
-  //   console.log("array:", selectedSeasons);
-  // };
 
 const handleSeasonClick = (seasonToRemove: string) => {
   if (selectedSeasons.includes(seasonToRemove)) {
@@ -191,15 +207,6 @@ const handleSeasonClick = (seasonToRemove: string) => {
   }
 };
 
-// const handleOccasionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-//   const selectedValue = e.target.value;
-//   if (selectedOccasions.includes(selectedValue)) {
-//     setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== selectedValue));
-//   } else {
-//     setSelectedOccasions(prevOccasions => [...prevOccasions, selectedValue]);
-//   }
-// };
-
 const handleOccasionClick = (occasionToRemove: string) => {
   if (selectedOccasions.includes(occasionToRemove)) {
     setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== occasionToRemove));
@@ -207,16 +214,6 @@ const handleOccasionClick = (occasionToRemove: string) => {
     setSelectedOccasions(prevOccasions => [...prevOccasions, occasionToRemove]);
   }
 };
-
-// const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-//   const selectedValue = e.target.value;
-//   if (selectedColors.includes(selectedValue)) {
-//     setSelectedColors(prevColors => prevColors.filter(color => color !== selectedValue));
-//   } else {
-//     setSelectedColors(prevColors => [...prevColors, selectedValue]);
-//   }
-// };
-
 
 const handleColorClick = (color: string) => {
   if (selectedColors.includes(color)) {
@@ -231,21 +228,7 @@ const handleClosetSelect = (closetId: string) => {
   // toggleClosetMenu();
 };
 
-const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
-
-const colorsData = [
-  { id: 1, color: 'Red', value: '#fd6767' },
-  { id: 2, color: 'Blue', value: '#619bfe' },
-  { id: 3, color: 'Green', value: '#468146' },
-  { id: 4, color: 'Yellow', value: '#fff872' },
-  { id: 5, color: 'Black', value: '#000000' },
-  { id: 6, color: 'White', value: '#FFFFFF' },
-  { id: 7, color: 'Purple', value: '#cd7cff' }
-];
-
-const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
-
-const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
+// const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
 
 return (
@@ -353,6 +336,8 @@ return (
         </div>
 
         {/* CLOSET DROPDOWN */}
+        {hasClosets && (
+  <>
       <div className='input-wrapper' onClick={toggleClosetMenu}>
         <div className='label-container colorDropdownButton'>
           <Image src={closetImg} alt="Icono" />
@@ -360,15 +345,16 @@ return (
         </div>
         <Image className="expand-icon" src={showClosetMenu ? expandLess : expandMore} alt="" />
       </div>
-
+    
       <ul className={`colors-dropdown ${showClosetMenu ? 'activedropdown' : ''}`}>
-        {closets.data.getClosets.map((closetItem: any) => (
+        {closets?.data?.getClosets?.map((closetItem: any) => (
           <li className={`li-wrapper ${selectedCloset === closetItem.id ? 'active' : ''}`}
             key={closetItem.id} onClick={() => handleClosetSelect(closetItem.id)}>{closetItem.name}
-          </li>))}
-      </ul>
-      {/* CLOSET DROPDOWN */}
-
+         </li>))}
+    </ul>
+  </>
+)}
+{/* CLOSET DROPDOWN */}
       </div>
       <button className='register-button' type="submit">Add Item</button>
     </form>}
