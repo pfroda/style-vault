@@ -1,13 +1,25 @@
 'use client';
 import './itemform.css';
 import categoriesImg from '../../../public/category.png';
-import seasonImg from '../../../public/season.png';
+import seasonImg from '../../../public/season.svg';
 import occasionImg from '../../../public/occasion.png';
 import colorImg from '../../../public/color.png';
-import brandImg from '../../../public/brand.png';
-import locationImg from '../../../public/location.png';
+import brandImg from '../../../public/diamante.svg';
+// import locationImg from '../../../public/location.png';
 import expandLess from '../../../public/expand-less.png';
 import expandMore from '../../../public/expand-more.png';
+
+// Nuevos iconos, solo comentalos y pon los otros
+import closetImg from '../../../public/closet.png';
+import shirtImg  from '../../../public/tshirt.png';
+import calendarImg  from '../../../public/calendar.png';
+import colorBuck  from '../../../public/fill.png';
+import locationImg  from '../../../public/loc.png';
+
+
+
+
+
 
 import { useForm } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
@@ -54,6 +66,7 @@ function ItemForm() {
   const toggleCategoryMenu = () => {
     setShowCategoryMenu(!showCategoryMenu);
   };
+  
 
   const categoriesArray = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
  
@@ -66,6 +79,26 @@ function ItemForm() {
       console.log("No existe", imageInfo?.labels, "cambia nombre")
     }
   }
+
+  useEffect(() => {
+    if (!selectedCategory) {
+    setSelectedCategory(categoriesArray[0]);
+    console.log(categoriesArray[0])
+}
+  }, [categoriesArray]);
+
+
+  // No borrar esto, es para el color. 
+  
+//   useEffect(() => {
+//     if (!selectedColors.length && imageInfo?.hexColor) {
+//         const color = rgbToColor(imageInfo.hexColor);
+//         if (color) {
+//             setSelectedColors([color]);
+//         }
+//     }
+// }, [imageInfo?.hexColor, selectedColors]);
+
  
   useEffect(() => {
     if (itemUrl) {
@@ -172,6 +205,8 @@ const handleColorClick = (color: string) => {
 
 const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
+
+
 const colorsData = [
   { id: 1, color: 'Red', value: '#fd6767' },
   { id: 2, color: 'Blue', value: '#619bfe' },
@@ -206,7 +241,7 @@ return (
           {/* CATEOGRY DROPDOWN */}
           <div className='input-wrapper' onClick={toggleCategoryMenu}>
             <div className='label-container colorDropdownButton'>
-              <Image src={categoriesImg} alt="Icono" />
+              <Image src={shirtImg} alt="Icono" />
               <label htmlFor="categories">Categories</label>
             </div>
             <Image className="expand-icon" src={showCategoryMenu ? expandLess : expandMore} alt="" />
@@ -240,7 +275,7 @@ return (
         {/* OCASSIONS DROPDOWN */}
         <div className='input-wrapper' onClick={toggleOccasionsMenu}>
           <div className='label-container colorDropdownButton'>
-            <Image src={occasionImg} alt="Icono" />
+            <Image src={calendarImg} alt="Icono" />
             <label htmlFor="occasion">Occasion</label>
           </div>
           <Image className="expand-icon" src={showOccasionMenu ? expandLess : expandMore} alt="" />
@@ -260,7 +295,7 @@ return (
         {/* COLORS DROPDOWN */}
         <div className='input-wrapper' onClick={toggleColorMenu}>
           <div className='label-container colorDropdownButton'>
-            <Image src={colorImg} alt="Icono" />
+            <Image src={colorBuck} alt="Icono" />
             <label htmlFor="colorSelect">Color</label>
           </div>
           <Image className="expand-icon" src={showColorMenu ? expandLess : expandMore} alt="" />
@@ -291,6 +326,16 @@ return (
           </div>
           <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
         </div>
+
+        
+        <div className='input-wrapper'>
+          <div className='label-container'>
+            <Image src={closetImg} alt="Icono" />
+            <label htmlFor="closets">Closet</label>
+          </div>
+          <input id="closets" className='item-input' type="text" {...register("closets", { required: true })} placeholder='Closet' />
+        </div>
+
 
       </div>
       <button className='register-button' type="submit">Add Item</button>
