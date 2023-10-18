@@ -8,11 +8,11 @@ import Image from 'next/image';
 const OutfitSlider = ({ items, width, height, category }) => {
   const sliderSettings = {
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    arrows: true,
     dots: false,
+    arrows: true,
   };
 
   return (
