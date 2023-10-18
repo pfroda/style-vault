@@ -4,15 +4,20 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from 'next/image';
+import { useState } from 'react';
 
 const OutfitSlider = ({ items, width, height, category }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  console.log(items);
+
   const sliderSettings = {
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
-    arrows: true,
     dots: false,
+    arrows: true,
   };
 
   return (

@@ -27,12 +27,11 @@ function OutfitForm() {
   const { user, handleRegister } = useAuth();
   const [currentOutfit, setCurrentOutfit] = useState({id: 'outfit-2'});
   const [showShuffle, setShowShuffle] = useState(false);
+  const [selectedItemUrls, setSelectedItemUrls] = useState([]);
   const items = useSelector(state => state.item.items);
-
   const router = useRouter();
   const dispatch = useDispatch();
 
-  
   useEffect(() => {
     queryUserItems(user?.id!)
       .then(res => {
@@ -44,42 +43,17 @@ function OutfitForm() {
       });
   }, []);
   
-  const TwoPiecesOutfit = [
-    ['One-Piece', 'Dresses'],
-    ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
+  const dress = ['One-Piece', 'Dresses'];
+  const outer = ['Outerwear'];
+  const tops = ['Tops', 'Shirts'];
+  const pants = ['Pants', 'Shorts'];
+  const shoes = ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels'];
 
-  const ThreePiecesOutfit = [
-    ['Tops', 'Shirts'],
-    ['Pants', 'Shorts'],
-    ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
-
-  const FourPiecesOutfit = [
-    ['Outerwear'],
-    ['Tops', 'Shirts'],
-    ['Pants', 'Shorts'],
-    ['Shoes', 'Boots', 'Sandals', 'Sneakers', 'Heels']];
-
-    
-  const shoesArray = items?.filter(item => ThreePiecesOutfit[2].includes(item.category));
-  const dressArray = items?.filter(item => TwoPiecesOutfit[0].includes(item.category));
-  const outerWearArray = items?.filter(item => FourPiecesOutfit[0].includes(item.category));
-  const topsArray = items?.filter(item => ThreePiecesOutfit[0].includes(item.category));
-  const pantsArray = items?.filter(item => ThreePiecesOutfit[1].includes(item.category));
-  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
-
-  // const itemsExample = [
-  //   { id: 1, url: myUrl, brand: 'Marca 1' },
-  //   { id: 2, url: myUrl, brand: 'Marca 2' },
-  //   { id: 3, url: myUrl, brand: 'Marca 2' },
-  //   { id: 4, url: myUrl, brand: 'Marca 2' },
-  // ];
-
-  // const imagesUrls = [
-  //   { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' },
-  //   { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' }
-  // ];
-
-  // const itemsUrls = [myUrl, myUrl, myUrl];
+  const shoesArray = items?.filter(item => shoes.includes(item.category));
+  const dressArray = items?.filter(item => dress.includes(item.category));
+  const outerWearArray = items?.filter(item => outer.includes(item.category));
+  const topsArray = items?.filter(item => tops.includes(item.category));
+  const pantsArray = items?.filter(item => pants.includes(item.category));
 
   const handleShuffle = () => {
     setShowShuffle(!showShuffle);
@@ -89,6 +63,7 @@ function OutfitForm() {
     console.log('pantsArray: ', pantsArray);
     console.log('shoesArray: ', shoesArray);
   }
+
 
   const handleOutfit = () => {
     createOutfitImage(itemsUrls)
@@ -114,14 +89,14 @@ function OutfitForm() {
         {currentOutfit.id === 'outfit-1' &&
         <div className='outfit-1'>
           <OutfitSlider items={topsArray} height={200} width={200} category={outfit1} />
-          <OutfitSlider items={shoesArray} height={200} width={200} category={outfit1} />
+          <OutfitSlider items={shoesArray} height={175} width={175} category={outfit1} />
         </div>}
 
         {currentOutfit.id === 'outfit-2' &&
         <div className='outfit-2'>
           <OutfitSlider items={topsArray} height={150} width={150} category={outfit2} />
           <OutfitSlider items={pantsArray} height={150} width={150} category={outfit2} />
-          <OutfitSlider items={shoesArray} height={150} width={150} category={outfit2} />
+          <OutfitSlider items={shoesArray} height={125} width={125} category={outfit2} />
         </div>}
 
         {currentOutfit.id === 'outfit-3' &&
@@ -129,7 +104,7 @@ function OutfitForm() {
           <OutfitSlider items={outerWearArray} height={125} width={125} category={outfit3} />
           <OutfitSlider items={topsArray} height={125} width={125} category={outfit3} />
           <OutfitSlider items={pantsArray} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={shoesArray} height={125} width={125} category={outfit3} />
+          <OutfitSlider items={shoesArray} height={100} width={100} category={outfit3} />
         </div>}
       </div>
       {/* <div className="outfit-slider">
@@ -183,3 +158,22 @@ function OutfitForm() {
 }
 
 export default OutfitForm
+
+
+
+  
+  // const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
+
+  // const itemsExample = [
+  //   { id: 1, url: myUrl, brand: 'Marca 1' },
+  //   { id: 2, url: myUrl, brand: 'Marca 2' },
+  //   { id: 3, url: myUrl, brand: 'Marca 2' },
+  //   { id: 4, url: myUrl, brand: 'Marca 2' },
+  // ];
+
+  // const imagesUrls = [
+  //   { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' },
+  //   { url: 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg' }
+  // ];
+
+  // const itemsUrls = [myUrl, myUrl, myUrl];

@@ -275,18 +275,18 @@ export const queryFavoritedItems = (userId: string): Promise<GraphQLResponse<{ g
 };
 
 
-export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
-  const query = `
-  query Query($userId: String!) {
-    getUserItems(userId: $userId) {
-      id
-      category
-      itemUrl
-    }
-  }
-  `;
-  return fetchGraphQL(query, { userId });
-};
+// export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
+//   const query = `
+//   query Query($userId: String!) {
+//     getUserItems(userId: $userId) {
+//       id
+//       category
+//       itemUrl
+//     }
+//   }
+//   `;
+//   return fetchGraphQL(query, { userId });
+// };
 
 export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserProfile: User }>> => {
   const query = `

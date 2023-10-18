@@ -57,13 +57,15 @@
 /* color dots and change default colors for dots in filter */
 
 .colorDot {
-  height: 15px;
-  width: 15px;
+  height: 13px;
+  width: 13px;
   background-color: black;
   border-radius: 2px;
   display: inline-block;
   margin-right: 5px;
-  vertical-align: middle !important; 
+  vertical-align: middle !important;
+  align-items: center;
+  text-align: center;
 }
 
 

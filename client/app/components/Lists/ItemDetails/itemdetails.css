@@ -80,41 +80,7 @@
     cursor: pointer;
   }
 
-
-/* colors for form */
-
-.colorDot {
-    height: 13px;
-    width: 13px;
-    background-color: black;
-    border-radius: 2px;
-    display: inline-block;
-    margin-right: 5px;
-    /* vertical-align: middle !important;  */
-    align-items: center;
-    text-align: center;
-     /* margin-top: 6px; */
-    
- }
  
- /* change default colors for dots in filter */
- 
-.colorDot.red {
-     background-color: #fd6767 !important;
-   }
-   
-.colorDot.blue {
-     background-color: #619bfe !important;
-   }
-   
-.colorDot.green {
-     background-color: #468146 !important;
-   }
- 
-.colorDot.yellow {
-     background-color: #fff872 !important;
-   }
-
 .itemdetails-ul {
     display: flex;
     align-items: center;
