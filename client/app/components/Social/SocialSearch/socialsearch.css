@@ -40,7 +40,7 @@
       gap: 12px;
       border-bottom: var(--primary-border);
       & .profile-image {
-        background-color: rgb(161, 154, 154);
+        background-color: rgba(168, 168, 168);
         border-radius: 50%;
         width: 42px;
         height: 42px;
@@ -50,4 +50,9 @@
       }
     }
   }
+}
+
+.user-result:hover {
+  background-color: var(--header-color);
+  cursor: pointer;
 }
