@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 function SocialGrid() {
   const [isFollowed, setIsFollowed] = useState(false);
-  const [serachBar, setSearchBar] = useState(false);
+  const [searchBar, setSearchBar] = useState(false);
 
   const handleFollow = () => {
     console.log('clicked');
@@ -28,15 +28,15 @@ function SocialGrid() {
   ];
 
   const handleSearch = () => {
-    setSearchBar(!serachBar);
+    setSearchBar(!searchBar);
   }
 
   return (
     <div className='SocialGrid'>
-      {serachBar && <SocialSearch />}
+      {searchBar && <SocialSearch />}
       <Header />
       <div className="search-container">
-        <Image src={serachBar ? close : searchuser} alt="" className={serachBar ? 'close-button' : 'search-user-button'} onClick={handleSearch} />
+        <Image src={searchBar ? close : searchuser} alt="" className={searchBar ? 'close-button' : 'search-user-button'} onClick={handleSearch} />
       </div>
       <div className="social-profile">
         <div className="social-header">

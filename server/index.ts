@@ -67,7 +67,7 @@ const PORT = 3001;
     await initGql(server, app);
     
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT} 🎉`);
+      console.log(`We chillin' on port ${PORT}`);
     });
   } catch (error) {
     console.log('Error', error);

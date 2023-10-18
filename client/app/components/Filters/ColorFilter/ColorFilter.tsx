@@ -47,7 +47,7 @@ function ColorFilter() {
                             onClick={() => handleSelectedColor(color)}
                             className={selectedColors.includes(color) ? 'selected' : '' }
                         >
-                            <span className={`colorDot ${color.toLowerCase()}`} style={{ backgroundColor: color }}></span>
+                            <div className={`colorDot ${color}`} style={{ backgroundColor: color }}></div>
                             {color}
                         </li>
                     ))}

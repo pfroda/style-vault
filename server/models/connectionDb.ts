@@ -31,5 +31,5 @@ const sequelize = new Sequelize(
 
 export const initDb = async () => {
   await sequelize.sync({ force: false });
-  console.log('Orale putos 📑!');
+  console.log('Órale putos! Connected to db');
 }

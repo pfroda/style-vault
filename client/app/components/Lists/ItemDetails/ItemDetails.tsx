@@ -117,7 +117,7 @@ function ItemDetails() {
                   <ul className="itemdetails-ul">
                     {item.color.map((c) => (
                       <li key={c.id} className="itemdetails-li">
-                        <span className={`colorDot ${c.toLowerCase()}`} style={{ backgroundColor: c }}></span>
+                        <div className={`colorDot ${c}`} style={{ backgroundColor: c }}></div>
                         {c}
                       </li>
                     ))}

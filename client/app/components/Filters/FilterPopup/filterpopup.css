@@ -4,8 +4,6 @@
 
 .general-filters-container {
   background-color: white;
-  /* background-color: rgb(66, 66, 204); */
-  /* border-top: 1px solid grey; */
   box-shadow: 2px 2px 7px .5px rgba(0, 0, 0, 0.3);
   z-index: 5;
   display: flex;
@@ -13,8 +11,6 @@
   position: fixed;
   left: -105%;
   width: 100vw;
-  /* left: -100%; */
-  /* width: 98vw; */
   height: calc(100vh - 145px);
   bottom: 0;
   transition: left 0.6s ease;
@@ -27,7 +23,6 @@
 }
 
 .general-filters-container.popup-active {
-  /* left: 1vw; */
   left: 0;
   bottom: 0;
   transition: left 0.6s ease;
@@ -37,8 +32,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* margin-top: 20px; */
-  /* gap: 50px; */
 }
 
 .info-popup p {

@@ -6,8 +6,8 @@ import occasionImg from '../../../public/occasion.png';
 import colorImg from '../../../public/color.png';
 import brandImg from '../../../public/diamante.svg';
 // import locationImg from '../../../public/location.png';
-import expandLess from '../../../public/expand-less.png';
-import expandMore from '../../../public/expand-more.png';
+import expandLess from '../../../public/icon-expand-less.svg';
+import expandMore from '../../../public/icon-expand-more.svg';
 
 // Nuevos iconos, solo comentalos y pon los otros
 import closetImg from '../../../public/closet.png';
@@ -212,7 +212,7 @@ function ItemForm() {
         <form onSubmit={submitForm} className='item-form'>
           <div className='input-container'>
             
-            {/* CATEOGRY DROPDOWN */}
+            {/* CATEGORY DROPDOWN */}
             <div className='input-wrapper' onClick={toggleCategoryMenu}>
               <div className='label-container colorDropdownButton'>
                 <Image src={shirtImg} alt="Icono" />
@@ -226,7 +226,7 @@ function ItemForm() {
               <li className={`li-wrapper ${selectedCategory === categoryItem ? 'active' : ''}`} key={categoryItem} onClick={() => handleCategorySelect(categoryItem)} >{categoryItem}</li>
             ))}
             </ul>
-            {/* CATEOGRY DROPDOWN */}
+            {/* CATEGORY DROPDOWN */}
             
             {/* SEASON DROPDOWN */}
             <div className='input-wrapper' onClick={toggleSeasonMenu}>

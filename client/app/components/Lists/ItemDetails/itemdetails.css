@@ -101,7 +101,7 @@
 
 .itemdetails-container input {
     /* max width only works with pixels wtf */
-    max-width: 100px; 
+    max-width: 80px; 
     align-items: center;
     text-align: center;
 }
@@ -142,4 +142,79 @@
 
 #occasionlab {
     max-width: fit-content !important;
+}
+
+
+.colorDot {
+  height: 13px;
+  width: 13px;
+  background-color: black;
+  border-radius: 2px !important;
+  display: inline-block !important;
+  margin-right: 5px;
+  vertical-align: middle !important;
+  align-items: center !important;
+  text-align: center !important;
+  margin-top: 0px !important;
+}
+
+
+.colorDot.Red {
+   background-color: #fd6767 !important;
+ }
+
+.colorDot.Blue {
+   background-color: #619bfe !important;
+ }
+
+.colorDot.Green {
+   background-color: #468146 !important;
+ }
+
+.colorDot.Yellow {
+   background-color: #fff872 !important;
+ }
+
+.colorDot.Orange {
+  background-color: #faa250 !important;
+}
+
+.colorDot.Purple {
+  background-color: #cd7cff !important;
+}
+
+.colorDot.Fuchsia {
+  background-color: #ff7cc6 !important;
+}
+
+.colorDot.Navy {
+  background-color: #1d2f75 !important;
+}
+
+.colorDot.Teal {
+  background-color: #155e63 !important;
+}
+
+.colorDot.Aqua {
+  background-color: #2ea9b1 !important;
+}
+
+.colorDot.Lime {
+  background-color: #c6ff7c !important;
+}
+
+.colorDot.Olive {
+  background-color: #7c8d34 !important;
+}
+
+.colorDot.Maroon {
+  background-color: #aa453a !important;
+}
+
+.colorDot.Gray {
+  background-color: #6e7078 !important;
+}
+
+.colorDot.Silver {
+  background-color: #acadb2e6 !important;
 }
