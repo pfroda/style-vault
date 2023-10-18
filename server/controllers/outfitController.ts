@@ -17,14 +17,15 @@ async function createOutfit (req, res) {
       season: outfit.season
     });
 
-    const activity = await UserActivity.create({
-      type: 'NewOutfitToCloset', 
-      userId: outfit.userId,
-      outfitId: newOutfit.id,
-      timestamp: new Date()  
-    });
+    // const activity = await UserActivity.create({
+    //   type: 'NewOutfitToCloset', 
+    //   userId: outfit.userId,
+    //   outfitId: newOutfit.id,
+    //   timestamp: new Date()  
+    // });
 
-    res.status(201).send(newOutfit, activity);
+    res.status(201).send(newOutfit);
+    // res.status(201).send(newOutfit, activity);
   } catch (error) {
     console.error('Error creating outfit:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the outfit' });
