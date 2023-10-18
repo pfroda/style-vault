@@ -5,9 +5,9 @@ import seasonImg from '../../../public/season.svg';
 import occasionImg from '../../../public/occasion.png';
 import colorImg from '../../../public/color.png';
 import brandImg from '../../../public/diamante.svg';
-// import locationImg from '../../../public/location.png';
 import expandLess from '../../../public/expand-less.png';
 import expandMore from '../../../public/expand-more.png';
+
 
 // Nuevos iconos, solo comentalos y pon los otros
 import closetImg from '../../../public/closet.png';
@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
 import { Item } from '@/app/Interfaces';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { uploadPhotoToCloudinary } from '@/app/services/apiCloudinary';
 import { useRouter } from 'next/navigation'; 
 import { fetchInfoFromImage } from '@/app/services/apiCloudVision';
@@ -33,6 +33,8 @@ import rgbToColor from '@/app/utils/rgbToColor';
 import Image from 'next/image';
 import { it } from 'node:test';
 import { levenshtein, findClosestCategory } from '@/app/utils/searchAlgorithm';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 
 function ItemForm() {
@@ -46,6 +48,8 @@ function ItemForm() {
   const router = useRouter();
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
+  const fileInputRef = useRef(null);
+
 
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -79,6 +83,11 @@ function ItemForm() {
   const toggleClosetMenu = () => {
     setShowClosetMenu(!showClosetMenu);
   };
+
+  useEffect(() => {
+    // Abre el selector de archivos automáticamente cuando el componente se monta
+    fileInputRef.current.click();
+  }, []);
 
   useEffect(() => {
     if (imageInfo?.labels) {
@@ -126,7 +135,7 @@ function ItemForm() {
       try {
         const imageUrl = await uploadPhotoToCloudinary(selectedFile); 
         setItemUrl(imageUrl);
-          
+        setPhotoIsLoading(true);
         const info = await fetchInfoFromImage(imageUrl);
         reset()
         setImageInfo(prevState => ({
@@ -141,7 +150,6 @@ function ItemForm() {
     }
   }
 
-  // 1240        23855
 
   const submitForm = handleSubmit(async (item: Item) => {
     item.userId = user?.id!;
@@ -196,19 +204,31 @@ function ItemForm() {
 
   // const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
 
-
+    /* img-form-container   cuadro de la foto*/
+// label           boton
   return (
+  
+   
+
     <div className='ItemForm'>
       <div className="img-form-container">
         {itemUrl && <img  src={itemUrl} alt="" />}
         {photoIsLoading && <div className='spinner'></div>}
       </div>
+      
+      <input 
+      className="img-form" 
+      type="file" 
+      ref={fileInputRef} 
+      onChange={handleFileChange} 
+      style={{ display: 'none' }} // Esto es para ocultar el input
+    />
       <div className="custom-file-input">
         <input className="img-form" type="file" onChange={handleFileChange} />
-        <label htmlFor="file-input">Select a Photo</label>
+        <label className='prueba' htmlFor="file-input">Select a Photo</label>
       </div>
 
-        {showForm &&
+      
         <form onSubmit={submitForm} className='item-form'>
           <div className='input-container'>
             
@@ -319,9 +339,14 @@ function ItemForm() {
         {/* CLOSET DROPDOWN */}
         </div>
         <button className='register-button' type="submit">Add Item</button>
-      </form>}
+      </form>
     </div>
+
+     
+    
+    
   )
+  
 }
 
 export default ItemForm
