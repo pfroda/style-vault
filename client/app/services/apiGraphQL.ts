@@ -1,4 +1,4 @@
-import { Item, Outfit, Closet, User  } from "../Interfaces"
+import { Item, Outfit, Closet, ActivityFeed, User } from "../Interfaces"
 
 const GRAPHQL_URL = "http://localhost:3001/graphql";
 
@@ -225,54 +225,6 @@ export const queryUsersForSearch = (username: string) : Promise<GraphQLResponse<
   return fetchGraphQL(query, {username});
 };
 
-export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserById: User }>> => {
-  const query = `
-  query Query {
-    getAllUsers {
-      id
-      username
-      profilePicture
-      name
-      closets {
-        id
-        userId
-        name
-        items {
-          userId
-          id
-          category
-          itemUrl
-          occasion
-          season
-          color
-          brand
-        }
-        outfits {
-          id
-          userId
-          name
-          occasion
-          season
-        }
-      }
-      followers {
-        id
-        username
-        profilePicture
-      }
-      following {
-        id
-        username
-        profilePicture
-      }
-      followersCount
-      followingCount
-    }
-  }
-  `;
-  return fetchGraphQL(query, { id });
-};
-
 export const queryFavoritedOutfits = (userId: string): Promise<GraphQLResponse<{ getFavoritedOutfits: Outfit[] }>> => {
   const query = `
   query Query($userId: String!) {
@@ -335,18 +287,7 @@ export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{
   return fetchGraphQL(query, { userId });
 };
 
-export const queryUsersForSearch = () : Promise<GraphQLResponse<{ getAllUsers: User[] }>> => {
-  const query = `
-  query Query {
-    getAllUsers {
-      id
-      username
-      profilePicture
-    }
-  }
-  `;
-  return fetchGraphQL(query);
-};
+
 
 export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUserProfile: User }>> => {
   const query = `
