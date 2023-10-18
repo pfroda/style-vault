@@ -3,17 +3,18 @@
   flex-direction: column;
   overflow: hidden;
   position: relative;
-    & .back {
-      position: absolute;
-      left: 13px;
-      top: 13px;
-      width: 18px;
-      height: 18px;
-    }
+  & .back {
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    width: 18px;
+    height: 18px;
+  }
   & .outfit-slider {
     /* background-color: rgba(163, 163, 227, 0.2); */
-    width: 100vw !important;
-    height: calc(90vh - 80px) !important;
+    margin-top: 20px;
+    width: 100vw;
+    height: calc(90vh - 100px);
     & .outfit-1, .outfit-2, .outfit-3 {
       height: 100%;
       width: 100% !important;
@@ -40,12 +41,13 @@
 }
 
 .slick-arrow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 .slick-next:before, .slick-prev::before {
   color: rgba(128, 128, 128, 0.5) !important;
+  background-color: blue !important;
 }
 
 .slick-slide.slick-active {
@@ -54,7 +56,10 @@
 
 .OutfitForm {
   & .outfit-form {
-    margin: auto;
+    position: fixed;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
     & button {
       height: 30px;
       padding-inline: 30px;
@@ -70,11 +75,12 @@
 
 .OutfitForm {
   & footer {
+    position: fixed;
     display: flex;
     align-items: center;
     width: 100%;
     /* background-color: rgb(224, 224, 224); */
-    height: 50px;
+    height: 45px;
     bottom: 0;
     & .footer-container {
       position: relative;
@@ -97,15 +103,15 @@
         border-left: 35px solid transparent;
         border-right: 35px solid transparent;
         border-bottom: 50px solid rgb(224, 224, 224);
-        border-top: 3px solid transparent;
+        border-top: 7px solid transparent;
         z-index: -1;
       }
       & .triangulo1 {
-        left: 5px;
+        left: 6px;
         transform: translateX(-50%);
       }
       & .triangulo2 {
-        right: 5px;
+        right: 6px;
         transform: translateX(50%);
       }
       & .outfit-icon-container {
@@ -141,17 +147,4 @@
       }
     }
   }
-}
-
-
-.slick-slider {
-  /* display: flex !important;
-  justify-content: center !important; */
-}
-
-.slick-list {
-  /* position: relative !important; */
-}
-.slick-slider .something .slick-initialized {
-  /* position: absolute !important; */
 }
