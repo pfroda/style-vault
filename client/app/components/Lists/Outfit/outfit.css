@@ -1,0 +1,32 @@
+/* outfit.css */
+.outfit {
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1/1;
+    border-right: var(--primary-border);
+    border-bottom: var(--primary-border);
+    /* margin: 2px; */
+  }
+  
+  .outfit .image {
+    height: 300px;
+    width: 100%;
+    background-color: rgba(177, 157, 157, 0.2);
+  }
+  
+  .outfit .image:hover {
+    cursor: pointer;
+    filter: brightness(1.1);
+    opacity: 1;
+  }
+  
+  .outfit .brand {
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    font-size: 12px;
+    height: 25px;
+    text-transform: uppercase;
+    color: darkgrey;
+  }
+  

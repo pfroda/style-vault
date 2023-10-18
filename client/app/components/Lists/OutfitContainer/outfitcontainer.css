@@ -1,0 +1,16 @@
+.outfits-list-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding-bottom: 65px;
+    width: 100%;
+  }
+  
+  .outfits-list-container .outfit:nth-child(3n) {
+    border-right: none;
+  }
+  
+  .outfits-list-container .outfit:nth-last-child(-n+3) {
+    border-bottom: none;
+  }
+  

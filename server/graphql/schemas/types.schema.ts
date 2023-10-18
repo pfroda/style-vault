@@ -26,8 +26,9 @@ export const types = `#graphql
     userId: String!
     name: String!
     closets: [Closet]
-    occasion: [String]!
-    season: [String]!
+    occasion: [String]
+    season: [String]
+    outfitUrl: String
   }
 
   type User {
