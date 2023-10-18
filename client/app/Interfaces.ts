@@ -23,7 +23,7 @@ export type LoginUser = {
 export type Item = {
   id?: string;
   userId: string;
-  closets?: Closet[];
+  closets?: string[];
   category?: string;
   itemUrl: string;
   occasion?: string[];
