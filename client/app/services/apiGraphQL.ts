@@ -419,12 +419,6 @@ export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUs
   `;
   return fetchGraphQL(query, { userId });
 };
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> Xavi
 
 
 
