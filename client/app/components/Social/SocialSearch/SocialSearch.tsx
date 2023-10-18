@@ -4,16 +4,20 @@ import userImage from '../../../../public/user.png';
 import Image from 'next/image';
 import { useState } from 'react';
 import { queryUsersForSearch } from '@/app/services/apiGraphQL';
+import { useRouter } from 'next/navigation'; 
 import useAuth from '@/app/hooks/useAuth';
 
 function SocialSearch() {
   const [searchResults, setSearchResults] = useState<User[]>([]);
+  const [clickedUser, setClickedUser] = useState([]);
   const { user } = useAuth();
+  const router = useRouter();
+  
   let searchTimeout: any;
   
   const handleInputChange = (e) => {
     const query = e.target.value;
-    //delay the api call until user typed more
+    //delay the api call until user types more
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
       handleSearch(query);
@@ -32,9 +36,9 @@ function SocialSearch() {
         user.username.toLowerCase().includes(query.toLowerCase()));
       
       const filteredResults = matchedUsers?.filter((match) => match.id !== user?.id)
-      console.log('userid:', user?.id)
-      console.log('matched users:', matchedUsers);
-      console.log('filtered results;', filteredResults);
+      // console.log('userid:', user?.id)
+      // console.log('matched users:', matchedUsers);
+      // console.log('filtered results;', filteredResults);
 
       if (filteredResults) setSearchResults(filteredResults);
 
@@ -43,8 +47,11 @@ function SocialSearch() {
     }
   };
 
-  const handleResultClick = () => {
+  const handleResultClick = (user) => {
     console.log('clicked mf');
+    console.log(user);
+    setClickedUser(user);
+    router.push(`/dashboard/socialprofile?user=${user?.username}`)
   }
 
   return (
@@ -60,7 +67,7 @@ function SocialSearch() {
       <div className="social-results">
         {searchResults.length > 0 && (
           searchResults.map((user) => (
-            <div className="user-result" key={user.id} onClick={handleResultClick}>
+            <div className="user-result" key={user.id} onClick={()=> handleResultClick(user)}>
               <Image
                 alt="profile"
                 src={user.profilePicture || userImage}

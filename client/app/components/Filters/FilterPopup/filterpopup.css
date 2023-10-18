@@ -1,3 +1,7 @@
+.FilterPopup {
+  z-index: 9999;
+}
+
 .general-filters-container {
   background-color: white;
   /* background-color: rgb(66, 66, 204); */

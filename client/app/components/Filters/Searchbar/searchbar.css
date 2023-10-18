@@ -26,7 +26,7 @@
 }
 
 .searchbar-icon {
-  z-index: 99;
+  z-index: 1;
   position: absolute;
   left: 8vw;
   top: 50%;
