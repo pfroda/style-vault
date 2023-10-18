@@ -80,10 +80,14 @@ function ItemForm() {
     }
   }
 
+  console.log("Nombre de api categories->", imageInfo?.labels)
+
   useEffect(() => {
+    console.log("antes",categoriesArray[0])
+
     if (!selectedCategory) {
     setSelectedCategory(categoriesArray[0]);
-    console.log(categoriesArray[0])
+    console.log("despues",categoriesArray[0])
 }
   }, [categoriesArray]);
 
