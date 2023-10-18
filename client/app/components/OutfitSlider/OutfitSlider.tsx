@@ -6,10 +6,9 @@ import Slider from "react-slick";
 import Image from 'next/image';
 import { useState } from 'react';
 
-const OutfitSlider = ({ items, width, height, category }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const OutfitSlider = ({ items, width, height, category, index, onItemURLChange }) => {
 
-  console.log(items);
+  const [currentUrl, setCurrentUrl] = useState('');
 
   const sliderSettings = {
     infinite: true,
@@ -17,7 +16,15 @@ const OutfitSlider = ({ items, width, height, category }) => {
     slidesToScroll: 1,
     autoplay: false,
     dots: false,
-    arrows: true,
+    arrows: false,
+    // beforeChange: (current, next) => {
+    //   console.log(`Slide actual: ${next}`);
+    //   // console.log('Item correspondiente:', items[next]);
+    //   console.log('Item correspondiente:', items[next]?.itemUrl);
+    // },
+    beforeChange: (current, next) => {
+      onItemURLChange(index, items[next]?.itemUrl);
+    },
   };
 
   return (
