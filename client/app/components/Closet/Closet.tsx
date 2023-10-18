@@ -2,6 +2,8 @@ import './closet.css'
 import edit from '../../../public/edit-profile1.png';
 import defaultUserImage from '../../../public/user.png';
 import closet1 from '../../../public/closet1.png';
+import closet2 from '../../../public/closet2.png';
+import closet3 from '../../../public/closet3.png';
 import closet4 from '../../../public/closet4.png';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -81,13 +83,13 @@ function Closet() {
 
       <div className="user-closets">
         <Link href="/dashboard/grid" className="closets-container">
-          <Image alt="" className='closet-image' src={closet1} />
+          <Image alt="" className='closet-image' src={closet2} />
           <div className="closet-name">All Clothes</div>
         </Link>
 
         {closets.map((closet) => (
           <div key={closet.id} className="closets-container">
-              <Image alt="" className='closet-image' src={closet1} />
+              <Image alt="" className='closet-image' src={closet2} />
               <div className="closet-name">
                 {closet.name}
               </div>
@@ -98,9 +100,9 @@ function Closet() {
           <Image alt="" className={`closet-image ${closetForm ? 'closet-active' : ''}`} src={closet4} />
           {closetForm ? (
             <>
-              <form onSubmit={submitForm} className='register-form'>
+              <form onSubmit={submitForm} className='closet-form'>
                 <div onClick={showFormCloset} className="close-closet">X</div>
-                <input className='closet-input' type="text" {...register("name", { required: true })} placeholder='Closet name' />
+                <input className='closet-input' type="text" {...register("name", { required: true })} placeholder='Type the name' />
                 <button className='closet-button' type="submit" >Add Closet</button>
               </form>
             </>
