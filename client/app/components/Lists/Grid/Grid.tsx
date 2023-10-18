@@ -1,12 +1,13 @@
 import './grid.css'
 import ItemContainer from '../ItemContainer/ItemContainer';
+import OutfitContainer from '../OutfitContainer/OutfitContainer';
 import ItemHeader from '../ItemHeader/ItemHeader';
 import Footer from '../../Footer/Footer';
 import SearchBar from '../../Filters/Searchbar/SearchBar';
 import Filters from '../../Filters/CategoryFilter/CategoryFilter';
 import FilterPopup from '../../Filters/FilterPopup/FilterPopup';
-import { queryItems } from '@/app/services/apiGraphQL';
-import { Item } from '../../../Interfaces';
+import { queryItems, queryOutfits } from '@/app/services/apiGraphQL';
+import { Item, Outfit } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import useFriend from '@/app/hooks/useFriend';
@@ -15,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
 
 function Grid() {
+  const dispatch = useDispatch();
   const selectedCategory = useSelector((state) => state.filter.category);
   const selectedSeason = useSelector((state) => state.filter.season);
   const selectedBrands = useSelector((state) => state.filter.brand);
@@ -25,8 +27,9 @@ function Grid() {
   const searchParams = useSearchParams();
   const friendUsername = searchParams.get('friend');
 
-  const dispatch = useDispatch();
   const [items, setItems] = useState<Item[]>([]);
+  const [outfits, setOutfits ] = useState<Outfit[]>([]);
+
   const { user } = useAuth();
   const { friend } = useFriend(); 
   const [displayFilters, setDisplayFilters] = useState(false);
@@ -39,18 +42,21 @@ function Grid() {
   const handleHeaderClick = (buttonId: string) => {
     if (buttonId === 'closet') {
       setActiveItems('filteredItems');
-    } else if (buttonId === 'outfits') {
-      setActiveItems('outfitItems');
+      console.log('closet changing')
+    } else if (buttonId === 'outfit') {
+      setActiveItems('filteredOutfits');
+      console.log('outfit changing');
     }
   };
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItemsAndOutfits = async () => {
+      
       try {
 
         if (friendUsername) {
 
-          const  res = await queryItems({
+          const  resItems = await queryItems({
             userId: friend?.id!,
             category: selectedCategory,
             season: selectedSeason,
@@ -59,12 +65,15 @@ function Grid() {
             location: selectedLocation,
             color: selectedColor
           });
-          console.log('GraphQL res Grid:', res);
-          console.log('FRRRRRIENDS PARAMS:', friendUsername)
-          setItems(res.data?.getItems || []);
+          // console.log('GraphQL resItems Grid:', resItems);
+          // console.log('FRRRRRIENDS PARAMS:', friendUsername)
+          setItems(resItems.data?.getItems || []);
+
+          const resOutfits = await queryOutfits(friend?.id!);
+          setOutfits(resOutfits.data?.getOutfits || []);
 
         } else {
-          const  res = await queryItems({
+          const  resItems = await queryItems({
             userId: user?.id!,
             category: selectedCategory,
             season: selectedSeason,
@@ -73,9 +82,13 @@ function Grid() {
             location: selectedLocation,
             color: selectedColor
           });
-          console.log('GraphQL res Grid:', res);
-          console.log('FRRRRRIENDS PARAMS:', friendUsername)
-          setItems(res.data?.getItems || []);
+          // console.log('GraphQL resItems Grid:', resItems);
+          // console.log('FRRRRRIENDS PARAMS:', friendUsername)
+          setItems(resItems.data?.getItems || []);
+
+          const resOutfits = await queryOutfits(user?.id!);
+          setOutfits(resOutfits.data?.getOutfits || []);
+          console.log('HERE ARE THE OUTFITS', resOutfits)
 
         }
       } catch (error) {
@@ -84,7 +97,7 @@ function Grid() {
     };
     // dispatch(setSelectedFilter({ type: 'category', value: 'All' }))
     // console.log('selectedFilterCat', selectedCategory)
-    fetchItems();
+    fetchItemsAndOutfits();
   }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
@@ -101,30 +114,32 @@ function Grid() {
         id: item.id
       }))
 
+
   // Esto hay que pasarlo como parametros. Dejar de momento
-  const itemCount = 7;
-  const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
-  const outfitItems = Array.from({ length: itemCount }, (_, index) => ({
-  id: index + 1,
-  url: myUrl,
-  brand: `Marca ${index + 1}`,
-  }));
   const honduras = 'Puta espanya!';
-  // Esto hay que pasarlo como parametros. Dejar de momento
+  
   const headers = {
     closet: 'Closet',
     outfit: 'Outfit'
   };
 
   return (
-    <div className='Grid'>
-      <ItemHeader closetName={honduras} headers={headers} onHeaderClick={handleHeaderClick} />
-      <SearchBar toggleFilters={toggleFilters}/>
-      <Filters/>
-      <ItemContainer items={filteredItems} />
-      <FilterPopup toggleFilters={toggleFilters} displayFilters={displayFilters}/>
-      <Footer />
-    </div>
+    <>
+      <div className='Grid'>
+        <ItemHeader closetName={honduras} headers={headers} onHeaderClick={handleHeaderClick} />
+        {activeItems === 'filteredItems' ? (
+          <>
+            <SearchBar toggleFilters={toggleFilters} />
+            <Filters />
+            <ItemContainer items={filteredItems} />
+            <FilterPopup toggleFilters={toggleFilters} displayFilters={displayFilters} />
+          </>
+        ) : (
+          <OutfitContainer outfits={outfits} />
+        )}
+        <Footer />
+      </div>
+    </>
   );
 }
 

@@ -80,8 +80,7 @@ export const queryOutfits = (userId: string): Promise<GraphQLResponse<{ getOutfi
       getOutfits(userId: $userId) {
         id
         name
-        occasion
-        season
+        outfitUrl
       }
     }
   `;

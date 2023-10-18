@@ -19,6 +19,10 @@ export class Outfit extends Model<InferAttributes<Outfit>, InferCreationAttribut
   @NotNull
   declare name: string;
 
+  @Attribute(DataTypes.STRING)
+  declare outfitUrl: string;
+  // @NotNull
+
   @BelongsToMany(() => Closet, { through: 'ClosetOutfit' })
   declare closets: Closet[];
 

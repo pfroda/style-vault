@@ -22,6 +22,7 @@ async function createOutfit (req, res) {
     const newOutfit = await Outfit.create({
       userId: outfit.userId,
       name: outfit.name,
+      outfitUrl: outfit.outfitUrl,
       occasion: outfit.occasion || null,
       season: outfit.season || null
     });
