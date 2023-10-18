@@ -224,6 +224,20 @@ export const queryResolver = {
     return favoriteOutfits;
 },
 
+  getUserItems: async (_, { userId }) => {
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            throw new Error("User not found!");
+        }
+        const items = await Item.findAll({ where: { userId: user.id } });
+        return items;
+    } catch (error) {
+        console.error("Error fetching items for user:", error);
+        throw new Error("Could not fetch items for the user");
+    }
+}
+
 };
 
 

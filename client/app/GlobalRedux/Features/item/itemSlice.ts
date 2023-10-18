@@ -26,9 +26,12 @@ export const itemSlice = createSlice({
             state.items[index] = action.payload;
           }
         },
+        setItemsState: (state, action) => {
+          state.items = action.payload;
+        },
       }
     })
 
-export const { addItem, removeItem, updateItem }  = itemSlice.actions;
+export const { addItem, removeItem, updateItem, setItemsState }  = itemSlice.actions;
 
 export default itemSlice.reducer;

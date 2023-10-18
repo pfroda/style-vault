@@ -344,18 +344,18 @@ export const queryUserProfile = (id: string) : Promise<GraphQLResponse<{ getUser
 //   return fetchGraphQL(query, { userId });
 // };
 
-export const queryItemsForOutfits = (userId: string) : Promise<GraphQLResponse<{ getItems: Item[] }>> => {
+export const queryUserItems = (userId: string) : Promise<GraphQLResponse<{ getUserItems: Item[] }>> => {
   const query = `
-    query Query($userId: String!) {
-      getItems(userId: $userId) {
-        itemUrl
-        category
-      }
+  query Query($userId: String!) {
+    getUserItems(userId: $userId) {
+      id
+      category
+      itemUrl
     }
-    `;
+  }
+  `;
   return fetchGraphQL(query, { userId });
 };
-  
 
 
 

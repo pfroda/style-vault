@@ -19,7 +19,7 @@ const OutfitSlider = ({ items, width, height, category }) => {
     <Slider {...sliderSettings} className={`${category}`}>
       {items.map((item, index) => (
         <div key={index} className={`img ${category}`}>
-          <Image className="outfit-slider-img" width={width} height={height} src={item.url} alt="" />
+          <Image className="outfit-slider-img" width={width} height={height} src={item.itemUrl} alt="" />
         </div>
       ))}
     </Slider>
