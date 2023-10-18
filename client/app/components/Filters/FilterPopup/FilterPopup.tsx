@@ -9,6 +9,8 @@ import { queryBrands } from "@/app/services/apiGraphQL";
 import { resetFilters } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import useAuth from '@/app/hooks/useAuth';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import closeIcon from '../../../../public/icon-close.svg';
 
 function FilterPopup({displayFilters, toggleFilters}: any) {
   const [brands, setBrands] = useState<string[]>([]);
@@ -37,7 +39,7 @@ function FilterPopup({displayFilters, toggleFilters}: any) {
     <div className="FilterPopup">
       <div className={`general-filters-container ${displayFilters ? 'popup-active' : ''}`}>
         <div className='filters-popup'>
-          <p onClick={toggleFilters}>X</p>
+          <Image onClick={toggleFilters} alt="close" src={closeIcon}></Image>
           <h3>Filter</h3>
           {brands.length > 0 ? (
             <>
