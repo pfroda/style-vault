@@ -13,7 +13,9 @@ export const colorsData = [
     { "id": 12, "color": "Olive", "value": "#7c8d34" },
     { "id": 13, "color": "Maroon", "value": "#aa453a" },
     { "id": 14, "color": "Gray", "value": "#6e7078" },
-    { "id": 15, "color": "Silver", "value": "#acadb2e6" }
+    { "id": 15, "color": "Silver", "value": "#acadb2e6" },
+    { "id": 16, "color": "White", "value": "#FFFFFF" },
+    { "id": 17, "color": "Black", "value": "#000000" }
   ];
   
   export const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
