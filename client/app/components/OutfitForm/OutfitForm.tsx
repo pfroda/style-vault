@@ -27,6 +27,9 @@ function OutfitForm() {
   const { user, handleRegister } = useAuth();
   const [currentOutfit, setCurrentOutfit] = useState({id: 'outfit-2'});
   const [showShuffle, setShowShuffle] = useState(false);
+
+  const [selectedOutfitURLs, setSelectedOutfitURLs] = useState<string[]>(['', '', '']);
+  // const [selectedItemUrls, setSelectedItemUrls] = useState<string[]>([]);
   const items = useSelector(state => state.item.items);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -54,6 +57,25 @@ function OutfitForm() {
   const topsArray = items?.filter(item => tops.includes(item.category));
   const pantsArray = items?.filter(item => pants.includes(item.category));
 
+  const handleItemURLChange = (index: number, itemURL: string) => {
+    setSelectedOutfitURLs(prevURLs => {
+      const updatedURLs = [...prevURLs];
+      updatedURLs[index] = itemURL;
+      return updatedURLs;
+    });
+  };
+
+  const handleOutfit = () => {
+    console.log(selectedOutfitURLs);
+
+    createOutfitImage(selectedOutfitURLs)
+      .then(outfitUrl => {
+        console.log(outfitUrl);
+        dispatch(setOutfitUrl(outfitUrl));
+      })
+    router.push('/dashboard/outfitsubmit');
+  }
+
   const handleShuffle = () => {
     setShowShuffle(!showShuffle);
     console.log('dressArray: ', dressArray);
@@ -61,15 +83,6 @@ function OutfitForm() {
     console.log('topsArray: ', topsArray);
     console.log('pantsArray: ', pantsArray);
     console.log('shoesArray: ', shoesArray);
-  }
-
-  const handleOutfit = () => {
-    createOutfitImage(itemsUrls)
-      .then(outfitUrl => {
-        console.log(outfitUrl);
-        dispatch(setOutfitUrl(outfitUrl));
-      })
-    router.push('/dashboard/outfitsubmit');
   }
 
   const outfit1 = 'outfit1';
@@ -86,47 +99,25 @@ function OutfitForm() {
       <div className="outfit-slider">
         {currentOutfit.id === 'outfit-1' &&
         <div className='outfit-1'>
-          <OutfitSlider items={topsArray} height={200} width={200} category={outfit1} />
-          <OutfitSlider items={shoesArray} height={175} width={175} category={outfit1} />
+          <OutfitSlider items={topsArray} height={200} width={200} category={outfit1} index={0} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={shoesArray} height={175} width={175} category={outfit1} index={1} onItemURLChange={handleItemURLChange} />
         </div>}
 
         {currentOutfit.id === 'outfit-2' &&
         <div className='outfit-2'>
-          <OutfitSlider items={topsArray} height={150} width={150} category={outfit2} />
-          <OutfitSlider items={pantsArray} height={150} width={150} category={outfit2} />
-          <OutfitSlider items={shoesArray} height={125} width={125} category={outfit2} />
+          <OutfitSlider items={topsArray} height={150} width={150} category={outfit2} index={0} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={pantsArray} height={150} width={150} category={outfit2} index={1} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={shoesArray} height={125} width={125} category={outfit2} index={2} onItemURLChange={handleItemURLChange} />
         </div>}
 
         {currentOutfit.id === 'outfit-3' &&
         <div className='outfit-3'>
-          <OutfitSlider items={outerWearArray} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={topsArray} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={pantsArray} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={shoesArray} height={100} width={100} category={outfit3} />
+          <OutfitSlider items={outerWearArray} height={125} width={125} category={outfit3} index={0} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={topsArray} height={125} width={125} category={outfit3} index={1} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={pantsArray} height={125} width={125} category={outfit3} index={2} onItemURLChange={handleItemURLChange} />
+          <OutfitSlider items={shoesArray} height={100} width={100} category={outfit3} index={3} onItemURLChange={handleItemURLChange} />
         </div>}
       </div>
-      {/* <div className="outfit-slider">
-        {currentOutfit.id === 'outfit-1' &&
-        <div className='outfit-1'>
-          <OutfitSlider items={itemsExample} height={200} width={200} category={outfit1} />
-          <OutfitSlider items={itemsExample} height={200} width={200} category={outfit1} />
-        </div>}
-
-        {currentOutfit.id === 'outfit-2' &&
-        <div className='outfit-2'>
-          <OutfitSlider items={itemsExample} height={150} width={150} category={outfit2} />
-          <OutfitSlider items={itemsExample} height={150} width={150} category={outfit2} />
-          <OutfitSlider items={itemsExample} height={150} width={150} category={outfit2} />
-        </div>}
-
-        {currentOutfit.id === 'outfit-3' &&
-        <div className='outfit-3'>
-          <OutfitSlider items={itemsExample} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={itemsExample} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={itemsExample} height={125} width={125} category={outfit3} />
-          <OutfitSlider items={itemsExample} height={125} width={125} category={outfit3} />
-        </div>}
-      </div> */}
 
       <div className='outfit-form'>
         <button className='outfit-button' type="submit" onClick={handleOutfit} >Create Outfit</button>

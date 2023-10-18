@@ -1,8 +1,5 @@
 .OutfitSubmit {
   height: 100vh;
-  /* background-color: antiquewhite; */
-  /* padding-bottom: 100px; */
-  margin-bottom: 72px;
   & .outfit-form-header {
     height: 45px;
     border-bottom: var(--primary-border);
@@ -86,12 +83,20 @@
 
 .OutfitSubmit {
   & .outfit-form-container {
-    & .outfit-form {
-       & .lastactive {
-        padding-bottom: 65px;
+    & .input-wrapper {
+      & .lastactive {
+        padding-bottom: 200px;
       }
     }
   }
+}
+
+.hey {
+  padding-bottom: 48px !important;
+}
+
+.lastactive {
+  padding-bottom: 63px !important;
 }
 
 

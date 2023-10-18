@@ -4,15 +4,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
-const OutfitSlider = ({ items, width, height, category }) => {
+const OutfitSlider = ({ items, width, height, category, index, onItemURLChange }) => {
+
+  const [currentUrl, setCurrentUrl] = useState('');
+
   const sliderSettings = {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
     dots: false,
-    arrows: true,
+    arrows: false,
+    // beforeChange: (current, next) => {
+    //   console.log(`Slide actual: ${next}`);
+    //   // console.log('Item correspondiente:', items[next]);
+    //   console.log('Item correspondiente:', items[next]?.itemUrl);
+    // },
+    beforeChange: (current, next) => {
+      onItemURLChange(index, items[next]?.itemUrl);
+    },
   };
 
   return (

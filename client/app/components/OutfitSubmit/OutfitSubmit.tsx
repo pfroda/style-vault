@@ -151,7 +151,7 @@ function OutfitSubmit() {
           </div>
 
           {closets && (
-            <ul className={`colors-dropdown ${showClosetMenu ? 'activedropdown lastactive' : ''}`}>
+            <ul className={`colors-dropdown hey ${showClosetMenu ? 'activedropdown lastactive' : ''}`}>
               {console.log('closetsss ', closets)}
               {closets.map((closetItem: any) => (
                 <li className={`li-wrapper ${selectedCloset === closetItem.id ? 'active' : ''}`}
