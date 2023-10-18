@@ -66,13 +66,13 @@
       max-width: calc(50% - 10px);
       aspect-ratio: 1/1;
       /* background-color: rgba(162, 162, 162, 0.1); */
-      border: 1.5px solid rgb(183, 183, 183);
+      /* border: 1.5px solid rgb(183, 183, 183); */
       border-radius: 12px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 5px;
+      gap: 10px;
       & .closet-image {
         width: 75%;
         height: auto;
@@ -89,6 +89,8 @@
         z-index: 5;
         & .close-closet {
           position: absolute;
+          width: 13px;
+          height: 13px;
           top: -30px;
           right: 5px;
           z-index: -1;

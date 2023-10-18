@@ -1,8 +1,11 @@
 'use client'
 import './footer.css';
-import home from '../../../public/home.png';
-import add from '../../../public/plus.png';
-import closet from '../../../public/cupboard.png';
+import home from '../../../public/home1.png';
+import add from '../../../public/plus1.png';
+import closet from '../../../public/cupboard1.png';
+import home1 from '../../../public/home.png';
+import add1 from '../../../public/plus.png';
+import closet1 from '../../../public/cupboard.png';
 import AddPopup from '../AddPopup/AddPopup';
 
 import { useState, useEffect } from 'react';
@@ -31,18 +34,18 @@ function  Footer () {
   const links = [
     {
       href: '/dashboard/social',
-      imgSrc: pathname === '/home' ? home : home,
+      imgSrc: pathname === '/dashboard/social' ? home1 : home,
       text: 'Home',
     },
     {
       href: '#',
       onClick: togglePopup,
-      imgSrc: add,
+      imgSrc: isPopupVisible ? add1 : add,
       text: 'Upload',
     },
     {
       href: '/dashboard/cupboard',
-      imgSrc: pathname === '/login' ? closet : closet,
+      imgSrc: pathname === '/dashboard/cupboard' ? closet1 : closet,
       text: 'You',
     },
   ];

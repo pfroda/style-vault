@@ -5,6 +5,7 @@ import closet1 from '../../../public/closet1.png';
 import closet2 from '../../../public/closet2.png';
 import closet3 from '../../../public/closet3.png';
 import closet4 from '../../../public/closet4.png';
+import close from '../../../public/close.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../Header/Header';
@@ -105,7 +106,7 @@ function Closet() {
           {closetForm ? (
             <>
               <form onSubmit={submitForm} className='closet-form'>
-                <div onClick={showFormCloset} className="close-closet">X</div>
+                <Image onClick={showFormCloset} src={close} className="close-closet" alt="" />
                 <input className='closet-input' type="text" {...register("name", { required: true })} placeholder='Type the name' />
                 <button className='closet-button' type="submit" >Add Closet</button>
               </form>

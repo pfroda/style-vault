@@ -3,11 +3,13 @@ import { Closet } from '@/app/Interfaces';
 import { createSlice, PayloadAction  } from '@reduxjs/toolkit';
 
 interface ClosetState {
-  closets: Closet[]
+  closets: Closet[],
+  selectedCloset: Closet | null;
 }
 
 const initialState: ClosetState = {
   closets: [],
+  selectedCloset: null,
 };
 
 export const closetSlice = createSlice({
@@ -29,9 +31,12 @@ export const closetSlice = createSlice({
     setClosetState: (state, action) => {
       state.closets = action.payload;
     },
+    setSelectedCloset: (state, action: PayloadAction<Closet | null>) => {
+      state.selectedCloset = action.payload;
+    },
   }
 })
 
-export const { addCloset, removeCloset, updateCloset, setClosetState } = closetSlice.actions;
+export const { addCloset, removeCloset, updateCloset, setClosetState, setSelectedCloset } = closetSlice.actions;
 
 export default closetSlice.reducer;
