@@ -17,14 +17,15 @@ async function createItem (req, res) {
       location: item.location || null
     });
 
-   const activity = await UserActivity.create({
-      type: 'NewItemToCloset', 
-      userId: item.userId,
-      itemId: newItem.id,
-      timestamp: new Date()  
-    });
+  //  const activity = await UserActivity.create({
+  //     type: 'NewItemToCloset', 
+  //     userId: item.userId,
+  //     itemId: newItem.id,
+  //     timestamp: new Date()  
+  //   });
 
-    res.status(201).send(newItem, activity);
+    res.status(201).send(newItem);
+    // res.status(201).send(newItem, activity);
   } catch (error) {
     console.error('Error creating item:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the item' });

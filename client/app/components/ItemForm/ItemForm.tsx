@@ -16,11 +16,10 @@ import calendarImg  from '../../../public/calendar.png';
 import colorBuck  from '../../../public/fill.png';
 import locationImg  from '../../../public/loc.png';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
-
-
-
-
+import { queryClosets } from '@/app/services/apiGraphQL';
 import { useForm } from 'react-hook-form';
 import useItems from '@/app/hooks/useItem';
 import useAuth from '@/app/hooks/useAuth';
@@ -42,17 +41,21 @@ function ItemForm() {
   const [itemUrl, setItemUrl] = useState('');
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const closets = useSelector(state => state.closet.closets);
 
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedOccasions, setSelectedOccasions] = useState<string[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCloset, setSelectedCloset] = useState<string>('');
 
   const [showColorMenu, setShowColorMenu] = useState(false);
   const [showOccasionMenu, setShowOccasionMenu] = useState(false);
   const [showSeasonMenu, setShowSeasonMenu] = useState(false);
   const [showCategoryMenu, setShowCategoryMenu] = useState(false);
+  const [showClosetMenu, setShowClosetMenu] = useState(false);
 
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
@@ -66,8 +69,10 @@ function ItemForm() {
   const toggleCategoryMenu = () => {
     setShowCategoryMenu(!showCategoryMenu);
   };
+  const toggleClosetMenu = () => {
+    setShowClosetMenu(!showClosetMenu);
+  };
   
-
   const categoriesArray = ["Pants", "Tops", "Shirts", "Shoes", "Boots", "Bags", "Accessories", "Sandals", "Sneakers", "Heels", "Outerwear", "Dress", "Shorts", "One-Piece"];
  
   for (let i = 0; i < categoriesArray.length; i++){
@@ -76,16 +81,22 @@ function ItemForm() {
       categoriesArray.splice(deleteElement, 1);
         categoriesArray.unshift(imageInfo?.labels)
     } else {
-      console.log("No existe", imageInfo?.labels, "cambia nombre")
+      // console.log("No existe", imageInfo?.labels, "cambia nombre")
     }
   }
 
+//   useEffect(() => {
+//     if (!selectedCategory) {
+//     setSelectedCategory(categoriesArray[0]);
+//     console.log(categoriesArray[0])
+// }
+//   }, [categoriesArray]);
   useEffect(() => {
     if (!selectedCategory) {
-    setSelectedCategory(categoriesArray[0]);
-    console.log(categoriesArray[0])
-}
-  }, [categoriesArray]);
+      setSelectedCategory(categoriesArray[0]);
+      console.log(categoriesArray[0]);
+    }
+  }, [categoriesArray, selectedCategory]);
 
 
   // No borrar esto, es para el color. 
@@ -104,7 +115,16 @@ function ItemForm() {
     if (itemUrl) {
       setPhotoIsLoading(false);
     }
-  }, [itemUrl]); 
+  }, [itemUrl]);
+
+  
+  useEffect(() => {
+    queryClosets(user?.id!)
+      .then(data => {
+        console.log(data);
+        dispatch(setClosetState(data))
+      })
+  }, []);
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -138,6 +158,7 @@ function ItemForm() {
     item.occasion = selectedOccasions;
     item.season = selectedSeasons;
     item.color = selectedColors;
+    item.closets = selectedCloset
     // item.brand = imageInfo?.logos
     
     handlePostItem(item);
@@ -150,15 +171,15 @@ function ItemForm() {
   };
   
 
-  const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedValue = e.target.value;
-    if (selectedSeasons.includes(selectedValue)) {
-      setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== selectedValue));
-    } else {
-      setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
-    }
-    console.log("array:", selectedSeasons);
-  };
+  // const handleSeasonChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedValue = e.target.value;
+  //   if (selectedSeasons.includes(selectedValue)) {
+  //     setSelectedSeasons(prevSeasons => prevSeasons.filter(season => season !== selectedValue));
+  //   } else {
+  //     setSelectedSeasons(prevSeasons => [...prevSeasons, selectedValue]);
+  //   }
+  //   console.log("array:", selectedSeasons);
+  // };
 
 const handleSeasonClick = (seasonToRemove: string) => {
   if (selectedSeasons.includes(seasonToRemove)) {
@@ -168,14 +189,14 @@ const handleSeasonClick = (seasonToRemove: string) => {
   }
 };
 
-const handleOccasionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  const selectedValue = e.target.value;
-  if (selectedOccasions.includes(selectedValue)) {
-    setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== selectedValue));
-  } else {
-    setSelectedOccasions(prevOccasions => [...prevOccasions, selectedValue]);
-  }
-};
+// const handleOccasionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//   const selectedValue = e.target.value;
+//   if (selectedOccasions.includes(selectedValue)) {
+//     setSelectedOccasions(prevOccasions => prevOccasions.filter(occasion => occasion !== selectedValue));
+//   } else {
+//     setSelectedOccasions(prevOccasions => [...prevOccasions, selectedValue]);
+//   }
+// };
 
 const handleOccasionClick = (occasionToRemove: string) => {
   if (selectedOccasions.includes(occasionToRemove)) {
@@ -185,14 +206,14 @@ const handleOccasionClick = (occasionToRemove: string) => {
   }
 };
 
-const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  const selectedValue = e.target.value;
-  if (selectedColors.includes(selectedValue)) {
-    setSelectedColors(prevColors => prevColors.filter(color => color !== selectedValue));
-  } else {
-    setSelectedColors(prevColors => [...prevColors, selectedValue]);
-  }
-};
+// const handleColorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+//   const selectedValue = e.target.value;
+//   if (selectedColors.includes(selectedValue)) {
+//     setSelectedColors(prevColors => prevColors.filter(color => color !== selectedValue));
+//   } else {
+//     setSelectedColors(prevColors => [...prevColors, selectedValue]);
+//   }
+// };
 
 
 const handleColorClick = (color: string) => {
@@ -203,9 +224,12 @@ const handleColorClick = (color: string) => {
   }
 };
 
+const handleClosetSelect = (closetId: string) => {
+  setSelectedCloset(closetId);
+  // toggleClosetMenu();
+};
+
 const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
-
-
 
 const colorsData = [
   { id: 1, color: 'Red', value: '#fd6767' },
@@ -220,7 +244,6 @@ const colorsData = [
 const occasionsData = ["Lounge", "Active", "Work", "Formal", "Night", "Day", "Semi-Formal"];
 
 const seasonsData = ["Winter", "Spring", "Summer", "Autumn"];
-
 
 
 return (
@@ -327,15 +350,22 @@ return (
           <input id="location" className='item-input' type="text" {...register("location", { required: true })} placeholder='Location' />
         </div>
 
-        
-        <div className='input-wrapper'>
-          <div className='label-container'>
-            <Image src={closetImg} alt="Icono" />
-            <label htmlFor="closets">Closet</label>
-          </div>
-          <input id="closets" className='item-input' type="text" {...register("closets", { required: true })} placeholder='Closet' />
+        {/* CLOSET DROPDOWN */}
+      <div className='input-wrapper' onClick={toggleClosetMenu}>
+        <div className='label-container colorDropdownButton'>
+          <Image src={closetImg} alt="Icono" />
+          <label htmlFor="closets">Closet</label>
         </div>
+        <Image className="expand-icon" src={showClosetMenu ? expandLess : expandMore} alt="" />
+      </div>
 
+      <ul className={`colors-dropdown ${showClosetMenu ? 'activedropdown' : ''}`}>
+        {closets.data.getClosets.map((closetItem: any) => (
+          <li className={`li-wrapper ${selectedCloset === closetItem.id ? 'active' : ''}`}
+            key={closetItem.id} onClick={() => handleClosetSelect(closetItem.id)}>{closetItem.name}
+          </li>))}
+      </ul>
+      {/* CLOSET DROPDOWN */}
 
       </div>
       <button className='register-button' type="submit">Add Item</button>

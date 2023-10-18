@@ -11,15 +11,16 @@ async function createCloset (req, res) {
       name: closet.name,
     });
 
-    const activity = await UserActivity.create({
-      type: 'NewCloset', 
-      userId: closet.userId,
-      closetId: newCloset.id,
-      timestamp: new Date()  
-    });
+    // const activity = await UserActivity.create({
+    //   type: 'NewCloset', 
+    //   userId: closet.userId,
+    //   closetId: newCloset.id,
+    //   timestamp: new Date()  
+    // });
 
 
-    res.status(201).send(newCloset, activity);
+    res.status(201).send(newCloset);
+    // res.status(201).send(newCloset, activity);
   } catch (error) {
     console.error('Error creating closet:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the closet' });
