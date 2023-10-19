@@ -28,6 +28,18 @@
         }
       }
     }
+    & .logout {
+      /* background-color: blue; */
+      margin-top: 20px;
+      width: fit-content;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--primary-color);
+      /* padding-top: 20px; */
+      padding: 5px 17px;
+      border-radius: 4px;
+    }
     & .user-button {
       position: fixed;
       bottom: 0;

@@ -1,8 +1,10 @@
 'use client';
 import './profileform.css'
+import logout from '../../../public/log-out.png';
 import Header from '../Header/Header';
 import GoBack from '../GoBack/GoBack';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import { User } from '@/app/Interfaces';
 import { useForm } from 'react-hook-form';
@@ -76,6 +78,7 @@ function ProfileForm() {
             <label htmlFor="surname">Surname</label>
             <input className='user-input' type="text" {...register("surname")} defaultValue={user?.surname || ''} />
           </div>
+          <Link href={'/login'}><div className='logout'>Log out</div></Link>
           <button className='user-button' type="submit" >Submit changes</button>
         </form>
       </div>

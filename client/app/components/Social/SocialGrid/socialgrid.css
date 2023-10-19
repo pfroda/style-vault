@@ -21,7 +21,7 @@
 
 .social-profile-wrapper {
   width: 100vw;
-  padding-bottom: 55px;
+  padding-bottom: 54px;
   &.active {
     max-height: 70vh;
     overflow-y: hidden;

@@ -65,7 +65,7 @@ function Closet() {
   return (
     <div className='Closet'>
       <div className="closet-header">
-        <Header />
+         <Header />
         <div className="profile">
           <div className="profile-content">
           <Image className="img" alt="" src={user?.profilePicture || defaultUserImage} width={100} height={100} />
