@@ -12,7 +12,7 @@ function ItemHeader({ closetName, headers, onHeaderClick }) {
 
   return (
     <div className='ItemHeader'>
-      <h2>{closetName}</h2>
+      <h2><span className='closet-title'>{closetName}</span></h2>
       <div className="items-list-header">
         <div className="header-options">
           {Object.keys(headers).map((key) => (

@@ -26,22 +26,27 @@ function ItemDetails() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
 
+  // Check if item is from current user visitor to show or not form
+
   useEffect(() => {
-    if (id) {
+  
       (async () => {
         try {
           const itemData = await queryItemById(user?.id!, id);
           setItem(itemData?.data?.getItemById);
+          console.log('ITEM', item)
+          console.log(itemData)
           console.log(itemData?.data?.getItemById);
           setFormData({
             location: itemData?.data?.getItemById?.location || '',
             closet: itemData?.data?.getItemById?.closet || '',
           });
+
         } catch (error) {
           console.error(error);
         }
       })();
-    }
+  
   }, [id]);
 
   const handleDeleteAlert = () => {
@@ -84,6 +89,9 @@ function ItemDetails() {
       setVisibleUpdate(false);
     }, 2500);
   });
+
+
+
 
   return (
     <div className="ItemDetails">
@@ -137,6 +145,7 @@ function ItemDetails() {
                 </div>
               </div>
 
+   
               <form onSubmit={updateForm} className="itemdetails-form">
                 <div className="input-wrapper">
                   <div className="itemdetails-container">
@@ -151,7 +160,7 @@ function ItemDetails() {
                     />
                   </div>
                 </div>
-
+{/* 
                 <div className="input-wrapper">
                   <div className="itemdetails-container">
                     <label htmlFor="closet">Closet</label>
@@ -162,7 +171,7 @@ function ItemDetails() {
                       onChange={handleFormChange}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className="itemdetails-actions">
                   <div className="itemdetails-delete" onClick={handleDeleteAlert}>
@@ -187,6 +196,8 @@ function ItemDetails() {
                   )}
                 </div>
               </form>
+
+
             </div>
           </div>
         )}

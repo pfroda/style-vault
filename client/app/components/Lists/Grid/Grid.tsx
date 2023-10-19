@@ -81,8 +81,6 @@ function Grid() {
             location: selectedLocation,
             color: selectedColor
           });
-          // console.log('GraphQL resItems Grid:', resItems);
-          // console.log('FRRRRRIENDS PARAMS:', friendUsername)
           setItems(resItems.data?.getItems || []);
 
           const resOutfits = await queryOutfits(user?.id!);

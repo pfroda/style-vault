@@ -17,7 +17,7 @@ function Register() {
 
   const submitForm = handleSubmit(async (user: RegisterUser) => {
     handleRegister(user);
-    router.push('/dashboard/social');
+    router.push('/dashboard/cupboard');
   });
 
   return (

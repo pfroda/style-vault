@@ -2,7 +2,7 @@
   & h2 {
     padding-left: 20px;
     padding-top: 20px;
-    font-size: 20px;
+    font-size: 16px;
   }
   & .items-list-header {
     padding-top: 20px;
@@ -22,4 +22,8 @@
       }
     }
   }
+}
+
+.closet-title {
+  font-style: italic;
 }

@@ -17,7 +17,7 @@ function Login() {
 
   const submitForm = handleSubmit(async (user: LoginUser) => {
     handleLogin(user);
-    router.push('/dashboard/social');
+    router.push('/dashboard/cupboard');
   });
 
   return (

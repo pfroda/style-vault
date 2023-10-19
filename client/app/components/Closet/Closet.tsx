@@ -84,8 +84,8 @@ function Closet() {
           <Image className="edit" src={edit} alt="Edit" onClick={handleProfile} />
         </div>
         <div className="header-options">
-          <button className='closet-button'>Closet</button>
-          <button className='outfit-button'>Outfits</button>
+          <button className='closet-button'>Closets</button>
+          {/* <button className='outfit-button'>Outfits</button> */}
           <button className='loves-button'>Loves</button>
         </div>
       </div>
