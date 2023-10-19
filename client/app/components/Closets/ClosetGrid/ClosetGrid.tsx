@@ -1,4 +1,4 @@
-import './grid.css'
+import './closetgrid.css'
 import ItemContainer from '../../Lists/ItemContainer/ItemContainer';
 import OutfitContainer from '../../Lists/OutfitContainer/OutfitContainer';
 import ItemHeader from '../../Lists/ItemHeader/ItemHeader';
@@ -14,6 +14,8 @@ import useFriend from '@/app/hooks/useFriend';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
+import { queryItemsByCloset, queryOutfitsByCloset } from '@/app/services/apiGraphQL';
+
 
 function ClosetGrid() {
   const dispatch = useDispatch();
@@ -50,13 +52,13 @@ function ClosetGrid() {
   };
 
   useEffect(() => {
-    const fetchItemsAndOutfits = async () => {
+    const fetchItemsAndOutfitsByCloset = async () => {
       
       try {
 
         if (friendUsername) {
 
-          const  resItems = await queryItems({
+          const  resItems = await queryItemsByCloset({
             userId: friend?.id!,
             category: selectedCategory,
             season: selectedSeason,
@@ -94,7 +96,7 @@ function ClosetGrid() {
       }
     };
 
-    fetchItemsAndOutfits();
+    fetchItemsAndOutfitsByCloset();
   }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
@@ -123,7 +125,7 @@ function ClosetGrid() {
   return (
     <>
       <div className='Grid'>
-        <ItemHeader closetName={honduras} headers={headers} onHeaderClick={handleHeaderClick} />
+        <ItemHeader closetName={closetName} headers={headers} onHeaderClick={handleHeaderClick} />
         {activeItems === 'filteredItems' ? (
           <>
             <SearchBar toggleFilters={toggleFilters} />

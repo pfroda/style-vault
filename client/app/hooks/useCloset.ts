@@ -11,7 +11,6 @@ function useCloset() {
   const handlePostCloset = async (closet: Closet) => {
     const res = await postCloset(closet);
     if (res) {
-      console.log('whaterver')
       dispatch(addCloset(res));
     }
   }
