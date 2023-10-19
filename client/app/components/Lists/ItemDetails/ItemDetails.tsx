@@ -113,7 +113,7 @@ function ItemDetails() {
                 </h2>
               </div>
 
-              <div className="input-wrapper">
+              <div className="input-wrapper-item">
                 <div className="itemdetails-container">
                   <label htmlFor="occasion">Season</label>
                   <ul className="itemdetails-ul">
@@ -125,7 +125,7 @@ function ItemDetails() {
                   </ul>
                 </div>
               </div>
-              <div className="input-wrapper">
+              <div className="input-wrapper-item">
                 <div className="itemdetails-container">
                   <label htmlFor="color">Color</label>
                   <ul className="itemdetails-ul">
@@ -138,7 +138,7 @@ function ItemDetails() {
                   </ul>
                 </div>
               </div>
-              <div className="input-wrapper">
+              <div className="input-wrapper-item">
                 <div className="itemdetails-container">
                   <label htmlFor="occasion">Occasion</label>
                   <ul className="itemdetails-ul">
@@ -153,7 +153,7 @@ function ItemDetails() {
 
               {isUserItem && (
               <form onSubmit={updateForm} className="itemdetails-form">
-                <div className="input-wrapper">
+                <div className="input-wrapper-item">
                   <div className="itemdetails-container">
                     <label htmlFor="location" id="occasionlab">
                       Location
@@ -167,7 +167,7 @@ function ItemDetails() {
                   </div>
                 </div>
 {/* 
-                <div className="input-wrapper">
+                <div className="input-wrapper-item">
                   <div className="itemdetails-container">
                     <label htmlFor="closet">Closet</label>
                     <input
