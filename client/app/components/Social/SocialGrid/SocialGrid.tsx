@@ -4,6 +4,7 @@ import heartwhite from '../../../../public/heart-white.png';
 import heartblack from '../../../../public/heart-black.png';
 import searchuser from '../../../../public/search-user.png';
 import close from '../../../../public/close.png';
+import userImage from '../../../../public/user.png';
 import Header from '../../Header/Header';
 import SocialSearch from '../SocialSearch/SocialSearch';
 import { useState, useEffect } from 'react';
@@ -59,7 +60,7 @@ function SocialGrid() {
         {feedData && feedData.map(item => (
           <div key={item.item.id} className="social-profile-container">
             <div className="user-info">
-              <Image src={item.user.profilePicture} alt="" width={40} height={40} className='user-profile-picture' />
+              <Image src={item.user.profilePicture || userImage} alt="" width={40} height={40} className='user-profile-picture' />
               <h4>@{item.user.username}</h4>
             </div>
             <h3>{item.message}</h3>
