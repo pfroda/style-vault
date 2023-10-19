@@ -169,6 +169,7 @@ export const queryOutfitsByCloset = (id: string): Promise<GraphQLResponse<{ getO
         name
         occasion
         season
+        outfitUrl
       }
     }
   `;
