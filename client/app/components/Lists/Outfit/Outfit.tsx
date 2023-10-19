@@ -8,7 +8,6 @@ function Outfit({ id, name, url }) {
 
   const handleOutfitDetails = () => {
     // router.push(`/dashboard/itemdetails?id=${id}`);
-    console.log('heheh')
   }
 
   return (

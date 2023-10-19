@@ -34,9 +34,8 @@ function ItemDetails() {
         try {
           const itemData = await queryItemById(user?.id!, id);
           setItem(itemData?.data?.getItemById);
-          console.log('ITEM', item)
-          console.log(itemData)
-          console.log(itemData?.data?.getItemById);
+
+
           setFormData({
             location: itemData?.data?.getItemById?.location || '',
             closet: itemData?.data?.getItemById?.closet || '',
@@ -54,7 +53,7 @@ function ItemDetails() {
   };
 
   const handleDelete = () => {
-    console.log('deleting item');
+
     if (id) {
       deleteItem(id);
     }
@@ -70,7 +69,6 @@ function ItemDetails() {
   };
 
   const updateForm = handleSubmit(async () => {
-    console.log('updating form');
     setVisibleUpdate(true);
 
     if (id) {

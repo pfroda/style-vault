@@ -36,11 +36,9 @@ function OutfitForm() {
   useEffect(() => {
     queryUserItems(user?.id!)
       .then(res => {
-        console.log('respuesta', res);
         if (res.data?.getUserItems) {
           dispatch(setItemsState(res.data.getUserItems));
         }
-        console.log('proba: ', items)
       });
   }, []);
   
@@ -65,11 +63,9 @@ function OutfitForm() {
   };
 
   const handleOutfit = () => {
-    console.log(selectedOutfitURLs);
 
     createOutfitImage(selectedOutfitURLs)
       .then(outfitUrl => {
-        console.log(outfitUrl);
         dispatch(setOutfitUrl(outfitUrl));
       })
     router.push('/dashboard/outfitsubmit');
@@ -77,11 +73,11 @@ function OutfitForm() {
 
   const handleShuffle = () => {
     setShowShuffle(!showShuffle);
-    console.log('dressArray: ', dressArray);
-    console.log('outerWearArray: ', outerWearArray);
-    console.log('topsArray: ', topsArray);
-    console.log('pantsArray: ', pantsArray);
-    console.log('shoesArray: ', shoesArray);
+    // console.log('dressArray: ', dressArray);
+    // console.log('outerWearArray: ', outerWearArray);
+    // console.log('topsArray: ', topsArray);
+    // console.log('pantsArray: ', pantsArray);
+    // console.log('shoesArray: ', shoesArray);
   }
 
   const outfit1 = 'outfit1';
