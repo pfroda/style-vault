@@ -26,7 +26,8 @@ function ItemDetails() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
 
-  // Check if item is from current user visitor to show or not form
+  // Check if item is from current user visitor
+  const [isUserItem, setIsUserItem] = useState(false);
 
   useEffect(() => {
   
@@ -40,6 +41,13 @@ function ItemDetails() {
             location: itemData?.data?.getItemById?.location || '',
             closet: itemData?.data?.getItemById?.closet || '',
           });
+
+        // Check if the user owns the item
+        if (itemData?.data?.getItemById?.userId === user?.id) {
+          setIsUserItem(true);
+        }
+        console.log('testing item data:', itemData?.data?.getItemById?.userId );
+        console.log('current user:', user?.id)
 
         } catch (error) {
           console.error(error);
@@ -143,7 +151,7 @@ function ItemDetails() {
                 </div>
               </div>
 
-   
+              {isUserItem && (
               <form onSubmit={updateForm} className="itemdetails-form">
                 <div className="input-wrapper">
                   <div className="itemdetails-container">
@@ -194,6 +202,9 @@ function ItemDetails() {
                   )}
                 </div>
               </form>
+
+              )}
+   
 
 
             </div>
