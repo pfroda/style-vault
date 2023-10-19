@@ -49,7 +49,7 @@ function ItemForm() {
   const router = useRouter();
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
 
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
@@ -66,7 +66,7 @@ function ItemForm() {
   const [showSeasonMenu, setShowSeasonMenu] = useState(false);
   const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
-
+  const [hasOpenedFileSelector, setHasOpenedFileSelector] = useState(false);
 
 
   const toggleColorMenu = () => {
@@ -85,9 +85,12 @@ function ItemForm() {
     setShowClosetMenu(!showClosetMenu);
   };
 
+
   useEffect(() => {
-    // Abre el selector de archivos automáticamente cuando el componente se monta
-    fileInputRef.current.click();
+    if (fileInputRef.current && !hasOpenedFileSelector) {
+      fileInputRef.current.click();
+      setHasOpenedFileSelector(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -209,11 +212,23 @@ function ItemForm() {
   // label           boton
   return (
   
-  <div className='ItemForm'>
-
-    <div className="go-back-item-form">
-      <GoBack />
-    </div>
+    <div className='ItemForm'>
+      <div className="img-form-container">
+        {itemUrl && <img  src={itemUrl} alt="" />}
+        {photoIsLoading && <div className='spinner'></div>}
+      </div>
+      
+      <input 
+      className="img-form" 
+      type="file" 
+      ref={fileInputRef} 
+      onChange={handleFileChange} 
+      style={{ display: 'none' }} 
+    />
+      <div className="custom-file-input">
+        <input className="img-form" type="file" onChange={handleFileChange} />
+        <label className='prueba' htmlFor="file-input">Select a Photo</label>
+      </div>
 
     <div className="img-form-container">
       {itemUrl && <img  src={itemUrl} alt="" />}
