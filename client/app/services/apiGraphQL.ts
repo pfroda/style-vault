@@ -68,6 +68,7 @@ export const queryItemById = (userId: string, id: string): Promise<GraphQLRespon
         location
         season
         brand
+        userId
       }
     }
   `;
