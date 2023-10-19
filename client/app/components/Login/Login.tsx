@@ -30,7 +30,7 @@ function Login() {
           <input className='register-input' type="password" {...register("password", { required: true })} placeholder='Password' />
           <button className='register-button' type="submit" >Log in</button>
         </form>
-          <p className='swap-to'>Don't have an account? <Link href="/register" className='swap-to-link'>Sign up</Link></p>
+          <p className='swap-to'>Don&apos;t have an account? <Link href="/register" className='swap-to-link'>Sign up</Link></p>
       </div>
     </div>
   )

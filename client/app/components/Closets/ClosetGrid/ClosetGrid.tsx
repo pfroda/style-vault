@@ -57,9 +57,8 @@ function ClosetGrid() {
       try {
 
           const  resItems = await queryItemsByCloset(selectedCloset.id);
-
           setClosetItems(resItems.data?.getItemsByCloset || []);
-
+          
           const resOutfits = await queryOutfitsByCloset(selectedCloset.id);
           setClosetOutfits(resOutfits.data?.getOutfitsByCloset || []);
 
@@ -67,8 +66,13 @@ function ClosetGrid() {
         console.log(error);
       }
     };
-
+    
     fetchItemsAndOutfitsByCloset();
+
+    console.log('CLOSET ITEMS', closetItems);
+    console.log('CLOSET OUTFITS', closetOutfits);
+
+
 
   }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
@@ -84,7 +88,9 @@ function ClosetGrid() {
         url: item.itemUrl,
         brand: item.brand,
         id: item.id
-      }))
+      }));
+
+    // const filteredOutfits = closetOutfits
 
   
   const headers = {

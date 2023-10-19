@@ -188,7 +188,7 @@ function ItemDetails() {
                   {visibleDelete && (
                     <div className="delete-secure" onClick={handleDelete}>
                       <p>
-                        Sure? <span className="delete-secure-confirm">Delete item ></span>
+                        Sure? <span className="delete-secure-confirm">Delete item</span>
                       </p>
                     </div>
                   )}
