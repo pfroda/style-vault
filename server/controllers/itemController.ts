@@ -26,15 +26,15 @@ async function createItem (req, res) {
 
     // add outfit to closet using closet.addOutfits
     await closetFound.addItems([newItem.id]);
-    //  const activity = await UserActivity.create({
-    //     type: 'NewItemToCloset', 
-    //     userId: item.userId,
-    //     itemId: newItem.id,
-    //     timestamp: new Date()  
-    //   });
+    await UserActivity.create({
+        type: 'NewItemToCloset', 
+        userId: item.userId,
+        itemId: newItem.id,
+        timestamp: new Date()  
+      });
 
+    // res.status(201).send(newItem);
     res.status(201).send(newItem);
-    // res.status(201).send(newItem, activity);
   } catch (error) {
     console.error('Error creating item:', error);
     res.status(400).send({ error: error.message, message: 'Could not create the item' });

@@ -1,9 +1,11 @@
 .FilterPopup {
-  z-index: 9999;
+  z-index: 10;
 }
 
 .general-filters-container {
   background-color: white;
+  overflow-y: auto;
+  /* background-color: blue; */
   box-shadow: 2px 2px 7px .5px rgba(0, 0, 0, 0.3);
   z-index: 5;
   display: flex;
@@ -11,8 +13,8 @@
   position: fixed;
   left: -105%;
   width: 100vw;
-  height: calc(100vh - 160px);
-  bottom: 0;
+  /* max-height: calc(100vh - 160px); */
+  top: 160px;
   transition: left 0.6s ease;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;

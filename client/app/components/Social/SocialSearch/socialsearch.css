@@ -5,7 +5,7 @@
   /* background-color: rgb(192, 192, 216); */
   /* z-index: 5; */
   & .social-header-container {
-    height: 10vh;
+    height: 65px;
     background-color: var(--header-color);
     display: flex;
     justify-content: center;

@@ -62,18 +62,18 @@ export const types = `#graphql
   }
 
   type UserActivity {
-    id: ID!
+    id: String!
     type: String!
-    userId: ID!
+    userId: String!
     timestamp: String!
-    itemId: ID
-    outfitId: ID
-    closetId: ID
+    itemId: String
+    closetId: String
   }
-
 
   type ActivityFeed {
     message: String!
     timestamp: String!
+    user: User!
+    item: Item
 }
 `;

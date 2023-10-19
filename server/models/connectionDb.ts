@@ -7,6 +7,7 @@ import { Outfit } from './outfitSchema';
 import { Closet } from './closetSchema';
 import { FavoriteItem } from './favoriteItemSchema';
 import { FavoriteOutfit } from './favoriteOutfitSchema';
+import { UserActivity } from './userActivitySchema';
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ const sequelize = new Sequelize(
     dialect: dialect,
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432,
     logging: false,
-    models: [User, Item, Outfit, Closet, FavoriteItem, FavoriteOutfit]
+    models: [User, Item, Outfit, Closet, FavoriteItem, FavoriteOutfit, UserActivity]
   }
 );
 

@@ -56,23 +56,23 @@ function ProfileForm() {
               <div className="change-img">Change picture</div>
             </div>
           </div>
-          <div className="input-wrapper">
+          <div className="input-wrapper-profile">
             <label htmlFor="username">Username</label>
             <input className='user-input' type="text" {...register("username")} defaultValue={user?.username || ''} />
           </div>
-          <div className="input-wrapper">
+          <div className="input-wrapper-profile">
             <label htmlFor="username">Email</label>
             <input className='user-input' type="email" {...register("email")}  defaultValue={user?.email || ''} />
           </div>
-          <div className="input-wrapper">
+          <div className="input-wrapper-profile">
             <label htmlFor="username">Password</label>
             <input className='user-input' type="password" {...register("password")} />
           </div>
-          <div className="input-wrapper">
+          <div className="input-wrapper-profile">
             <label htmlFor="name">Name</label>
             <input className='user-input' type="text" {...register("name")} defaultValue={user?.name || ''} />
           </div>
-          <div className="input-wrapper">
+          <div className="input-wrapper-profile">
             <label htmlFor="surname">Surname</label>
             <input className='user-input' type="text" {...register("surname")} defaultValue={user?.surname || ''} />
           </div>

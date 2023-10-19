@@ -9,14 +9,15 @@ import close from '../../../public/close.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '../Header/Header';
-import { queryClosets } from '@/app/services/apiGraphQL';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '@/app/hooks/useAuth';
 import useCloset from '@/app/hooks/useCloset';
 import { useRouter } from 'next/navigation'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { setClosetState, setSelectedCloset } from '@/app/GlobalRedux/Features/closet/closetSlice';
+import { setSelectedCloset } from '@/app/GlobalRedux/Features/closet/closetSlice';
+import { Closet } from '@/app/Interfaces';
+import { RootState } from '@/app/GlobalRedux/store';
 
 function Closet() {
   const { register, handleSubmit, reset } = useForm();
@@ -27,11 +28,10 @@ function Closet() {
   useEffect(() => {
     handleUserData(user?.id!);
   }, []);
-
   
-  const closets = useSelector(state => state.closet.closets);
+  const closets = useSelector((state: RootState) => state.closet.closets);
   
-  const { handlePostCloset } = useCloset();
+  const { loadClosets, handlePostCloset } = useCloset();
   const [closetForm, setClosetForm] = useState(false);
 
   const showFormCloset = () => {
@@ -43,25 +43,20 @@ function Closet() {
   }
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const res = await queryClosets(user?.id!);
-        dispatch(setClosetState(res.data?.getClosets || []));
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchItems();
+    loadClosets(user?.id!);
   }, [user?.id, dispatch]); 
 
-  const submitForm = handleSubmit(async (closet) => {
+  const submitForm = handleSubmit(async (closet: Partial<Closet>) => {
     closet.userId = user?.id!;
+    console.log(closet);
     handlePostCloset(closet);
     setClosetForm(false);
     reset();
   });
 
   const handleClosetClick = async (closet) => {
+    console.log('lets closetify');
+    console.log('THIS IS CLOSET:', closet)
     dispatch(setSelectedCloset(closet));
     router.push('/dashboard/closets');
     
@@ -91,7 +86,7 @@ function Closet() {
           <div className="closet-name">All Clothes</div>
         </Link>
 
-        {closets.map((closet) => (
+        {closets.map((closet: Closet) => (
           <div key={closet.id} className="closets-container" onClick={()=>{handleClosetClick(closet)}}>
               <Image alt="" className='closet-image' src={closet2} />
               <div className="closet-name">

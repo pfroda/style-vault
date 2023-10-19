@@ -1,12 +1,22 @@
 import { Closet } from '../Interfaces';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/app/GlobalRedux/store';
+import { queryClosets } from '@/app/services/apiGraphQL';
 import { postCloset, editCloset, deleteCloset } from '../services/apiCloset';
-import { addCloset, removeCloset, updateCloset } from '@/app/GlobalRedux/Features/closet/closetSlice';
+import { addCloset, removeCloset, updateCloset, setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
 function useCloset() {
   const closet = useSelector((state: RootState) => state.closet.closets);
   const dispatch = useDispatch();
+
+  const loadClosets = async (userId: string) => {
+    try {
+      const res = await queryClosets(userId);
+      dispatch(setClosetState(res.data?.getClosets || []));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handlePostCloset = async (closet: Closet) => {
     const res = await postCloset(closet);
@@ -29,7 +39,7 @@ function useCloset() {
     }
   }
 
-  return { closet, handlePostCloset, handleEditCloset, handleDeleteCloset };
+  return { closet, loadClosets, handlePostCloset, handleEditCloset, handleDeleteCloset };
 }
 
 export default useCloset
