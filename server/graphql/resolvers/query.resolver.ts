@@ -245,36 +245,33 @@ export const queryResolver = {
   },
 
   getFeed: async (_, { userId }) => {
-    const user = await User.findByPk(userId, {
-      include: {
-        association: 'following', 
-        attributes: ['id']
-      }
-    });
-  
-    if (!user) {
-      throw new Error("User not found.");
-    }
-  
-    const followingIds = user.following.map(user => user.id);
-  
+    // Fetching all user activities without filtering by userId.
     const activities = await UserActivity.findAll({
-      where: {
-        userId: followingIds 
-      },
-      order: [['timestamp', 'DESC']],
+      order: [['timestamp', 'DESC']]
     });
   
     const feed = await Promise.all(activities.map(async (activity) => {
-      const activityUser = await User.findByPk(activity.userId);
+      const activityUser = await User.findByPk(activity.userId, {
+        attributes: ['username', 'profilePicture']
+      });
       let message = "";
+      let item = null;
+      let outfit = null;
   
       switch (activity.type) {
         case 'NewItemToCloset':
           message = `${activityUser.username} added an item to their closet.`;
+          if (activity.itemId) {
+            const foundItem = await Item.findByPk(activity.itemId);
+            if (foundItem) item = { imageUrl: foundItem.itemUrl };
+          }
           break;
         case 'NewOutfitToCloset':
           message = `${activityUser.username} added an outfit to their closet.`;
+          if (activity.outfitId) {
+            const foundOutfit = await Outfit.findByPk(activity.outfitId);
+            if (foundOutfit) outfit = { outfitUrl: foundOutfit.outfitUrl };
+          }
           break;
         case 'NewCloset':
           message = `${activityUser.username} created a new closet.`;
@@ -284,11 +281,18 @@ export const queryResolver = {
       return {
         message: message,
         timestamp: activity.timestamp,
+        user: {
+          username: activityUser.username,
+          profilePicture: activityUser.profilePicture
+        },
+        item,
+        outfit
       };
     }));
   
     return feed;
-  }, 
+  },
+     
   getUserItems: async (_, { userId }) => {
     try {
         const user = await User.findByPk(userId);

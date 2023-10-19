@@ -16,11 +16,11 @@ export const queries = `#graphql
     getAllUsers: [User!]!
     getUserById(id: String!): User
     getUserProfile(id: String!): User
-    getFollowers(userId: String!): [User!]!
-    getFollowing(userId: String!): [User!]!
-    getFavoriteItems(userId: String!): [FavoriteItem!]!
-    getFavoriteOutfits(userId: String!): [FavoriteOutfit!]!
-    getFeed(userId: String!): [ActivityFeed!]!
+    getFollowers(userId: String!): [User]!
+    getFollowing(userId: String!): [User]!
+    getFavoriteItems(userId: String!): [FavoriteItem]!
+    getFavoriteOutfits(userId: String!): [FavoriteOutfit]!
+    getFeed(userId: String!): [ActivityFeed]!
     getUserItems(userId: String!): [Item]!
     getItemsFromUserCloset(userId: String!, closetId: String!): [Item]!
     getOutfitsFromUserCloset(userId: String!, closetId: String!): [Outfit]!
