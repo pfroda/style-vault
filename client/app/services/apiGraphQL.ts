@@ -392,3 +392,23 @@ export const queryOutfitsFromUserCloset = (userId: string): Promise<GraphQLRespo
   return fetchGraphQL(query, { userId });
 };
 
+
+export const queryFeed = (): Promise<GraphQLResponse<{ getFeed: ActivityFeed[] }>> => {
+  const query = `
+  query Query {
+    getFeed {
+      message
+      timestamp
+      user {
+        username
+        profilePicture
+      }
+      item {
+        id
+        itemUrl
+      }
+    }
+  }
+  `;
+  return fetchGraphQL(query);
+};

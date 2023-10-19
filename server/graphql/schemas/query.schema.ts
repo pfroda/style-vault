@@ -20,9 +20,9 @@ export const queries = `#graphql
     getFollowing(userId: String!): [User!]!
     getFavoriteItems(userId: String!): [FavoriteItem!]!
     getFavoriteOutfits(userId: String!): [FavoriteOutfit!]!
-    getFeed(userId: String!): [ActivityFeed!]!
     getUserItems(userId: String!): [Item]!
     getItemsFromUserCloset(userId: String!, closetId: String!): [Item]!
     getOutfitsFromUserCloset(userId: String!, closetId: String!): [Outfit]!
+    getFeed: [ActivityFeed]!
   }
 `;

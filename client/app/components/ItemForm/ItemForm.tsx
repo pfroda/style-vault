@@ -46,11 +46,11 @@ function ItemForm() {
   const [showForm, setShowForm] = useState(false);
   const [itemUrl, setItemUrl] = useState('');
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
+  const [hasOpenedFileSelector, setHasOpenedFileSelector] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const closets = useSelector(state => state.closet.closets);
-  const fileInputRef = useRef(null);
-
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [imageInfo, setImageInfo] = useState<{ logos?: string, labels?: string, hexColor?: string } | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -66,8 +66,6 @@ function ItemForm() {
   const [showSeasonMenu, setShowSeasonMenu] = useState(false);
   const [showCategoryMenu, setShowCategoryMenu] = useState(true);
   const [showClosetMenu, setShowClosetMenu] = useState(false);
-
-
 
   const toggleColorMenu = () => {
     setShowColorMenu(!showColorMenu);
@@ -86,8 +84,10 @@ function ItemForm() {
   };
 
   useEffect(() => {
-    // Abre el selector de archivos automáticamente cuando el componente se monta
-    fileInputRef.current.click();
+    if (fileInputRef.current && !hasOpenedFileSelector) {
+      fileInputRef.current.click();
+      setHasOpenedFileSelector(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -98,7 +98,6 @@ function ItemForm() {
       }
     }
   }, [imageInfo, categoriesArray]);
-
  
   useEffect(() => {
     if (itemUrl) {
@@ -114,8 +113,6 @@ function ItemForm() {
       })
   }, []);
 
- 
-
   useEffect(() => {
     if (imageInfo?.hexColor) {
       const closestColorName = rgbToColor(imageInfo.hexColor);
@@ -124,7 +121,6 @@ function ItemForm() {
       }
     }
   }, [imageInfo]);
-
 
   async function handleFileChange(event: any) {
     setPhotoIsLoading(true);
@@ -151,7 +147,6 @@ function ItemForm() {
     }
   }
 
-
   const submitForm = handleSubmit(async (item: Item) => {
     item.userId = user?.id!;
     item.itemUrl = itemUrl;
@@ -169,7 +164,6 @@ function ItemForm() {
     router.push('/dashboard/cupboard');
     console.log("item--->", item)
   });
-
 
   const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
@@ -203,14 +197,9 @@ function ItemForm() {
     setSelectedCloset(closetId);
   };
 
-  // const circleStyle = { backgroundColor: rgbToColor(imageInfo?.hexColor) || 'white'};
-
-    /* img-form-container   cuadro de la foto*/
-  // label           boton
   return (
-  
-  <div className='ItemForm'>
 
+  <div className='ItemForm'>
     <div className="go-back-item-form">
       <GoBack />
     </div>

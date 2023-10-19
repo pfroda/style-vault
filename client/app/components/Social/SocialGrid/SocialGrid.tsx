@@ -6,17 +6,25 @@ import searchuser from '../../../../public/search-user.png';
 import close from '../../../../public/close.png';
 import Header from '../../Header/Header';
 import SocialSearch from '../SocialSearch/SocialSearch';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { queryFeed } from '@/app/services/apiGraphQL';
 
 function SocialGrid() {
   const [isFollowed, setIsFollowed] = useState(false);
   const [searchBar, setSearchBar] = useState(false);
+  const [feedData, setFeedData] = useState(false);
 
   const handleFollow = () => {
     console.log('clicked');
     setIsFollowed(!isFollowed);
   }
+
+  useEffect(() => {
+    queryFeed().then(response => {
+      console.log(response);
+    })
+  }, []);
 
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
   const closet = 'Paris Fashion';
@@ -38,6 +46,7 @@ function SocialGrid() {
       <div className="search-container">
         <Image src={searchBar ? close : searchuser} alt="" className={searchBar ? 'close-button' : 'search-user-button'} onClick={handleSearch} />
       </div>
+
       <div className="social-profile">
         <div className="social-header">
           <div className="social-image"></div>
@@ -56,6 +65,7 @@ function SocialGrid() {
           ))}
         </div>
       </div>
+      
     </div>
   )
 }
