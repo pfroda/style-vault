@@ -17,55 +17,60 @@
       margin-right: 10px;
     }
   }
- .social-profile {
-  & .social-header {
+}
+
+.social-profile-wrapper {
+  width: 100vw;
+  padding-bottom: 55px;
+  &.active {
+    max-height: 70vh;
+    overflow-y: hidden;
+  }
+}
+
+.social-profile-container {
+  border-bottom: var(--primary-border);
+  /* margin: auto; */
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  /* background-color: blue; */
+  align-items: center;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  & .user-info {
+    align-self: flex-start;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding-left: 20px;
     gap: 10px;
-    & .social-image {
-      width: 40px;
-      height: 40px;
+    & .user-profile-picture {
       border-radius: 50%;
-      background-color: rgb(205, 205, 205);
-    }
-    & .name {
-      font-size: 14px;
     }
   }
-  & .status-update {
-    padding-left: 10px;
-    font-size: 13px;
-    padding-bottom: 10px;
+  & h3 {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    align-self: flex-start;
+    font-size: 14px;
   }
-  & .grid-container {
-    border-bottom: var(--primary-border);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    & .grid-img-container {
-      padding-bottom: 3px;
-      & .grid-img {
-      }
-      & .follow-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 26px;
-        & .follow {
-          padding-top: 3px;
-          width: 20px;
-          height: 20px;
-        }
-      }
-      & .grid-img-2 {
-        border-left: var(--primary-border);
-        border-right: var(--primary-border);
-      }
-      & .follow-container-2 {
-        border-left: var(--primary-border);
-        border-right: var(--primary-border);
-      }
+  & .social-profile {
+    max-width: 80vw;
+    & .feed-image {
     }
+  }
+  & .follow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 26px;
+    align-self: flex-end;
+    padding-right: 25px;
+    & .follow {
+      padding-top: 3px;
+      width: 20px;
+      height: 20px;
     }
-  } 
+  }
 }

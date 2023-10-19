@@ -2,7 +2,8 @@
   position: absolute;
   width: 100vw;
   height: calc(100vh - 55px);
-  /* background-color: rgb(192, 192, 216); */
+  /* height: 120vh; */
+  background-color: white;
   /* z-index: 5; */
   & .social-header-container {
     height: 65px;
