@@ -69,10 +69,9 @@ function OutfitSubmit() {
   };
 
   useEffect(() => {
-    console.log(user)
+
     queryClosets(user?.id!)
       .then(res => {
-        console.log(res);
         dispatch(setClosetState(res.data?.getClosets))
       })
   }, []);
@@ -82,7 +81,6 @@ function OutfitSubmit() {
     outfit.outfitUrl = outfitUrl;
     outfit.occasion = selectedOccasions;
     outfit.season = selectedSeasons;
-    console.log('this is the selected closet:', selectedCloset)
     outfit.closets = selectedCloset;
     handlePostOutfit({
       outfit: outfit, 

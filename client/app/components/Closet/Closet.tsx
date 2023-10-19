@@ -30,8 +30,6 @@ function Closet() {
 
   
   const closets = useSelector(state => state.closet.closets);
-
-  console.log(closets)
   
   const { handlePostCloset } = useCloset();
   const [closetForm, setClosetForm] = useState(false);
@@ -58,15 +56,12 @@ function Closet() {
 
   const submitForm = handleSubmit(async (closet) => {
     closet.userId = user?.id!;
-    console.log(closet);
     handlePostCloset(closet);
     setClosetForm(false);
     reset();
   });
 
   const handleClosetClick = async (closet) => {
-    console.log('lets closetify');
-    console.log('THIS IS CLOSET:', closet)
     dispatch(setSelectedCloset(closet));
     router.push('/dashboard/closets');
     

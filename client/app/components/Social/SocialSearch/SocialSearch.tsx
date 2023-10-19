@@ -55,8 +55,6 @@ function SocialSearch() {
   };
 
   const handleResultClick = (user) => {
-    console.log('clicked mf');
-    console.log(user);
     // setClickedUser(user);
     dispatch(setFriend(user));
     router.push(`/dashboard/explore/profile/?${user?.username}`)

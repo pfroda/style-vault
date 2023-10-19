@@ -40,9 +40,6 @@ function SocialProfile() {
     setClosetForm(!closetForm);
   }
 
-  const handleProfile = () => {
-    router.push('/dashboard/profile');
-  }
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -58,7 +55,6 @@ function SocialProfile() {
 
   const handleClosetClick = async (closet) => {
     console.log('lets closetify to friends');
-    console.log('THIS IS CLOSET:', closet)
     dispatch(setSelectedCloset(closet));
     router.push('/dashboard/closets');
   }

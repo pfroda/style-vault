@@ -31,7 +31,6 @@ function BrandsFilter() {
         } else {
             updatedBrands = [...selectedBrands, brand]
         }
-        console.log('updatedBrands', updatedBrands);
         dispatch(setSelectedFilter({type: 'brand', value: updatedBrands}))
     };
 

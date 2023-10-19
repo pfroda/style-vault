@@ -26,7 +26,7 @@ function LocationsFilter() {
   }, [user?.id]);
 
   const handleSelectedLocation = async (location) => {
-    console.log(location)
+
     if (location === selectedLocation) {
       dispatch(setSelectedFilter({ type: 'location', value: '' }));
       setSelectedLocation('');

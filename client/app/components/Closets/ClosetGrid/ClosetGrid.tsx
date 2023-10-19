@@ -6,17 +6,13 @@ import Footer from '../../Footer/Footer';
 import SearchBar from '../../Filters/Searchbar/SearchBar';
 import Filters from '../../Filters/CategoryFilter/CategoryFilter';
 import FilterPopup from '../../Filters/FilterPopup/FilterPopup';
-import { queryItems, queryOutfits } from '@/app/services/apiGraphQL';
 import { Item, Outfit } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import useFriend from '@/app/hooks/useFriend';
-import useCloset from '@/app/hooks/useCloset';
-import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
 import { queryItemsByCloset, queryOutfitsByCloset } from '@/app/services/apiGraphQL';
-
 
 function ClosetGrid() {
   const selectedCloset = useSelector((state) => state.closet.selectedCloset);
@@ -49,14 +45,13 @@ function ClosetGrid() {
   const handleHeaderClick = (buttonId: string) => {
     if (buttonId === 'closet') {
       setActiveItems('filteredItems');
-      console.log('closet changing')
     } else if (buttonId === 'outfit') {
       setActiveItems('filteredOutfits');
-      console.log('outfit changing');
     }
   };
 
   useEffect(() => {
+
     const fetchItemsAndOutfitsByCloset = async () => {
       
       try {
@@ -67,9 +62,6 @@ function ClosetGrid() {
 
           const resOutfits = await queryOutfitsByCloset(selectedCloset.id);
           setClosetOutfits(resOutfits.data?.getOutfitsByCloset || []);
-
-          console.log('CLOSET ITEMS:', resItems);
-          console.log('CLOSET OUTFITS:', resOutfits)
 
       } catch (error) {
         console.log(error);

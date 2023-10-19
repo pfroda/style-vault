@@ -42,10 +42,9 @@ function Grid() {
   const handleHeaderClick = (buttonId: string) => {
     if (buttonId === 'closet') {
       setActiveItems('filteredItems');
-      console.log('closet changing')
+
     } else if (buttonId === 'outfit') {
       setActiveItems('filteredOutfits');
-      console.log('outfit changing');
     }
   };
 
@@ -85,7 +84,6 @@ function Grid() {
 
           const resOutfits = await queryOutfits(user?.id!);
           setOutfits(resOutfits.data?.getOutfits || []);
-          console.log('HERE ARE THE OUTFITS', resOutfits)
 
         }
       } catch (error) {
