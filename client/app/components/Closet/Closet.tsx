@@ -21,13 +21,14 @@ import { setClosetState, setSelectedCloset } from '@/app/GlobalRedux/Features/cl
 function Closet() {
   const { register, handleSubmit, reset } = useForm();
   const { user, handleUserData } = useAuth();
+  const dispatch = useDispatch();
   const router = useRouter();
 
   useEffect(() => {
     handleUserData(user?.id!);
   }, []);
 
-  const dispatch = useDispatch();
+  
   const closets = useSelector(state => state.closet.closets);
 
   console.log(closets)

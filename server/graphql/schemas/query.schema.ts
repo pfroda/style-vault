@@ -7,7 +7,7 @@ export const queries = `#graphql
     getOutfitById(userId: String!, id: String!): Outfit!
     getClosetById(userId: String!, id: String!): Closet!
     getItemsByCategory(userId: String!, category: String!): [Item]!
-    getItemsByCloset(id: String!): [Item]!
+    getItemsByCloset(id: String!, ): [Item]!
     getOutfitsByCloset(id: String!): [Outfit]!
     getColors(userId: String!): [String]!
     getBrands(userId: String!): [String]!

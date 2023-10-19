@@ -6,7 +6,6 @@ function index() {
   return (
     <>
     <Header/>
-    <p>puta caca heh</p>
     <ClosetGrid />
     </>
   )

@@ -15,7 +15,7 @@ import useCloset from '@/app/hooks/useCloset';
 import useFriend from '@/app/hooks/useFriend';
 import { useRouter } from 'next/navigation'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { setClosetState } from '@/app/GlobalRedux/Features/closet/closetSlice';
+import { setClosetState, setSelectedCloset } from '@/app/GlobalRedux/Features/closet/closetSlice';
 
 function SocialProfile() {
   const { user, handleUserData } = useAuth();
@@ -56,6 +56,13 @@ function SocialProfile() {
     fetchItems();
   }, [friend?.id, dispatch]); 
 
+  const handleClosetClick = async (closet) => {
+    console.log('lets closetify to friends');
+    console.log('THIS IS CLOSET:', closet)
+    dispatch(setSelectedCloset(closet));
+    router.push('/dashboard/closets');
+  }
+
 
   return (
     <div className='Closet'>
@@ -68,7 +75,7 @@ function SocialProfile() {
           </div>
         </div>
         <div className="header-options">
-          <button className='closet-button'>Closet</button>
+          <button className='closet-button'>Closets</button>
           <button className='outfit-button'>Outfits</button>
         </div>
       </div>
@@ -80,7 +87,7 @@ function SocialProfile() {
         </Link>
 
         {closets.map((closet) => (
-          <div key={closet.id} className="closets-container">
+          <div key={closet.id} className="closets-container" onClick={() => {handleClosetClick(closet)}}>
               <Image alt="" className='closet-image' src={closet1} />
               <div className="closet-name">
                 {closet.name}

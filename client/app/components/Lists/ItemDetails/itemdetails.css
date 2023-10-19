@@ -84,6 +84,7 @@
 .itemdetails-ul {
     display: flex;
     align-items: center;
+
    }
 
 .itemdetails-li {
@@ -97,6 +98,7 @@
     align-items: center;
     text-align: center;
     display: flex;
+    
    }
 
 .itemdetails-container input {

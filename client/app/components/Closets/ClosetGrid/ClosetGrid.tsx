@@ -11,6 +11,7 @@ import { Item, Outfit } from '../../../Interfaces';
 import { useState, useEffect } from 'react';
 import useAuth from '@/app/hooks/useAuth';
 import useFriend from '@/app/hooks/useFriend';
+import useCloset from '@/app/hooks/useCloset';
 import { setSelectedFilter } from '@/app/GlobalRedux/Features/filter/filterSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
@@ -18,7 +19,8 @@ import { queryItemsByCloset, queryOutfitsByCloset } from '@/app/services/apiGrap
 
 
 function ClosetGrid() {
-  const dispatch = useDispatch();
+  const selectedCloset = useSelector((state) => state.closet.selectedCloset);
+
   const selectedCategory = useSelector((state) => state.filter.category);
   const selectedSeason = useSelector((state) => state.filter.season);
   const selectedBrands = useSelector((state) => state.filter.brand);
@@ -27,13 +29,16 @@ function ClosetGrid() {
   const selectedColor = useSelector((state) => state.filter.color)
 
   const searchParams = useSearchParams();
-  const friendUsername = searchParams.get('friend');
+  
+  // not necessary here since its always the last selected closet
+//   const friendUsername = searchParams.get('friend');
 
-  const [items, setItems] = useState<Item[]>([]);
-  const [outfits, setOutfits ] = useState<Outfit[]>([]);
+  const [closetItems, setClosetItems] = useState<Item[]>([]);
+  const [closetOutfits, setClosetOutfits ] = useState<Outfit[]>([]);
 
   const { user } = useAuth();
   const { friend } = useFriend(); 
+
   const [displayFilters, setDisplayFilters] = useState(false);
   const [activeItems, setActiveItems] = useState('filteredItems');
 
@@ -56,56 +61,32 @@ function ClosetGrid() {
       
       try {
 
-        if (friendUsername) {
+          const  resItems = await queryItemsByCloset(selectedCloset.id);
 
-          const  resItems = await queryItemsByCloset({
-            userId: friend?.id!,
-            category: selectedCategory,
-            season: selectedSeason,
-            brand: selectedBrands,
-            occasion: selectedOccasion,
-            location: selectedLocation,
-            color: selectedColor
-          });
+          setClosetItems(resItems.data?.getItemsByCloset || []);
 
-          setItems(resItems.data?.getItems || []);
+          const resOutfits = await queryOutfitsByCloset(selectedCloset.id);
+          setClosetOutfits(resOutfits.data?.getOutfitsByCloset || []);
 
-          const resOutfits = await queryOutfits(friend?.id!);
-          setOutfits(resOutfits.data?.getOutfits || []);
+          console.log('CLOSET ITEMS:', resItems);
+          console.log('CLOSET OUTFITS:', resOutfits)
 
-        } else {
-          const  resItems = await queryItems({
-            userId: user?.id!,
-            category: selectedCategory,
-            season: selectedSeason,
-            brand: selectedBrands,
-            occasion: selectedOccasion,
-            location: selectedLocation,
-            color: selectedColor
-          });
-
-          setItems(resItems.data?.getItems || []);
-
-          const resOutfits = await queryOutfits(user?.id!);
-          setOutfits(resOutfits.data?.getOutfits || []);
-          console.log('HERE ARE THE OUTFITS', resOutfits)
-
-        }
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchItemsAndOutfitsByCloset();
+
   }, [user?.id, friend?.id, selectedCategory, selectedBrands, selectedSeason, selectedOccasion, selectedLocation, selectedColor]); 
 
   const filteredItems = selectedCategory === 'All'
-    ? items.map((item) => ({
+    ? closetItems.map((item) => ({
       url: item.itemUrl,
       brand: item.brand,
       id: item.id
     }))
-    : items
+    : closetItems
       .filter(item => item.category === selectedCategory)
       .map((item) => ({
         url: item.itemUrl,
@@ -113,9 +94,6 @@ function ClosetGrid() {
         id: item.id
       }))
 
-
-  // Esto hay que pasarlo como parametros. Dejar de momento
-  const closetName = 'ClosetName';
   
   const headers = {
     closet: 'Items',
@@ -123,9 +101,10 @@ function ClosetGrid() {
   };
 
   return (
-    <>
+
+      <>
       <div className='Grid'>
-        <ItemHeader closetName={closetName} headers={headers} onHeaderClick={handleHeaderClick} />
+        <ItemHeader closetName={selectedCloset.name} headers={headers} onHeaderClick={handleHeaderClick} />
         {activeItems === 'filteredItems' ? (
           <>
             <SearchBar toggleFilters={toggleFilters} />
@@ -134,7 +113,7 @@ function ClosetGrid() {
             <FilterPopup toggleFilters={toggleFilters} displayFilters={displayFilters} />
           </>
         ) : (
-          <OutfitContainer outfits={outfits} />
+          <OutfitContainer outfits={closetOutfits} />
         )}
         <Footer />
       </div>
