@@ -24,10 +24,11 @@
     flex-direction: column;
 }
 
-.input-wrapper {
+.input-wrapper-item {
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .itemdetails-container {
