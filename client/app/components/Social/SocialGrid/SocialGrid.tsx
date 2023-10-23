@@ -21,14 +21,31 @@ function SocialGrid() {
     setIsFollowed(!isFollowed);
   }
 
+  // useEffect(() => {
+  //   queryFeed().then(response => {
+  //     console.log(response);
+  //     if (response && response.data && response.data.getFeed) {
+  //       setFeedData(response.data.getFeed);
+  //     }
+  //   })
+  // }, []);
+
   useEffect(() => {
-    queryFeed().then(response => {
-      console.log(response);
-      if (response && response.data && response.data.getFeed) {
-        setFeedData(response.data.getFeed);
+    const fetchFeedData = async () => {
+      try {
+        const response = await queryFeed();
+        console.log(response);
+        if (response && response.data && response.data.getFeed) {
+          setFeedData(response.data.getFeed);
+        }
+      } catch (error) {
+        console.error('Error fetching feed data:', error);
       }
-    })
+    };
+  
+    fetchFeedData();
   }, []);
+  
 
   const myUrl = 'http://res.cloudinary.com/dizg5ajyl/image/upload/v1697185079/file_har9cf.jpg';
   const closet = 'Paris Fashion';
@@ -55,17 +72,33 @@ function SocialGrid() {
         <Image src={searchBar ? close : searchuser} alt="" className={searchBar ? 'close-button' : 'search-user-button'} onClick={handleSearch} />
       </div>
 
-      {/* <div className="social-profile-wrapper"> */}
-      <div className={`social-profile-wrapper ${searchBar ? 'active' : ''}`}>
+      {/* <div className={`social-profile-wrapper ${searchBar ? 'active' : ''}`}>
         {feedData && feedData.map(item => (
-          <div key={item.item.id} className="social-profile-container">
+          <div key={item.item.id || 0} className="social-profile-container">
             <div className="user-info">
               <Image src={item.user.profilePicture || userImage} alt="" width={40} height={40} className='user-profile-picture' />
               <h4>@{item.user.username}</h4>
             </div>
             <h3>{item.message}</h3>
             <div className="social-profile">
-              <Image src={item.item.itemUrl} width={250} height={250} alt="" className='feed-image' />
+              <Image src={item.item.itemUrl || userImage} width={250} height={250} alt="" className='feed-image' />
+            </div>
+            <div className="follow-container">
+              <Image src={isFollowed ? heartblack : heartwhite} className='follow' alt="" onClick={handleFollow} />
+            </div>
+          </div>
+        ))}
+      </div> */}
+      <div className={`social-profile-wrapper ${searchBar ? 'active' : ''}`}>
+        {feedData && feedData.map(item => (
+          <div key={item?.item?.id || 0} className="social-profile-container">
+            <div className="user-info">
+              <Image src={item?.user?.profilePicture || userImage} alt="" width={40} height={40} className='user-profile-picture' />
+              <h4>@{item?.user?.username}</h4>
+            </div>
+            <h3>{item?.message}</h3>
+            <div className="social-profile">
+              <Image src={item?.item?.itemUrl || userImage} width={250} height={250} alt="" className='feed-image' />
             </div>
             <div className="follow-container">
               <Image src={isFollowed ? heartblack : heartwhite} className='follow' alt="" onClick={handleFollow} />
@@ -73,6 +106,7 @@ function SocialGrid() {
           </div>
         ))}
       </div>
+
       
     </div>
   )
